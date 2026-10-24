@@ -1,0 +1,128 @@
+@page
+@using System.Globalization
+@using Skycraft.Models
+@{
+    ViewData["Title"] = "Сборка беспилотника";
+    ViewData["WorkshopPage"] = true;
+    ViewData["WorkshopTab"] = "craft";
+}
+
+<section class="workshop-page" data-workshop-page="craft" aria-label="Конструктор беспилотника">
+    <aside class="workshop-sidebar part-browser" aria-label="Выбор компонентов">
+        <h2 class="sidebar-heading"><span aria-hidden="true">▶</span> Компоненты</h2>
+
+        <nav class="category-list" aria-label="Категории деталей">
+            <button type="button" class="category-button is-active" data-category="frame" aria-pressed="true">
+                <img src="~/assets/parts/frame.svg" alt="" /><span>Корпус</span><span class="category-arrow">›</span>
+            </button>
+            <button type="button" class="category-button" data-category="motor" aria-pressed="false">
+                <img src="~/assets/parts/motor.svg" alt="" /><span>Двигатель</span><span class="category-arrow">›</span>
+            </button>
+            <button type="button" class="category-button" data-category="propeller" aria-pressed="false">
+                <img src="~/assets/parts/propeller.svg" alt="" /><span>Пропеллер</span><span class="category-arrow">›</span>
+            </button>
+            <button type="button" class="category-button" data-category="battery" aria-pressed="false">
+                <img src="~/assets/parts/battery.svg" alt="" /><span>Аккумулятор</span><span class="category-arrow">›</span>
+            </button>
+            <button type="button" class="category-button" data-category="electronics" aria-pressed="false">
+                <img src="~/assets/parts/electronics.svg" alt="" /><span>Электроника</span><span class="category-arrow">›</span>
+            </button>
+        </nav>
+
+        <div class="part-list-heading">
+            <h3>Доступные детали</h3>
+            <span id="part-category-count" aria-label="Количество вариантов">3 варианта</span>
+        </div>
+        <div class="available-parts" id="available-parts" aria-label="Каталог деталей">
+            @foreach (var part in DroneCatalog.Parts)
+            {
+                <button type="button" class="part-card" data-part-id="@part.Id"
+                        data-category="@part.Category" data-name="@part.Name"
+                        data-description="@part.Description" data-weight="@part.WeightKg.ToString(CultureInfo.InvariantCulture)"
+                        data-speed="@part.SpeedModifier" data-flight-time="@part.FlightTimeModifier"
+                        data-range="@part.RangeModifier" data-price="@part.Price"
+                        data-stock="@part.Stock" data-rarity="@part.Rarity"
+                        hidden="@(part.Category != "frame")" aria-pressed="false">
+                    <img src="~/assets/parts/@(part.Icon).svg" alt="" loading="lazy" />
+                    <span class="part-card-info">
+                        <strong>@part.Name</strong>
+                        <small>@part.WeightKg.ToString("0.##", CultureInfo.GetCultureInfo("ru-RU")) кг <span class="part-price">· @part.Price CR</span></small>
+                    </span>
+                    <span class="part-stock" data-stock-display>x@part.Stock</span>
+                </button>
+            }
+        </div>
+        <div class="parts-hint"><span class="hint-dot"></span> Нажми на деталь, чтобы заменить её</div>
+    </aside>
+
+    <div class="builder-stage" aria-label="Трёхмерный предпросмотр дрона">
+        <canvas id="drone-canvas" class="drone-canvas" aria-label="Вращаемая трёхмерная модель дрона в ангаре">
+            3D-предпросмотр доступен в браузере с поддержкой Canvas.
+        </canvas>
+        <div class="stage-shade" aria-hidden="true"></div>
+        <div class="stage-title">
+            <span class="stage-eyebrow">АНГАР / ПРОЕКТ 001</span>
+            <h1 id="drone-build-title">Базовый беспилотник</h1>
+            <p id="drone-build-description">Простая и надёжная конструкция. Подходит<br /> для разведки и доставки.</p>
+        </div>
+        <div class="stage-view-controls" aria-label="Управление обзором">
+            <button type="button" id="view-reset" title="Сбросить ракурс" aria-label="Сбросить ракурс">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6M4 4v5h5"/></svg>
+            </button>
+            <button type="button" id="view-zoom-in" title="Приблизить" aria-label="Приблизить">+</button>
+            <button type="button" id="view-zoom-out" title="Отдалить" aria-label="Отдалить">−</button>
+        </div>
+        <p id="glb-model-status" class="glb-model-status" role="status" aria-live="polite">Загрузка 3D-моделей…</p>
+        <p class="view-hint">Перетаскивай модель для вращения <span>·</span> Колёсико — масштаб</p>
+        <div class="assembly-slots" aria-label="Установленные компоненты">
+            <button type="button" data-slot="frame"><img src="~/assets/parts/frame.svg" alt=""/><span>Корпус</span></button>
+            <button type="button" data-slot="motor"><img src="~/assets/parts/motor.svg" alt=""/><span>Двигатель</span></button>
+            <button type="button" data-slot="propeller"><img src="~/assets/parts/propeller.svg" alt=""/><span>Пропеллер</span></button>
+            <button type="button" data-slot="battery"><img src="~/assets/parts/battery.svg" alt=""/><span>Аккумулятор</span></button>
+            <button type="button" data-slot="electronics"><img src="~/assets/parts/electronics.svg" alt=""/><span>Электроника</span></button>
+        </div>
+    </div>
+
+    <aside class="workshop-sidebar builder-inspector" aria-label="Характеристики и сборка">
+        <h2>Характеристики</h2>
+        <div class="stat-list" aria-live="polite">
+            <div class="stat-row"><span class="stat-icon">⚖</span><span>Вес</span><strong id="stat-weight">12 кг</strong></div>
+            <div class="stat-row"><span class="stat-icon">◴</span><span>Макс. скорость</span><strong id="stat-speed">60 км/ч</strong></div>
+            <div class="stat-row"><span class="stat-icon">▣</span><span>Время работы</span><strong id="stat-flight-time">5 мин</strong></div>
+            <div class="stat-row"><span class="stat-icon">⌁</span><span title="Безопасный радиус от точки старта">Дальность (радиус)</span><strong id="stat-range">800 м</strong></div>
+        </div>
+        <div class="inspector-divider"></div>
+        <h3>Требует</h3>
+        <div class="requirement-list">
+            <div><span class="requirement-icon">▦</span><span>Компоненты</span><strong id="requirement-parts">5 / 5</strong></div>
+            <div><span class="requirement-icon">ⓒ</span><span>Деньги</span><strong id="requirement-credits">420 / 300</strong></div>
+        </div>
+        <div class="selected-part-info" id="selected-part-info" aria-live="polite">
+            <span>ВЫБРАННАЯ ДЕТАЛЬ</span>
+            <strong id="selected-part-name">Лёгкий корпус</strong>
+            <small id="selected-part-description">Универсальная лёгкая рама</small>
+        </div>
+        <p class="build-action-hint">Чертёж — бесплатная конфигурация. При сборке расходуются детали и кредиты.</p>
+        <div class="build-actions">
+            <button class="blueprint-create-button" id="create-blueprint-button" type="button">
+                <span aria-hidden="true">▤</span><span>Создать чертёж</span>
+            </button>
+            <button class="assemble-button" id="assemble-button" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 5-2 4 4-2 5-2 1 8 8 3-3-8-8 1-2-4-4-5 1Z"/></svg>
+                <span>Собрать</span>
+            </button>
+        </div>
+        <p class="assembly-message" id="assembly-message" role="status" aria-live="polite"></p>
+
+        <!-- Полёт открывается отдельно от чертежей и платной сборки.
+             На странице испытаний игрок выбирает уже собранный дрон. -->
+        <a class="constructor-play-link" asp-page="/Play">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M8 4.5 19 12 8 19.5Z" />
+            </svg>
+            <span>Играть</span>
+            <span class="constructor-play-arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="constructor-play-hint">Выбери готовый дрон и испытание</p>
+    </aside>
+</section>

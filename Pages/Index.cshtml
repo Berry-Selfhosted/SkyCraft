@@ -1,0 +1,76 @@
+@page
+@{
+    ViewData["Title"] = "Главное меню";
+    ViewData["Home3D"] = true;
+}
+
+<section class="hero hero--home" aria-labelledby="home-title">
+    <div class="home-three-stage" aria-label="Интерактивная 3D-сцена ангара и беспилотника">
+        <canvas id="home-drone-canvas" class="home-drone-canvas"
+                aria-label="3D-дрон в ангаре. Перетаскивайте мышью для поворота камеры, используйте колёсико для масштаба.">
+            Для просмотра трёхмерной сцены требуется современный браузер.
+        </canvas>
+        <div class="home-three-overlay" aria-hidden="true"></div>
+        <p class="home-3d-status" id="home-3d-status" role="status">Загрузка 3D-ангара…</p>
+        <p class="home-view-hint"><span aria-hidden="true">⟳</span> Повернуть: мышь · Приблизить: колёсико</p>
+    </div>
+    <div class="hangar-number" aria-hidden="true">АНГАР 01 <span></span></div>
+
+    <div class="hero-content">
+        <p class="eyebrow breadcrumb"><span class="accent-line"></span> АНГАР / ГЛАВНОЕ МЕНЮ</p>
+        <h1 class="hero-title" id="home-title">ТВОЙ ДРОН.<br />ТВОИ ПРАВИЛА.</h1>
+        <p class="hero-description">
+            Собирай беспилотники. Испытывай в полёте.<br class="desktop-break" />
+            Открывай новые возможности.
+        </p>
+
+        <nav class="hero-actions" aria-label="Режимы игры">
+            <a asp-page="/Play" class="action-card action-card--primary">
+                <svg class="action-icon" viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M8 4.5 27 16 8 27.5V4.5Z" />
+                </svg>
+                <span class="action-copy">
+                    <strong>Играть</strong>
+                    <small>Отправиться в полёт</small>
+                </span>
+                <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+            </a>
+            <a asp-page="/Campaign" class="action-card action-card--secondary" title="Сюжетная спасательная кампания">
+                <svg class="action-icon" viewBox="0 0 32 32" aria-hidden="true">
+                    <circle cx="16" cy="16" r="11"/><path d="M16 2v28M2 16h28M7 7l18 18M25 7 7 25"/>
+                </svg>
+                <span class="action-copy"><strong>Операция «Коршун»</strong><small>12 спасательных миссий · АИДА</small></span>
+                <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+            <a asp-page="/Constructor" class="action-card action-card--secondary">
+                <svg class="action-icon wrench-icon" viewBox="0 0 32 32" aria-hidden="true">
+                    <path d="M27.5 5.2a8.2 8.2 0 0 1-10.8 10.6L6 26.5a3 3 0 0 1-4.3-4.3l10.7-10.7A8.3 8.3 0 0 1 23 1.5l-5 5 4 4 5.5-5.3Z" />
+                </svg>
+                <span class="action-copy">
+                    <strong>Конструктор</strong>
+                    <small>Создать свой беспилотник</small>
+                </span>
+                <svg class="action-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+            </a>
+        </nav>
+
+        <p class="system-status"><span class="status-dot" aria-hidden="true"></span>Все системы готовы к запуску</p>
+    </div>
+
+    <aside class="drone-info" aria-label="Характеристики показанного беспилотника">
+        <p class="drone-category">УНИВЕРСАЛЬНАЯ ПЛАТФОРМА</p>
+        <h2 id="home-drone-title">Базовый беспилотник</h2>
+        <div class="drone-specs">
+            <div><strong id="home-stat-weight">12 кг</strong><span>Вес</span></div>
+            <div><strong id="home-stat-speed">60 км/ч</strong><span>Макс. скорость</span></div>
+            <div><strong id="home-stat-range">800 м</strong><span>Радиус</span></div>
+        </div>
+    </aside>
+</section>
+
+
+

@@ -1,0 +1,55 @@
+/* Операция «Коршун». Отдельный экран сюжетных миссий, без зависимостей. */
+.campaign-page { max-width: 1590px; margin: 0 auto; padding: 38px clamp(16px, 4vw, 65px) 70px; color: #e6edff; }
+.campaign-header { display: flex; justify-content: space-between; align-items: center; gap: 35px; border-bottom: 1px solid #283449; padding-bottom: 30px; }
+.campaign-intro { max-width: 850px; }
+.campaign-eyebrow,.campaign-section-label { font-size: 11px; letter-spacing: .17em; font-weight: 750; color: #82a5cb; }
+.campaign-eyebrow { margin: 0 0 17px; }
+.campaign-header h1 { font-size: clamp(36px,5.4vw,77px); font-weight: 900; line-height: 1.05; letter-spacing: -.037em; margin: 0 0 20px; }
+.campaign-header h1 span { color: #70d9ca; }
+.campaign-intro > p:not(.campaign-eyebrow) { line-height: 1.7; max-width: 770px; color: #9baeca; font-size: 16px; margin: 0; }
+.campaign-intro strong { color: #e9efff; }
+.campaign-header-meta { display: flex; flex-wrap:wrap; gap: 13px 22px; color: #83b9b5; font-size: 12px; margin-top: 24px; }
+.campaign-aida-id { flex: 0 0 285px; text-align: center; display: grid; justify-items: center; gap: 9px; }
+.campaign-aida-orbit { display: grid; place-items:center; width: 152px; height: 152px; border: 1px solid #467b83; border-radius: 50%; position: relative; box-shadow: 0 0 65px #2e89802e, inset 0 0 25px #356c7738; }
+.campaign-aida-orbit:before,.campaign-aida-orbit:after { content:""; position:absolute; border:1px dashed #4f8992; border-radius: 50%; inset:15px; transform:rotate(30deg); }
+.campaign-aida-orbit:after { inset:32px; border-color:#83d4c9; transform:rotate(-25deg); }
+.campaign-aida-core { font-weight: 900; font-size: 52px; color:#a6fff1; text-shadow:0 0 35px #69d2c7; }
+.campaign-aida-id span {font-size:11px; letter-spacing:.13em; color:#80d7ce; font-weight:700}
+.campaign-aida-id small {font-size:11px; color:#879bb4; line-height:1.5; max-width:240px}
+.campaign-statusline { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:23px 0 28px; }
+.campaign-statusline > div:first-child { display:grid; grid-template-columns:10px 1fr; column-gap:11px; align-items:center; row-gap:5px; }
+.campaign-status-dot {width:8px;height:8px;border-radius:50%;background:#65daca;box-shadow:0 0 13px #65daca}
+.campaign-statusline strong {font-size:13px;letter-spacing:.08em}
+.campaign-statusline small {grid-column:2;color:#92a4c0;font-size:12px}
+.campaign-counter {display:grid;text-align:right;gap:3px}.campaign-counter strong{font-size:27px;color:#8fe3d7}.campaign-counter span{font-size:10px;letter-spacing:.1em;color:#8c9db8}
+.campaign-section-label {display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid #273247;padding:0 0 13px;margin-bottom:17px}
+.campaign-chapters { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; }
+.campaign-chapter { text-align:left; position:relative; min-height:177px; border:1px solid #33425a; border-radius:10px; background:linear-gradient(150deg,#202f3d,#101825 74%); color:#e3edff; padding:16px 16px 14px; overflow:hidden; display:flex; flex-direction:column; gap:10px; cursor:pointer; transition:border-color .15s,transform .15s; }
+.campaign-chapter:hover { transform:translateY(-2px); border-color:#7dcfc2; }
+.campaign-chapter.is-selected { border-color:#65ded0; box-shadow:inset 3px 0 0 #65ded0,0 0 25px #49d9ca16; }
+.campaign-chapter.is-locked {opacity:.65}
+.campaign-chapter-top {white-space:nowrap; overflow:hidden;text-overflow:ellipsis; font-size:9px;letter-spacing:.11em;color:#b5cae0;z-index:1}
+.campaign-chapter-icon {font-size:36px;color:#79c8c4;align-self:flex-end;opacity:.8;line-height:1;}
+.campaign-chapter strong {font-size:19px;letter-spacing:-.01em;z-index:1}
+.campaign-chapter-status {font-size:10px;font-weight:750;letter-spacing:.11em;color:#8cc5bf;z-index:1}
+.campaign-chapter:before {content:"";position:absolute;width:190px;height:180px;right:-50px;top:-60px;border:1px solid #86b9b42c;border-radius:45%;transform:rotate(35deg);box-shadow:0 0 0 23px #78ccc20a,0 0 0 52px #78ccc207}
+.campaign-chapter--river,.campaign-chapter--lake,.campaign-chapter--storm,.campaign-chapter--torrent {background:linear-gradient(145deg,#22475b,#101a2a 75%)}
+.campaign-chapter--snow,.campaign-chapter--summit {background:linear-gradient(145deg,#465663,#1b2231 79%)}
+.campaign-chapter--mud,.campaign-chapter--cliff,.campaign-chapter--gorge {background:linear-gradient(145deg,#4a383a,#191b29 79%)}
+.campaign-prepare {margin-top:19px;padding:24px 27px;background:#121c2d;border:1px solid #34465f;border-radius:10px;display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,355px);gap:25px}
+.campaign-prepare h2 {font-size:26px;margin:0 0 8px}.campaign-prepare p:not(.campaign-eyebrow) {margin:0;color:#a4b5cd;line-height:1.6}.campaign-prepare .campaign-eyebrow{margin-bottom:9px}
+.campaign-condition{margin-top:17px;padding-left:12px;border-left:2px solid #60b7b3;color:#80c7c4;font-size:12px;line-height:1.5}
+.campaign-prepare-actions{display:grid;align-content:center;gap:13px}.campaign-prepare-actions>span{font-size:12px;color:#93a7c4}.campaign-action{border:0;border-radius:7px;background:#4f48d6;color:white;padding:17px;display:flex;justify-content:space-between;font-weight:800;letter-spacing:.04em;cursor:pointer}.campaign-action:disabled{background:#293249;color:#8a97ad;cursor:not-allowed}
+.campaign-secondary-link{color:#9eb2cc;font-size:12px;text-align:center;text-decoration:none}
+.campaign-epilogue{margin-top:20px;padding:25px;border:1px solid #4f8f86;border-radius:10px;background:#142929}.campaign-epilogue h2{font-size:25px}.campaign-epilogue p:last-child{color:#abc5c1;line-height:1.6}
+.campaign-debrief-backdrop:not([hidden]){position:fixed;inset:0;z-index:99;background:#030711d9;display:flex;align-items:center;justify-content:center;padding:17px}
+.campaign-debrief-dialog{width:min(600px,100%);padding:30px;background:#131f32;border:1px solid #567d83;border-radius:13px;box-shadow:0 28px 100px #0008}
+.campaign-debrief-dialog h2{font-size:25px; margin:0 0 15px}.campaign-debrief-dialog>p:not(.campaign-eyebrow){color:#bdd3da;line-height:1.7}.campaign-debrief-options{display:grid;gap:11px;margin:24px 0}.campaign-option{background:#1e3040;color:#e4f7ff;border:1px solid #4c6d7a;border-radius:8px;padding:15px;text-align:left;font-size:14px;font-weight:750;cursor:pointer}.campaign-option:hover{border-color:#7ee3d3}.campaign-option small{display:block;margin-top:8px;color:#9bb5c8;line-height:1.5;font-size:12px;font-weight:450}.campaign-close-debrief{background:none;border:0;color:#8fa0bd;cursor:pointer; padding:9px 0}
+@media(max-width:1050px){.campaign-chapters{grid-template-columns:repeat(3,minmax(0,1fr))}.campaign-aida-id{flex-basis:205px}.campaign-aida-orbit{width:110px;height:110px}.campaign-aida-core{font-size:37px}}
+@media(max-width:700px){.campaign-page{padding:20px 16px 50px}.campaign-header{align-items:flex-start}.campaign-aida-id{display:none}.campaign-header h1{font-size:42px}.campaign-chapters{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.campaign-chapter{min-height:162px;padding:12px}.campaign-chapter strong{font-size:16px}.campaign-section-label span:last-child{display:none}.campaign-prepare{grid-template-columns:1fr;padding:18px}.campaign-statusline{align-items:flex-start}.campaign-debrief-dialog{padding:20px}}
+@media(max-width:390px){.campaign-chapters{grid-template-columns:1fr}.campaign-chapter{min-height:117px}.campaign-chapter-icon{display:none}}
+
+/* v0.28: награда за первый вылет рядом с каждой главой. */
+.campaign-chapter-reward{position:relative;z-index:1;display:block;margin-top:6px;font-size:11px;font-weight:800;letter-spacing:.03em;color:#a3f4c9}
+.campaign-chapter.is-locked .campaign-chapter-reward{opacity:.52}
+.campaign-selected-reward{margin:12px 0 0;font-size:14px;font-weight:800;color:#94f4c4;line-height:1.4}

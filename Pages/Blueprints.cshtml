@@ -1,0 +1,18 @@
+@page
+@{
+    ViewData["Title"] = "Чертежи";
+    ViewData["WorkshopPage"] = true;
+    ViewData["WorkshopTab"] = "blueprints";
+}
+
+<section class="workshop-overview" data-workshop-page="blueprints">
+    <div class="overview-heading">
+        <span class="stage-eyebrow">SKYCRAFT / МАСТЕРСКАЯ</span>
+        <h1>Чертежи</h1>
+        <p>Чертежи — это бесплатные сохранённые конфигурации. Их можно переименовывать, удалять и загружать в конструктор. Для полёта понадобится собрать настоящий дрон.</p>
+        <a class="overview-primary-link" asp-page="/Constructor">+ Создать чертёж</a>
+    </div>
+    <p class="economy-notice" id="blueprint-message" role="status" aria-live="polite"></p>
+    <div class="overview-section-heading">Сохранённые проекты <span id="blueprint-count">0</span></div>
+    <div class="blueprint-grid" id="blueprint-grid"></div>
+</section>

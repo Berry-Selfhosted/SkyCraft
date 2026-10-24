@@ -1,0 +1,59 @@
+@page
+@using Skycraft.Models
+@{
+    ViewData["Title"] = "Магазин деталей";
+    ViewData["WorkshopPage"] = true;
+    ViewData["WorkshopTab"] = "shop";
+}
+
+<section class="workshop-overview workshop-overview--economy" data-workshop-page="shop">
+    <header class="overview-heading economy-heading">
+        <div>
+            <span class="stage-eyebrow">SKYCRAFT / МАСТЕРСКАЯ</span>
+            <h1>Магазин деталей</h1>
+            <p>Покупай комплектующие для новых беспилотников. Моторы и пропеллеры покупаются поштучно — для одного дрона нужно по четыре.</p>
+        </div>
+        <div class="economy-summary">
+            <span>ДОСТУПНО КРЕДИТОВ</span>
+            <strong><span data-economy-credits>420</span> CR</strong>
+            <a asp-page="/Warehouse">Посмотреть склад →</a>
+        </div>
+    </header>
+
+    <div class="economy-filter" role="group" aria-label="Фильтр по категориям">
+        <button type="button" data-shop-filter="all" class="is-active" aria-pressed="true">Все детали</button>
+        <button type="button" data-shop-filter="frame" aria-pressed="false">Корпуса</button>
+        <button type="button" data-shop-filter="motor" aria-pressed="false">Двигатели</button>
+        <button type="button" data-shop-filter="propeller" aria-pressed="false">Пропеллеры</button>
+        <button type="button" data-shop-filter="battery" aria-pressed="false">Аккумуляторы</button>
+        <button type="button" data-shop-filter="electronics" aria-pressed="false">Электроника</button>
+    </div>
+
+    <p class="economy-notice" id="economy-message" role="status" aria-live="polite"></p>
+    <div class="economy-grid" id="shop-grid">
+        @foreach (var part in DroneCatalog.Parts)
+        {
+            <article class="economy-card" data-shop-id="@part.Id" data-category="@part.Category"
+                     data-part-name="@part.Name" data-part-price="@part.Price" data-initial-stock="@part.Stock">
+                <div class="economy-card-top">
+                    <img src="~/assets/parts/@(part.Icon).svg" alt="" loading="lazy" />
+                    <div>
+                        <span class="economy-rarity">@part.Rarity</span>
+                        <h2>@part.Name</h2>
+                        <p>@part.Description</p>
+                    </div>
+                </div>
+                <div class="economy-card-meta">
+                    <span>На складе: <strong data-stock-count>@part.Stock</strong> шт.</span>
+                    <strong class="economy-price">@part.Price CR <small>/ шт.</small></strong>
+                </div>
+                <div class="economy-card-actions">
+                    <label>Количество
+                        <input type="number" class="economy-quantity" min="1" max="999" step="1" value="1" data-quantity aria-label="Количество для покупки: @part.Name" />
+                    </label>
+                    <button type="button" class="economy-buy" data-buy>Купить</button>
+                </div>
+            </article>
+        }
+    </div>
+</section>

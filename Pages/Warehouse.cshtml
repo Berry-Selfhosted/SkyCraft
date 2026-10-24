@@ -1,0 +1,54 @@
+@page
+@using Skycraft.Models
+@{
+    ViewData["Title"] = "Склад";
+    ViewData["WorkshopPage"] = true;
+    ViewData["WorkshopTab"] = "warehouse";
+}
+
+<section class="workshop-overview workshop-overview--economy" data-workshop-page="warehouse">
+    <header class="overview-heading economy-heading">
+        <div>
+            <span class="stage-eyebrow">SKYCRAFT / МАСТЕРСКАЯ</span>
+            <h1>Склад</h1>
+            <p>Здесь лежат комплектующие для сборки дронов. Лишние детали можно продать за 60% от стоимости в магазине.</p>
+            <div class="overview-links">
+                <a class="overview-primary-link" asp-page="/Shop">+ Купить детали</a>
+                <a class="overview-secondary-link" asp-page="/Constructor">Перейти к сборке →</a>
+            </div>
+        </div>
+        <div class="economy-summary">
+            <span>ДОСТУПНО КРЕДИТОВ</span>
+            <strong><span data-economy-credits>420</span> CR</strong>
+            <button type="button" class="demo-reset-button" id="reset-workshop-demo">Сбросить демо-прогресс</button>
+        </div>
+    </header>
+
+    <p class="economy-notice" id="economy-message" role="status" aria-live="polite"></p>
+    <div class="economy-grid" id="warehouse-grid">
+        @foreach (var part in DroneCatalog.Parts)
+        {
+            <article class="economy-card" data-warehouse-id="@part.Id" data-part-name="@part.Name"
+                     data-part-price="@part.Price" data-initial-stock="@part.Stock">
+                <div class="economy-card-top">
+                    <img src="~/assets/parts/@(part.Icon).svg" alt="" loading="lazy" />
+                    <div>
+                        <span class="economy-rarity">@part.Rarity</span>
+                        <h2>@part.Name</h2>
+                        <p>@part.Description</p>
+                    </div>
+                </div>
+                <div class="economy-card-meta">
+                    <span>В наличии: <strong data-warehouse-count>@part.Stock</strong> шт.</span>
+                    <strong class="economy-price">@(part.Price * 60 / 100) CR <small>/ шт.</small></strong>
+                </div>
+                <div class="economy-card-actions">
+                    <label>Количество
+                        <input type="number" class="economy-quantity" min="1" max="999" step="1" value="1" data-quantity aria-label="Количество для продажи: @part.Name" />
+                    </label>
+                    <button type="button" class="economy-sell" data-sell>Продать</button>
+                </div>
+            </article>
+        }
+    </div>
+</section>

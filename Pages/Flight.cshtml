@@ -1,0 +1,222 @@
+@page
+@{
+    ViewData["Title"] = "Полет";
+    ViewData["FlightPage"] = true;
+    ViewData["ImmersiveFlight"] = true;
+}
+
+<section class="flight-immersive" aria-label="Симулятор полёта SKYCRAFT">
+    <div class="flight-layout">
+        <div class="flight-center">
+            <div class="flight-stage" id="flight-stage" data-flight-mode="ready" data-flight-phase="disarmed">
+                <a href="/Play" class="flight-exit" id="flight-exit" title="Вернуться к выбору уровня">← К уровням</a>
+                <canvas id="flight-canvas" tabindex="0" aria-label="Трёхмерная игровая сцена"></canvas>
+                <div class="flight-atmosphere" id="flight-atmosphere" aria-hidden="true">
+                    <span class="flight-atmosphere-sun"></span>
+                    <span class="flight-atmosphere-clouds"></span>
+                    <span class="flight-atmosphere-haze"></span>
+                </div>
+                <div class="flight-stage-overlay" aria-hidden="true"></div>
+                <!-- Постоянное задание внутри игровой сцены, независимо от подсказок (I). -->
+                <section class="flight-mission-hud" id="flight-mission-hud" aria-label="Текущее задание уровня">
+                    <div class="flight-mission-heading">
+                        <span class="flight-mission-location" id="flight-hud-location">АНГАР 01 / ОБУЧЕНИЕ</span>
+                        <span class="flight-mission-difficulty" id="flight-difficulty">Легко</span>
+                    </div>
+                    <h2 id="flight-level-title">Первый взлёт</h2>
+                    <p id="flight-level-description">Освой управление беспилотником.</p>
+                    <div class="flight-mission-progress-heading">
+                        <span id="flight-mission-label">ЦЕЛИ МИССИИ</span>
+                        <strong id="flight-mission-count">0 / 4</strong>
+                    </div>
+                    <div class="flight-mission-progress-track" id="flight-mission-progressbar"
+                         role="progressbar" aria-label="Прогресс текущей миссии"
+                         aria-valuemin="0" aria-valuenow="0" aria-valuemax="4">
+                        <span id="flight-mission-progress-fill"></span>
+                    </div>
+                    <div class="flight-mission-footer">
+                        <span class="flight-mission-next" id="flight-mission-next">Цель: первая задача</span>
+                        <span class="flight-mission-record" title="Лучшее время прохождения">◷ <span id="flight-best">—</span></span>
+                    </div>
+                </section>
+                <aside class="flight-lesson-card" id="flight-lesson-card" aria-label="Инструктор академии" hidden>
+                    <div class="flight-lesson-header"><span>ИНСТРУКТОР / SKYCRAFT</span><span id="flight-lesson-step">ШАГ 01 / 14</span></div>
+                    <h3 id="flight-lesson-title">Начало тренировки</h3>
+                    <p id="flight-lesson-instruction">Начни обучение.</p>
+                    <span class="flight-lesson-shortcut" id="flight-lesson-keys">▶ Начать</span>
+                    <p class="flight-lesson-hint" id="flight-lesson-hint">Следуй указаниям инструктора.</p>
+                    <div class="flight-lesson-progress"><span id="flight-lesson-fill"></span></div>
+                </aside>
+                <!-- Единая компактная панель для телефона: заменяет две большие карточки. -->
+                <button type="button" class="flight-mobile-objective" id="flight-mobile-objective"
+                        aria-expanded="false" aria-controls="flight-mobile-objective-details"
+                        aria-label="Текущее задание. Нажми, чтобы посмотреть подробности">
+                    <span class="flight-mobile-objective-eyebrow">
+                        <span id="flight-mobile-objective-step">АКАДЕМИЯ / 01 ИЗ 14</span>
+                        <span class="flight-mobile-objective-chevron" aria-hidden="true">⌄</span>
+                    </span>
+                    <strong id="flight-mobile-objective-title">Запуск тренировки</strong>
+                    <span class="flight-mobile-objective-command" id="flight-mobile-objective-command">Начни испытание</span>
+                    <span class="flight-mobile-objective-details" id="flight-mobile-objective-details" hidden></span>
+                    <span class="flight-mobile-objective-track" aria-hidden="true"><span id="flight-mobile-objective-fill"></span></span>
+                </button>
+                <div class="flight-hud-top">
+                    <div class="flight-hud-actions">
+                        <span class="flight-hud-chip">● <span id="flight-hud-status">ГОТОВ К ПОЛЁТУ</span></span>
+                        <span class="flight-hud-chip flight-motor-indicator" id="flight-motor-indicator">МОТОРЫ ВЫКЛ.</span>
+                        <button type="button" class="flight-camera-button" id="flight-camera-toggle"
+                                aria-label="Переключить вид камеры" aria-pressed="false"
+                                title="Переключить камеру (V)">◉ <span id="flight-camera-label">3-е лицо</span> <kbd>V</kbd></button>
+
+                    </div>
+                </div>
+                <!-- Отдельная кнопка поверх сцены: доступна даже на узких экранах. -->
+                        <button type="button" class="flight-help-toggle" id="flight-help-toggle"
+                                aria-label="Показать подсказки по управлению" aria-controls="flight-help-drawer"
+                                aria-expanded="false" aria-keyshortcuts="I"
+                                title="Открыть подсказки (I)">ⓘ <span>Подсказки</span> <kbd>I</kbd></button>
+                <div class="flight-campaign-signal" id="flight-campaign-signal" hidden>
+                    <span>◈ АИДА / ПОСЛЕДСТВИЕ РЕШЕНИЯ</span>
+                    <strong id="flight-campaign-effect">РАЗВЕДКА</strong>
+                    <small id="flight-campaign-description">Стандартный режим</small>
+                    <button type="button" id="flight-campaign-action" hidden>F / Калибровать сенсор</button>
+                </div>
+                <div class="flight-campaign-visual" id="flight-campaign-visual" data-effect="normal" aria-hidden="true"></div>
+                <aside class="flight-radio-panel" id="flight-radio-panel" aria-label="Сюжетный канал связи" hidden>
+                    <div class="flight-radio-header">
+                        <div>
+                            <p class="flight-panel-caption">ДИАЛОГ / КАНАЛ СВЯЗИ</p>
+                            <h3 id="flight-radio-title">РАЦИЯ В ЭФИРЕ</h3>
+                        </div>
+                        <span class="flight-radio-status" id="flight-radio-status">ТИХИЙ КАНАЛ</span>
+                    </div>
+                    <div class="flight-radio-current" id="flight-radio-current" hidden>
+                        <img id="flight-radio-avatar" src="/assets/characters/aida-neutral.png" alt="Текущий собеседник" />
+                        <div class="flight-radio-current-copy">
+                            <strong id="flight-radio-speaker">АИДА</strong>
+                            <span id="flight-radio-role">ИИ-ассистент спасательной операции</span>
+                        </div>
+                    </div>
+                    <div class="flight-radio-log" id="flight-radio-log"></div>
+                </aside>
+                <div class="flight-cinematic-title" id="flight-cinematic-title" aria-live="polite" aria-atomic="true">
+                    <span id="flight-cinematic-location">СЕКТОР ОПЕРАЦИИ</span>
+                    <strong id="flight-cinematic-name">Испытание в полёте</strong>
+                    <small id="flight-cinematic-objective">Цель миссии появится здесь.</small>
+                </div>
+                <div class="flight-hud-bottom">
+                    <div><small>ВЫСОТА</small><strong id="flight-altitude">0,0 м</strong></div>
+                    <div><small>СКОРОСТЬ</small><strong id="flight-speed">0 км/ч</strong></div>
+                    <div><small>ВИНТЫ · СР.</small><strong id="flight-rpm">0 об/мин</strong></div>
+                    <div><small>ЗАРЯД</small><strong id="flight-battery">100%</strong></div>
+                    <div><small>РАДИУС</small><strong id="flight-radius">0 / 800 м</strong></div>
+                    <div><small>ВОРОТА</small><strong id="flight-progress">0 / 4</strong></div>
+                    <div><small>ВРЕМЯ</small><strong id="flight-time">00:00</strong></div>
+                </div>
+                <div class="flight-crosshair" aria-hidden="true">+</div>
+                <button type="button" class="flight-enter-prompt" id="flight-enter-prompt" aria-label="Начать испытание">
+                    <span class="flight-enter-prompt-label">ГОТОВ К ВЫЛЕТУ</span>
+                    <strong>НАЖМИ <kbd>ENTER</kbd>, ЧТОБЫ НАЧАТЬ</strong>
+                    <small>Или нажми здесь · Далее M — моторы, Space — взлёт</small>
+                </button>
+                <div class="flight-notification" id="flight-notification" role="status" aria-live="polite"></div>
+                <div class="flight-touch-controls" aria-label="Сенсорное управление">
+                    <div class="flight-touch-side flight-touch-side--left">
+                        <div class="flight-touch-stick" data-flight-stick="move" aria-label="Левый джойстик движения">
+                            <span class="flight-touch-stick-label">КРЕН / ТАНГАЖ</span>
+                            <div class="flight-touch-stick-base">
+                                <span class="flight-touch-stick-ring"></span>
+                                <span class="flight-touch-stick-thumb"></span>
+                            </div>
+                        </div>
+                        <div class="flight-touch-action-cluster flight-touch-action-cluster--left" aria-label="Запуск и моторы">
+                            <button type="button" data-flight-action="start" aria-label="Начать или продолжить полёт">▶ Старт</button>
+                            <button type="button" data-flight-action="motors" aria-label="Включить или выключить моторы">M Моторы</button>
+                        </div>
+                    </div>
+                    <div class="flight-touch-side flight-touch-side--right">
+                        <div class="flight-touch-action-cluster flight-touch-action-cluster--right" aria-label="Посадка, камера и помощь">
+                            <button type="button" data-flight-action="land" aria-label="Посадить дрон">L Посадка</button>
+                            <button type="button" data-flight-action="camera" aria-label="Сменить камеру">V Камера</button>
+                            <button type="button" data-flight-action="help" aria-label="Открыть подсказки">I Помощь</button>
+                        </div>
+                        <div class="flight-touch-stick" data-flight-stick="lift" aria-label="Правый джойстик высоты и поворота">
+                            <span class="flight-touch-stick-label">ГАЗ / РЫСКАНИЕ</span>
+                            <div class="flight-touch-stick-base">
+                                <span class="flight-touch-stick-ring"></span>
+                                <span class="flight-touch-stick-thumb"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Правая панель подсказок: по умолчанию закрыта, не влияет на управление. -->
+                <aside class="flight-help-drawer" id="flight-help-drawer"
+                       aria-label="Подсказки по управлению" aria-hidden="true" inert>
+                    <div class="flight-help-drawer-header">
+                        <div>
+                            <p class="flight-panel-caption">SKYCRAFT / ПОМОЩЬ</p>
+                            <h2 id="flight-help-title">ПОДСКАЗКИ</h2>
+                        </div>
+                        <button type="button" id="flight-help-close" class="flight-help-close"
+                                aria-label="Закрыть подсказки" title="Закрыть подсказки (I)">✕</button>
+                    </div>
+                    <div class="flight-help-drawer-content">
+                        <section class="flight-help-section" aria-labelledby="flight-academy-heading">
+                            <h3 id="flight-academy-heading">АКАДЕМИЯ ПИЛОТА</h3>
+                            <p>Пройди обязательное обучение: запуск моторов, зависание, движения по осям, FPV, ворота и посадка. Для обучения выдаётся бесплатный дрон.</p>
+                            <p>Промежуточные этапы автоматически засчитываются по реальному движению. Чтобы получить допуск, закончи урок посадкой.</p>
+                        </section>
+                        <section class="flight-help-section" aria-labelledby="flight-controls-heading">
+                            <h3 id="flight-controls-heading">УПРАВЛЕНИЕ ДРОНОМ</h3>
+                            <div class="flight-help-shortcut"><span><kbd>W</kbd><kbd>S</kbd></span><span>Тангаж: вперёд и назад</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>A</kbd><kbd>D</kbd></span><span>Крен влево и вправо</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>Q</kbd><kbd>E</kbd></span><span>Разворот</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>M</kbd></span><span>Запуск / выключение моторов на земле</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>Space</kbd></span><span>Взлёт / набор высоты</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>Shift</kbd></span><span>Снижение</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>L</kbd></span><span>Автопосадка / отмена</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>V</kbd></span><span>FPV / камера от третьего лица</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>Esc</kbd></span><span>Пауза</span></div>
+                            <div class="flight-help-shortcut"><span><kbd>I</kbd></span><span>Открыть / закрыть подсказки</span></div>
+                            <p class="flight-help-hint">Мышь — осмотр камерой; колёсико — масштаб в третьем лице.</p>
+                        </section>
+                        <section class="flight-help-section" aria-labelledby="flight-tips-heading">
+                            <h3 id="flight-tips-heading">СОВЕТЫ ПИЛОТУ</h3>
+                            <p>Нажми <kbd>Enter</kbd>, чтобы начать испытание, <kbd>M</kbd> для запуска моторов, затем <kbd>Space</kbd> для взлёта. Пауза — <kbd>Esc</kbd>, сброс — <kbd>R</kbd>.</p>
+                            <p>Дрон имеет инерцию: чтобы затормозить, наклони его в обратную сторону. Двигатели разгоняются не мгновенно.</p>
+                            <p>Пройди ворота по порядку и после последних выполни посадку. С выключенными моторами взлёт невозможен.</p>
+                            <p>Скорость, запас заряда и дальность зависят от комплектующих; при низком заряде включается аварийная посадка.</p>
+                        </section>
+                    </div>
+                    <div class="flight-help-drawer-footer">Нажми <kbd>I</kbd> ещё раз, чтобы скрыть подсказки</div>
+                </aside>
+                <section class="flight-pause-overlay" id="flight-pause-menu" aria-label="Меню паузы" hidden>
+                    <div class="flight-pause-panel">
+                        <p class="flight-panel-caption">SKYCRAFT / ПАУЗА</p>
+                        <h2>ПОЛЁТ ПРИОСТАНОВЛЕН</h2>
+                        <p>Продолжи маршрут или вернись к выбору заданий.</p>
+                        <button class="flight-primary" type="button" id="flight-pause-resume">▶ Продолжить полёт</button>
+                        <button class="flight-secondary" type="button" id="flight-pause-restart">↻ Начать заново</button>
+                        <a class="flight-secondary flight-menu-link" href="/Play">← Выбрать другой уровень</a>
+                    </div>
+                </section>
+                <div class="flight-win" id="flight-win" hidden>
+                    <div class="flight-win-panel">
+                        <span class="flight-win-icon" id="flight-result-symbol">✓</span>
+                        <p class="flight-panel-caption" id="flight-result-caption">ИСПЫТАНИЕ ЗАВЕРШЕНО</p>
+                        <h2 id="flight-result-title">МАРШРУТ ПРОЙДЕН!</h2>
+                        <p id="flight-result">Все контрольные точки пройдены.</p>
+                        <div class="flight-level-reward" id="flight-level-reward" role="status" aria-live="polite" hidden></div>
+                        <div class="flight-debrief" id="flight-campaign-debrief" hidden>
+                            <p class="flight-debrief-label">◈ АИДА / ПОСЛЕПОЛЁТНЫЙ ДЕБРИФИНГ</p>
+                            <p id="flight-debrief-text"></p>
+                            <div id="flight-debrief-choices"></div>
+                            <small>Решение изменит физику или сенсоры следующего вылета. Нет «правильного» варианта.</small>
+                        </div>
+                        <button type="button" id="flight-retry" class="flight-primary">Пройти ещё раз ↻</button>
+                        <a href="/Play" class="flight-secondary flight-menu-link">← К выбору уровней</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>

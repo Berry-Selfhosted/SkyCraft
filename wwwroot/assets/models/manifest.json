@@ -1,0 +1,31 @@
+{
+  "format": "glTF 2.0 / GLB",
+  "units": "metres",
+  "upAxis": "+Y",
+  "forwardAxis": "+Z",
+  "models": {
+    "frame-light": "frame-light.glb",
+    "frame-heavy": "frame-heavy.glb",
+    "frame-carbon": "frame-carbon.glb",
+    "motor-base": "motor-base.glb",
+    "motor-race": "motor-race.glb",
+    "motor-eco": "motor-eco.glb",
+    "prop-base": "prop-base.glb",
+    "prop-sport": "prop-sport.glb",
+    "prop-quiet": "prop-quiet.glb",
+    "battery-base": "battery-base.glb",
+    "battery-long": "battery-long.glb",
+    "battery-light": "battery-light.glb",
+    "chip-base": "chip-base.glb",
+    "chip-nav": "chip-nav.glb",
+    "chip-ai": "chip-ai.glb",
+    "hangar-floor": "hangar-floor.glb",
+    "hangar-shell": "hangar-shell.glb",
+    "hangar-structure": "hangar-structure.glb",
+    "hangar-lighting": "hangar-lighting.glb",
+    "hangar-props": "hangar-props.glb",
+    "academy-course": "academy-course.glb",
+    "academy-beacons": "academy-beacons.glb",
+    "hills-lake-world": "hills-lake-world.glb"
+  }
+}

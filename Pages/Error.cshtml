@@ -1,0 +1,14 @@
+@page
+@{
+    ViewData["Title"] = "Ошибка";
+}
+
+<section class="hero hero--subpage" aria-labelledby="error-title">
+    <div class="hangar-backdrop" aria-hidden="true"></div>
+    <div class="subpage-inner">
+        <p class="eyebrow breadcrumb"><span class="accent-line"></span> СИСТЕМА / ОШИБКА</p>
+        <h1 class="hero-title" id="error-title">СБОЙ СИСТЕМЫ.</h1>
+        <p class="hero-description">Не удалось обработать запрос. Попробуй вернуться в ангар.</p>
+        <a asp-page="/Index" class="compact-button compact-button--primary">← Главное меню</a>
+    </div>
+</section>

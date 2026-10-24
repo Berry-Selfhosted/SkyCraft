@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80">
+  <defs><linearGradient id="chip" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#67758e"/><stop offset="1" stop-color="#202b3e"/></linearGradient></defs>
+  <ellipse cx="50" cy="68" rx="33" ry="4" fill="#03050b" opacity=".25"/>
+  <g stroke="#b3bfd2" stroke-width="3" stroke-linecap="round">
+    <path d="M20 23v-7M33 20v-7M47 18v-7M61 20v-7M75 23v-7M20 57v7M33 59v7M47 61v7M61 59v7M75 57v7M11 32l-7-2M11 42l-7 2M88 32l8-2M88 42l8 2"/>
+  </g>
+  <path d="M16 27 67 19l18 16-51 22Z" fill="url(#chip)" stroke="#a5b3cf" stroke-width="1.5"/>
+  <path d="M16 27v14l18 21V57ZM34 57v5l51-18V35Z" fill="#151e31" stroke="#8796af"/>
+  <path d="m31 32 34-6 9 8-35 12Z" fill="#182338" stroke="#7787a3"/>
+  <circle cx="50" cy="36" r="5" fill="#4440a9" stroke="#b0a7ff" stroke-width="1.5"/>
+</svg>

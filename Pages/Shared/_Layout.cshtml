@@ -1,0 +1,272 @@
+@using Skycraft.Models
+@using System.Text.Json
+@{
+    var isWorkshop = ViewData["WorkshopPage"] is true;
+    var workshopTab = ViewData["WorkshopTab"] as string ?? "";
+    var immersiveFlight = ViewData["ImmersiveFlight"] is true;
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0e18" />
+    <meta name="description" content="SKYCRAFT — создавай беспилотники и открывай новые возможности." />
+    <title>@ViewData["Title"] — SKYCRAFT</title>
+    <!-- Проверка локального профиля до загрузки игрового состояния. -->
+    <script asp-append-version="true" src="~/js/profile-session.js"></script>
+    <script>
+        window.SkycraftProfiles?.requireLogin();
+    </script>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/site.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/css/workshop.css" />
+    @if (isWorkshop || ViewData["FlightPage"] is true || ViewData["Home3D"] is true)
+    {
+        <!-- Locally vendored Three.js is preferred; install via Tools/vendor-three.mjs. -->
+        <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@@0.186.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@@0.186.0/examples/jsm/"
+            }
+        }
+        </script>
+    }
+    @if (ViewData["FlightPage"] is true || ViewData["FlightSelectPage"] is true)
+    {
+        <link rel="stylesheet" asp-append-version="true" href="~/css/flight.css" />
+    }
+    @if (ViewData["FlightPage"] is true)
+    {
+        <script asp-append-version="true" src="~/js/flight-device-layout.js"></script>
+        <link rel="stylesheet" asp-append-version="true" href="~/css/flight-desktop.css" />
+        <link rel="stylesheet" asp-append-version="true" href="~/css/flight-mobile.css" />
+    }
+    @if (ViewData["CampaignPage"] is true)
+    {
+        <link rel="stylesheet" asp-append-version="true" href="~/css/campaign.css" />
+    }
+</head>
+<body class="@(immersiveFlight ? "is-immersive-flight" : "")">
+    <div class="site-shell">
+        <header class="topbar">
+            <a class="brand" asp-page="/Index" aria-label="SKYCRAFT — главное меню">
+                <svg class="brand-symbol logo__mark" viewBox="0 0 40 32" aria-hidden="true">
+                    <path d="M0 2h14l6 8 6-8h14l-8 10H8z" fill="currentColor"></path>
+                    <path d="M16 14h8v6l-4 11-4-11z" fill="currentColor"></path>
+                    <path d="M6 15h6l-2 4H8z M28 15h6l-2 4h-2z" fill="currentColor" opacity=".7"></path>
+                </svg>
+                <span>SKYCRAFT</span>
+            </a>
+
+            @if (isWorkshop)
+            {
+                <nav class="workshop-nav" aria-label="Разделы мастерской">
+                    <a asp-page="/Constructor" class="workshop-nav-link @(workshopTab == "craft" ? "is-current" : "")" aria-current="@(workshopTab == "craft" ? "page" : null)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5 5-3 3 3-3 5-4 1-8 9a3 3 0 0 1-4-4l9-8 2-3Z"/><path d="m14 5 5 5"/></svg>
+                        <span>Крафт</span>
+                    </a>
+                    <a asp-page="/Blueprints" class="workshop-nav-link @(workshopTab == "blueprints" ? "is-current" : "")" aria-current="@(workshopTab == "blueprints" ? "page" : null)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 7h7M9 11h7M9 15h4M2 7h3M2 12h3M2 17h3"/></svg>
+                        <span>Чертежи</span>
+                    </a>
+                    <a asp-page="/Hangar" class="workshop-nav-link @(workshopTab == "hangar" ? "is-current" : "")" aria-current="@(workshopTab == "hangar" ? "page" : null)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V9l9-6 9 6v11H3Z"/><path d="M7 20v-7h10v7M8 9h8"/></svg>
+                        <span>Мои дроны</span>
+                    </a>
+                    <a asp-page="/Warehouse" class="workshop-nav-link @(workshopTab == "warehouse" ? "is-current" : "")" aria-current="@(workshopTab == "warehouse" ? "page" : null)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5ZM3 7v10l9 5V12M21 7v10l-9 5"/></svg>
+                        <span>Склад</span>
+                    </a>
+                    <a asp-page="/Shop" class="workshop-nav-link @(workshopTab == "shop" ? "is-current" : "")" aria-current="@(workshopTab == "shop" ? "page" : null)">
+                        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h2l2 11h12l2-8H6M9 21h.01M18 21h.01"/><circle cx="9" cy="21" r="1"/><circle cx="18" cy="21" r="1"/></svg>
+                        <span>Магазин</span>
+                    </a>
+                </nav>
+            }
+
+            <div class="account-controls">
+                <div class="popover-anchor">
+                    <button class="balance-button" type="button" id="balance-button"
+                            aria-expanded="false" aria-controls="balance-popover"
+                            aria-label="Баланс: 420 кредитов">
+                        <svg viewBox="0 0 24 24" class="icon" aria-hidden="true">
+                            <circle cx="12" cy="12" r="7.3" />
+                            <path d="M12 8v8m-2-6.4c1.6-1 4.5-.6 4.5 1.2s-5 1-5 2.9 3.2 2.2 5 1" />
+                        </svg>
+                        <span data-player-credits>420</span>
+                        <span class="balance-button-divider" aria-hidden="true"></span>
+                    </button>
+                    <div class="popover" id="balance-popover" hidden>
+                        <strong>Кредиты</strong>
+                        <p><span data-player-credits class="balance-number">420</span> <span>CR</span></p>
+                        <small>Демо-баланс хранится в браузере. Серверная экономика ещё не подключена.</small>
+                    </div>
+                </div>
+
+                <div class="popover-anchor">
+                    <button class="user-button" type="button" id="user-button"
+                            aria-expanded="false" aria-controls="user-popover">
+                        <svg viewBox="0 0 24 24" class="icon user-icon" aria-hidden="true">
+                            <circle cx="12" cy="12" r="6.5" />
+                        </svg>
+                        <span data-user-profile-name>Пилот</span>
+                        <svg viewBox="0 0 24 24" class="icon chevron-icon" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="popover user-popover" id="user-popover" hidden>
+                        <strong>Пилот <span data-user-profile-name>Пилот</span></strong>
+                        <small>Сохранения в этом браузере</small>
+                        <a asp-page="/Index">Главное меню</a>
+                        <button type="button" data-open-settings>Настройки</button>
+                        <button type="button" id="profile-logout">Сменить пилота / выйти</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="page-content" id="main-content">
+            @RenderBody()
+        </main>
+
+        <footer class="status-footer @(isWorkshop ? "status-footer--workshop" : "")">
+            @if (isWorkshop)
+            {
+                <a class="workshop-back" asp-page="/Index">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+                    Назад
+                </a>
+                <p class="footer-quote">Маленький шаг — большая цель.</p>
+                <span class="version">SKYCRAFT / v.0.31.0</span>
+            }
+            else
+            {
+            <div class="footer-controls">
+                <button type="button" class="footer-control" data-open-settings>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 2.8h4l.6 2.5c.6.2 1.2.4 1.7.7l2.2-1.4 2.8 2.8-1.4 2.2.7 1.7 2.5.6v4l-2.5.6-.7 1.7 1.4 2.2-2.8 2.8-2.2-1.4-1.7.7-.6 2.5h-4l-.6-2.5-1.7-.7-2.2 1.4-2.8-2.8 1.4-2.2-.7-1.7-2.5-.6v-4l2.5-.6.7-1.7-1.4-2.2 2.8-2.8 2.2 1.4c.5-.3 1.1-.5 1.7-.7L10 2.8Z" />
+                        <circle cx="12" cy="13" r="3.2" />
+                    </svg>
+                    <span>Настройки</span>
+                </button>
+                <span class="footer-separator" aria-hidden="true"></span>
+                <button type="button" class="footer-control" id="sound-button" aria-pressed="true">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 9h4l5-4v14l-5-4H3V9Zm13-1c1.5 1 2.2 2.4 2.2 4s-.7 3-2.2 4M18.5 5c2.4 1.8 3.5 4.1 3.5 7s-1.1 5.2-3.5 7" />
+                        <path class="muted-stroke" d="m3 3 18 18" />
+                    </svg>
+                    <span id="sound-label">Звук включён</span>
+                </button>
+            </div>
+            <p class="footer-quote">Маленький шаг — большая цель.</p>
+            <span class="version">SKYCRAFT / v.0.31.0</span>
+            }
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="settings-overlay" hidden>
+        <section class="settings-dialog" role="dialog" aria-modal="true"
+                 aria-labelledby="settings-title" tabindex="-1" id="settings-dialog">
+            <div class="dialog-header">
+                <div>
+                    <p class="eyebrow">SKYCRAFT / ПАРАМЕТРЫ</p>
+                    <h2 id="settings-title">Настройки</h2>
+                </div>
+                <button type="button" class="icon-button" id="close-settings"
+                        aria-label="Закрыть настройки">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m5 5 14 14M19 5 5 19" />
+                    </svg>
+                </button>
+            </div>
+            <label class="setting-row" for="setting-sound">
+                <span>
+                    <strong>Звуки интерфейса</strong>
+                    <small>Кнопки, переключатели, покупки и события игры</small>
+                </span>
+                <input type="checkbox" class="switch-input" id="setting-sound" checked />
+            </label>
+            <div class="setting-volume-row">
+                <div class="setting-volume-heading">
+                    <label for="setting-sound-volume">Громкость эффектов</label>
+                    <output id="setting-volume-value" for="setting-sound-volume">55%</output>
+                </div>
+                <div class="setting-volume-controls">
+                    <input type="range" id="setting-sound-volume" min="0" max="100" step="5" value="55" aria-label="Громкость звуков интерфейса" />
+                    <button type="button" class="sound-preview-button" id="test-sound" data-sound-preview>
+                        ▶ Прослушать
+                    </button>
+                </div>
+            </div>
+            <label class="setting-row" for="setting-motion">
+                <span>
+                    <strong>Уменьшить анимацию</strong>
+                    <small>Отключить лишние переходы и движения</small>
+                </span>
+                <input type="checkbox" class="switch-input" id="setting-motion" />
+            </label>
+            <button type="button" id="save-settings" class="dialog-save-button">Готово</button>
+        </section>
+    </div>
+
+    @if (isWorkshop || ViewData["FlightPage"] is true || ViewData["FlightSelectPage"] is true || ViewData["Home3D"] is true)
+    {
+        // Один каталог компонентов для мастерской и игрового режима.
+        <script type="application/json" id="skycraft-parts-catalog">@Html.Raw(JsonSerializer.Serialize(DroneCatalog.Parts))</script>
+        <script asp-append-version="true" src="~/js/drone-stats.js" defer></script>
+    }
+    <script asp-append-version="true" src="~/js/ui-sounds.js" defer></script>
+    <script asp-append-version="true" src="~/js/site.js" defer></script>
+    @if (ViewData["Home3D"] is true)
+    {
+        <script asp-append-version="true" src="~/js/rotor-dynamics.js" defer></script>
+        <script asp-append-version="true" src="~/js/drone-scene.js" defer></script>
+        <script asp-append-version="true" src="~/js/home-scene.js" defer></script>
+    }
+    @if (isWorkshop)
+    {
+        <script asp-append-version="true" src="~/js/rotor-dynamics.js" defer></script>
+        <script asp-append-version="true" src="~/js/drone-scene.js" defer></script>
+        <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
+        <script asp-append-version="true" src="~/js/workshop.js" defer></script>
+    }
+    @if (ViewData["CampaignPage"] is true)
+    {
+        <script asp-append-version="true" src="~/js/campaign-story.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-effects.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-levels.js" defer></script>
+        <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-rewards.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-ui.js" defer></script>
+    }
+    @if (ViewData["FlightSelectPage"] is true)
+    {
+        <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-rewards.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-levels.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-select.js" defer></script>
+    }
+    @if (ViewData["FlightPage"] is true)
+    {
+        <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-rewards.js" defer></script>
+        <script asp-append-version="true" src="~/js/rotor-dynamics.js" defer></script>
+        <script asp-append-version="true" src="~/js/drone-scene.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-story.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-effects.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-radio.js" defer></script>
+        <script asp-append-version="true" src="~/js/campaign-levels.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-levels.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-tutorial.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-physics.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-operations.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-collisions.js" defer></script>
+        <script asp-append-version="true" src="~/js/hills-terrain.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-orientation.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-scene.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-help.js" defer></script>
+        <script asp-append-version="true" src="~/js/flight-game.js" defer></script>
+    }
+</body>
+</html>

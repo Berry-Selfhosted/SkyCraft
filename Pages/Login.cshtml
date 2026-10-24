@@ -1,0 +1,54 @@
+@page
+@{
+    Layout = null;
+    ViewData["Title"] = "Вход в SKYCRAFT";
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090e1b" />
+    <title>Вход / SKYCRAFT</title>
+    <link rel="stylesheet" asp-append-version="true" href="~/css/login.css" />
+    <script asp-append-version="true" src="~/js/profile-session.js" defer></script>
+    <script asp-append-version="true" src="~/js/login.js" defer></script>
+</head>
+<body>
+    <main class="login-screen">
+        <div class="login-visual" aria-hidden="true">
+            <div class="login-orbit orbit-a"></div>
+            <div class="login-orbit orbit-b"></div>
+            <div class="login-horizon"></div>
+            <div class="login-crosshair">+</div>
+            <div class="login-visual-caption"><span>SKYCRAFT / СИСТЕМА ОПЕРАТОРА</span><strong>ТВОЙ ДРОН.<br />ТВОЯ МИССИЯ.</strong><p>Создавай технику. Исследуй открытый мир. Управляй своей историей.</p></div>
+        </div>
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="login-logo">
+                <svg class="logo__mark" viewBox="0 0 40 32" aria-hidden="true">
+                    <path d="M0 2h14l6 8 6-8h14l-8 10H8z" fill="currentColor"></path>
+                    <path d="M16 14h8v6l-4 11-4-11z" fill="currentColor"></path>
+                    <path d="M6 15h6l-2 4H8z M28 15h6l-2 4h-2z" fill="currentColor" opacity=".7"></path>
+                </svg>
+                <span>SKYCRAFT</span>
+            </div>
+            <p class="login-eyebrow">ЛОКАЛЬНЫЙ ПРОФИЛЬ / ВХОД</p>
+            <h1 id="login-title">ДОБРО ПОЖАЛОВАТЬ, ОПЕРАТОР.</h1>
+            <p class="login-subtitle">Войди под существующим логином или создай нового пилота. Для каждого профиля сохраняется собственный прогресс.</p>
+            <p id="profile-current" class="login-current"></p>
+            <form id="profile-form" autocomplete="off">
+                <label for="profile-username">ПОЗЫВНОЙ / ЛОГИН</label>
+                <input id="profile-username" name="username" type="text" maxlength="24" minlength="2" required placeholder="Например, Korshun_01" autocomplete="off" spellcheck="false" />
+                <p class="login-feedback" id="profile-message" role="alert" aria-live="polite"></p>
+                <button type="submit" class="login-main-button" id="profile-login">Войти в профиль <span>→</span></button>
+                <button type="button" class="login-secondary-button" id="profile-register">+ Зарегистрировать новый логин</button>
+            </form>
+            <section class="login-profiles" id="profile-existing" aria-label="Существующие профили" hidden>
+                <h2>ПРОФИЛИ НА ЭТОМ УСТРОЙСТВЕ</h2>
+                <div class="login-profile-list" id="profile-list"></div>
+            </section>
+            <p class="login-privacy">Прогресс, кредиты, чертежи, дроны и настройки хранятся только в этом браузере. Пароля и серверного аккаунта нет — любой человек с доступом к браузеру сможет открыть эти профили. Не очищай данные сайта, иначе сохранения пропадут.</p>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,19 @@
+@page
+@{
+    ViewData["Title"] = "Мои дроны";
+    ViewData["WorkshopPage"] = true;
+    ViewData["WorkshopTab"] = "hangar";
+}
+
+<section class="workshop-overview" data-workshop-page="hangar">
+    <div class="overview-heading">
+        <span class="stage-eyebrow">SKYCRAFT / АНГАР</span>
+        <h1>Мои дроны</h1>
+        <p>Здесь находятся уже собранные беспилотники. Только они доступны в полёте.
+            Сохранение или удаление чертежа не влияет на готовые дроны.</p>
+        <a class="overview-primary-link" asp-page="/Constructor">+ Собрать новый дрон</a>
+    </div>
+    <p class="economy-notice" id="economy-message" role="status" aria-live="polite"></p>
+    <div class="overview-section-heading">Готовые к полёту <span id="hangar-count">0</span></div>
+    <div class="blueprint-grid" id="hangar-grid"></div>
+</section>

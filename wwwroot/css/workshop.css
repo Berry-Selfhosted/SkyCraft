@@ -1,0 +1,1160 @@
+/* SKYCRAFT — мастерская: сборка, чертежи и склад.
+   Основные цвета наследуются из site.css. */
+
+.site-shell:has(.workshop-nav) {
+    --header-height: 76px;
+    --footer-height: 68px;
+}
+
+.topbar:has(.workshop-nav) {
+    justify-content: flex-start;
+    gap: clamp(22px, 4vw, 78px);
+    padding-inline: clamp(16px, 2vw, 40px);
+}
+
+.topbar:has(.workshop-nav) .account-controls {
+    margin-left: auto;
+}
+
+.workshop-nav {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.workshop-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 47px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 20px;
+    white-space: nowrap;
+    transition: background 140ms ease, color 140ms ease;
+}
+
+.workshop-nav-link .icon {
+    height: 22px;
+    width: 22px;
+}
+
+.workshop-nav-link:hover,
+.workshop-nav-link.is-current {
+    background: #36318d;
+    color: #ecedff;
+}
+
+.workshop-nav-link.is-current {
+    background: #403a9e;
+}
+
+.status-footer--workshop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background: #090d17;
+    border-top: 0;
+}
+
+.status-footer--workshop .footer-quote {
+    display: block;
+    margin: 0;
+    font-style: italic;
+    color: #7182a2;
+    font-size: 15px;
+}
+
+.workshop-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: #9aa9c7;
+}
+
+.workshop-back:hover {
+    color: #e3e8f7;
+}
+
+.workshop-back .icon {
+    width: 17px;
+    height: 17px;
+}
+
+.workshop-page {
+    display: grid;
+    grid-template-columns: clamp(258px, 18vw, 305px) minmax(0, 1fr) clamp(286px, 19vw, 325px);
+    gap: 15px;
+    width: 100%;
+    min-width: 0;
+    padding: clamp(26px, 7.5vh, 86px) 18px 28px;
+    align-items: stretch;
+    background: #090d17;
+}
+
+.workshop-sidebar {
+    height: clamp(560px, 61dvh, 740px);
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #202a41;
+    border-radius: 6px;
+    background: #0d1220;
+}
+
+.part-browser {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 8px 14px;
+}
+
+.sidebar-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+    margin: 0 0 13px;
+    padding: 2px 1px;
+    color: #c1cee5;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.sidebar-heading span {
+    color: #a8b6d6;
+    font-size: 15px;
+}
+
+.category-list {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.category-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 48px;
+    padding: 5px 12px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: #151b2b;
+    color: #a5b3d0;
+    text-align: left;
+    font-size: 17px;
+    transition: background 140ms ease, border-color 140ms ease;
+}
+
+.category-button img {
+    width: 27px;
+    height: 27px;
+    object-fit: contain;
+}
+
+.category-button:hover {
+    background: #222840;
+    color: #e2e8f5;
+}
+
+.category-button.is-active {
+    border-color: #7166fe;
+    background: #2d3167;
+    color: #e2e5ff;
+    box-shadow: inset 0 0 0 1px #544ee0;
+}
+
+.category-arrow {
+    margin-left: auto;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.part-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 26px;
+    margin-bottom: 10px;
+    color: #d4ddf0;
+}
+
+.part-list-heading h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.part-list-heading > span {
+    color: #7484a5;
+    font-size: 12px;
+}
+
+.available-parts {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 110px;
+    overflow-y: auto;
+    flex-direction: column;
+    gap: 8px;
+    scrollbar-color: #343c61 transparent;
+    scrollbar-width: thin;
+}
+
+.part-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 75px;
+    width: 100%;
+    flex: 0 0 auto;
+    padding: 7px 9px;
+    border: 1px solid #202941;
+    border-radius: 7px;
+    background: #151b2b;
+    color: #d9e2f4;
+    text-align: left;
+    transition: border-color 140ms ease, background 140ms ease;
+}
+
+.part-card:hover {
+    border-color: #5d5baa;
+    background: #1d2440;
+}
+
+.part-card.is-selected {
+    border-color: #7165ff;
+    box-shadow: inset 0 0 0 1px #7165ff;
+}
+
+.part-card.is-out-of-stock {
+    opacity: .5;
+}
+
+.part-card img {
+    display: block;
+    width: 67px;
+    height: 54px;
+    flex: 0 0 67px;
+    object-fit: contain;
+    background: #151a27;
+}
+
+.part-card-info {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    gap: 7px;
+}
+
+.part-card-info strong {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.part-card-info small {
+    color: #899bbd;
+    font-size: 13px;
+}
+
+.part-price {
+    color: #747fa3;
+}
+
+.part-stock {
+    align-self: flex-end;
+    padding-bottom: 5px;
+    font-size: 13px;
+    color: #96a5c4;
+}
+
+.parts-hint {
+    margin-top: 13px;
+    color: #7788a8;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.hint-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+    background: #a199ff;
+}
+
+/* Центральная сцена: canvas рисует геометрию, CSS — свет, затемнение и UI. */
+.builder-stage {
+    position: relative;
+    isolation: isolate;
+    height: clamp(560px, 61dvh, 740px);
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #2a3349;
+    border-radius: 4px;
+    background: radial-gradient(ellipse at 60% 40%, #263144, #0d1522 67%, #080d17);
+    box-shadow: inset 0 -45px 95px #050914c9;
+}
+
+.drone-canvas {
+    display: block;
+    height: 100%;
+    width: 100%;
+    touch-action: none;
+    cursor: grab;
+}
+
+.drone-canvas:active {
+    cursor: grabbing;
+}
+
+.stage-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg, #090d17a3, transparent 26%, transparent 65%, #090d17d6 100%),
+        linear-gradient(90deg, #090d175e, transparent 28%, transparent 74%, #090d1744);
+}
+
+.stage-title {
+    position: absolute;
+    z-index: 2;
+    top: 23px;
+    left: 25px;
+    max-width: calc(100% - 70px);
+    pointer-events: none;
+}
+
+.stage-eyebrow {
+    font-size: 11px;
+    letter-spacing: .14em;
+    color: #938bff;
+    font-weight: 600;
+}
+
+.stage-title .stage-eyebrow {
+    display: none;
+}
+
+.stage-title h1 {
+    margin: 0 0 8px;
+    color: #e9effb;
+    font-size: clamp(21px, 1.4vw, 27px);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.stage-title p {
+    margin: 0;
+    color: #9fafcb;
+    font-size: clamp(15px, 1vw, 18px);
+    line-height: 1.35;
+}
+
+.stage-view-controls {
+    position: absolute;
+    z-index: 2;
+    top: 22px;
+    right: 22px;
+    display: flex;
+    gap: 5px;
+}
+
+.stage-view-controls button {
+    display: grid;
+    place-items: center;
+    height: 32px;
+    width: 33px;
+    padding: 4px;
+    border: 1px solid #4a5472;
+    border-radius: 5px;
+    background: #10182cb5;
+    color: #b9c7e5;
+    font-size: 23px;
+    line-height: 1;
+}
+
+.stage-view-controls button:hover {
+    background: #323763;
+}
+
+.stage-view-controls svg {
+    width: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.6;
+}
+
+.view-hint {
+    position: absolute;
+    z-index: 2;
+    bottom: 129px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    width: max-content;
+    max-width: calc(100% - 35px);
+    color: #96a7c5;
+    font-size: 12px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.view-hint span {
+    color: #8d80f7;
+}
+
+.assembly-slots {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    max-width: calc(100% - 24px);
+}
+
+.assembly-slots button {
+    display: flex;
+    flex: 0 1 114px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    height: 99px;
+    padding: 9px 5px;
+    border: 1px solid #292f41;
+    border-radius: 6px;
+    background: #151923eb;
+    color: #b5c1d9;
+    font-size: 13px;
+}
+
+.assembly-slots button:hover,
+.assembly-slots button.is-active {
+    border-color: #7770fa;
+    background: #252747ef;
+}
+
+.assembly-slots button img {
+    height: 56px;
+    width: min(70px, 100%);
+    object-fit: contain;
+}
+
+.builder-inspector {
+    display: flex;
+    flex-direction: column;
+    padding: 23px 20px;
+}
+
+.builder-inspector h2,
+.builder-inspector h3 {
+    margin: 0;
+    color: #c1cee3;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.stat-list {
+    display: grid;
+    gap: 25px;
+    margin-top: 24px;
+}
+
+.stat-row,
+.requirement-list > div {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 11px;
+    font-size: 16px;
+    color: #a8b7d4;
+}
+
+.stat-row strong,
+.requirement-list strong {
+    color: #e3e9f9;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.stat-icon,
+.requirement-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 23px;
+    height: 24px;
+    color: #a8b7d5;
+    font-size: 23px;
+    line-height: 1;
+}
+
+.inspector-divider {
+    border-top: 1px solid #212b41;
+    margin: 30px 0 27px;
+}
+
+.requirement-list {
+    display: grid;
+    gap: 24px;
+    margin-top: 23px;
+}
+
+.requirement-list strong.requirement-good {
+    color: #00dfa0;
+}
+
+.requirement-list strong.requirement-bad {
+    color: #ff8995;
+}
+
+.selected-part-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding: 15px 0 12px;
+    border-top: 1px solid #20283b;
+}
+
+.selected-part-info > span {
+    color: #797fa4;
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.selected-part-info strong {
+    color: #ccd6ec;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.selected-part-info small {
+    color: #8391b1;
+    font-size: 12px;
+}
+
+.assemble-button,
+.overview-primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 60px;
+    width: 100%;
+    border: 1px solid #6a62ed;
+    border-radius: 6px;
+    background: #4841d5;
+    color: #e6e7ff;
+    font-size: 22px;
+    transition: background 140ms ease;
+}
+
+.assemble-button:hover,
+.overview-primary-link:hover {
+    background: #5750eb;
+}
+
+.assemble-button:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+.assemble-button svg {
+    width: 27px;
+    height: 27px;
+    fill: currentColor;
+}
+
+.assembly-message {
+    min-height: 36px;
+    margin: 8px 0 0;
+    color: #8ba0bd;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.assembly-message.is-success { color: #44e3af; }
+.assembly-message.is-error { color: #f1a6ad; }
+
+/* Чертежи и склад. */
+.workshop-overview {
+    width: min(1380px, 100%);
+    min-height: calc(100dvh - var(--header-height) - var(--footer-height));
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 85px) 26px 50px;
+}
+
+.overview-heading {
+    margin-bottom: 35px;
+}
+
+.overview-heading h1 {
+    margin: 8px 0 14px;
+    font-size: clamp(33px, 3.2vw, 54px);
+}
+
+.overview-heading p {
+    max-width: 600px;
+    color: #9eacca;
+    line-height: 1.5;
+    font-size: 17px;
+}
+
+.overview-primary-link {
+    min-height: 47px;
+    width: auto;
+    margin-top: 15px;
+    padding: 8px 24px;
+    font-size: 17px;
+}
+
+.demo-reset-button {
+    margin-left: 16px;
+    min-height: 45px;
+    padding: 8px 16px;
+    border: 1px solid #3b4560;
+    border-radius: 6px;
+    background: transparent;
+    color: #a4b1cc;
+    font-size: 15px;
+}
+
+.demo-reset-button:hover {
+    color: #fff;
+    border-color: #7970e0;
+}
+
+.blueprint-grid,
+.warehouse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 14px;
+}
+
+.blueprint-card,
+.warehouse-card,
+.empty-blueprints {
+    border: 1px solid #2a344d;
+    border-radius: 9px;
+    background: #111725;
+}
+
+.blueprint-card {
+    min-height: 200px;
+    padding: 21px;
+}
+
+.blueprint-card h2 { margin: 8px 0 13px; font-size: 21px; }
+.blueprint-card p { color: #9eacca; font-size: 14px; }
+.blueprint-card small { color: #858fae; }
+.blueprint-card .stage-eyebrow { font-size: 10px; }
+.empty-blueprints { padding: 32px; color: #aab9d5; }
+
+.warehouse-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 95px;
+    padding: 13px;
+}
+
+.warehouse-card img { width: 70px; height: 65px; object-fit: contain; }
+.warehouse-card > div { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; gap: 7px; }
+.warehouse-card strong { font-size: 16px; font-weight: 500; }
+.warehouse-card small { color: #8c9abb; }
+.warehouse-quantity { align-self: flex-end; color: #b9c8e4; }
+
+@media (max-width: 1450px) {
+    .workshop-page { grid-template-columns: 256px minmax(0, 1fr) 274px; gap: 12px; padding-inline: 12px; }
+    .builder-inspector { padding-inline: 16px; }
+    .stat-row, .requirement-list > div { font-size: 14px; gap: 7px; }
+    .workshop-nav-link { padding-inline: 11px; font-size: 17px; }
+    .assembly-slots { gap: 5px; }
+    .assembly-slots button { flex-basis: 94px; font-size: 12px; }
+}
+
+@media (max-width: 1100px) {
+    .topbar:has(.workshop-nav) { gap: 18px; flex-wrap: wrap; height: auto; min-height: 76px; padding-block: 10px; }
+    .workshop-nav { order: 3; width: 100%; justify-content: center; }
+    .workshop-nav-link { min-height: 40px; }
+    .workshop-page { grid-template-columns: 260px minmax(0, 1fr); padding-top: 24px; }
+    .builder-inspector { grid-column: 1 / -1; height: auto; min-height: 255px; }
+    .builder-inspector .stat-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .builder-inspector .stat-row { grid-template-columns: 1fr; gap: 6px; }
+    .builder-inspector .stat-icon { display: none; }
+    .builder-inspector .requirement-list { grid-template-columns: 1fr 1fr; }
+    .builder-inspector .selected-part-info { margin-top: 24px; }
+    .builder-inspector .assemble-button { max-width: 300px; }
+}
+
+@media (max-width: 720px) {
+    .topbar:has(.workshop-nav) { gap: 10px; }
+    .topbar:has(.workshop-nav) .brand { font-size: 20px; gap: 8px; }
+    .topbar:has(.workshop-nav) .brand-symbol { width: 35px; height: 30px; }
+    .topbar:has(.workshop-nav) .account-controls { gap: 10px; }
+    .workshop-nav { justify-content: space-between; gap: 4px; }
+    .workshop-nav-link { flex: 1 1 auto; justify-content: center; gap: 6px; padding: 7px 5px; font-size: 14px; }
+    .workshop-nav-link .icon { height: 17px; width: 17px; }
+    .workshop-page { display: flex; flex-direction: column; gap: 12px; padding: 16px 12px 20px; }
+    .workshop-sidebar { height: auto; }
+    .part-browser { order: 2; }
+    .builder-stage { order: 1; height: clamp(410px, 62vw, 580px); }
+    .builder-inspector { order: 3; min-height: 0; }
+    .category-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .available-parts { max-height: 260px; }
+    .stage-title { top: 16px; left: 17px; }
+    .stage-title h1 { font-size: 21px; }
+    .stage-title p { font-size: 13px; }
+    .stage-view-controls { top: 17px; right: 11px; gap: 3px; }
+    .stage-view-controls button { width: 26px; height: 28px; font-size: 18px; }
+    .stage-view-controls svg { width: 14px; }
+    .view-hint { bottom: 100px; font-size: 10px; }
+    .assembly-slots { bottom: 9px; gap: 3px; width: calc(100% - 14px); }
+    .assembly-slots button { flex: 1 1 20%; height: 78px; padding: 4px 1px; font-size: 10px; gap: 1px; }
+    .assembly-slots button img { height: 48px; }
+    .builder-inspector .stat-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .builder-inspector .requirement-list { grid-template-columns: 1fr; }
+    .status-footer--workshop { padding-inline: 14px; }
+    .status-footer--workshop .footer-quote { display: none; }
+    .status-footer--workshop .version { font-size: 9px; }
+}
+
+@media (max-width: 410px) {
+    .workshop-nav-link { font-size: 12px; }
+    .topbar:has(.workshop-nav) .brand { font-size: 17px; }
+    .stage-title p { max-width: 175px; }
+}
+
+/* Indicator of loaded 3D files (not baked image). */
+.glb-model-status {
+    position: absolute; left: 50%; bottom: 157px; transform: translateX(-50%);
+    z-index: 3; width: max-content; max-width: 85%; text-align: center;
+    color: #8eacc8; font-size: 11px; letter-spacing: .045em;
+    pointer-events: none;
+}
+.glb-model-status[data-error="true"] { color: #ffa2a2; }
+
+@media (max-width: 900px) { .glb-model-status { bottom: 122px; font-size: 10px; } }
+
+/* SKYCRAFT 0.6.1 — полноэкранная рабочая область конструктора.
+   На больших экранах мастерская занимает высоту окна между верхним меню
+   и нижней строкой. Каталог деталей прокручивается внутри собственной панели.
+   На планшетах и телефонах сохраняется привычный вертикальный поток. */
+@media (min-width: 1101px) {
+    .site-shell:has(.workshop-page) {
+        --header-height: 70px;
+        --footer-height: 48px;
+        height: 100dvh;
+        min-height: 620px;
+    }
+
+    .site-shell:has(.workshop-page) .page-content {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    .workshop-page {
+        flex: 1 1 auto;
+        grid-template-rows: minmax(0, 1fr);
+        min-height: 0;
+        padding: 12px 14px;
+    }
+
+    .workshop-page > .workshop-sidebar,
+    .workshop-page > .builder-stage {
+        height: 100%;
+        min-height: 0;
+    }
+
+    .available-parts {
+        min-height: 0;
+    }
+
+    /* На низком мониторе кнопка сборки доступна прокруткой инспектора. */
+    .builder-inspector {
+        overflow-y: auto;
+        scrollbar-color: #343c61 transparent;
+        scrollbar-width: thin;
+        padding-block: 18px;
+    }
+
+    .builder-inspector .stat-list {
+        gap: 19px;
+        margin-top: 18px;
+    }
+
+    .builder-inspector .inspector-divider {
+        margin: 22px 0 19px;
+    }
+
+    .builder-inspector .requirement-list {
+        gap: 18px;
+        margin-top: 17px;
+    }
+
+    .builder-inspector .assemble-button {
+        min-height: 52px;
+        flex: 0 0 auto;
+    }
+
+    .builder-inspector .assembly-message {
+        min-height: 22px;
+    }
+
+    .status-footer--workshop {
+        padding-inline: 18px;
+    }
+}
+
+/* v0.7 — магазин, продажа деталей и управление чертежами. */
+.workshop-overview--economy {
+    width: min(1480px, 100%);
+    padding-top: clamp(24px, 3.6vw, 54px);
+}
+
+.economy-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.economy-heading h1 { margin-bottom: 10px; }
+.economy-heading p { margin-bottom: 0; }
+
+.economy-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 230px;
+    padding: 20px;
+    border: 1px solid #29334e;
+    border-radius: 9px;
+    background: linear-gradient(140deg, #19213b, #101624);
+}
+
+.economy-summary > span {
+    font-size: 11px;
+    color: #8594b7;
+    letter-spacing: .08em;
+}
+
+.economy-summary > strong {
+    color: #e8eafe;
+    font-size: 29px;
+    font-weight: 600;
+}
+
+.economy-summary > a { color: #b7b3ff; font-size: 14px; }
+.economy-summary > a:hover { color: white; }
+.economy-summary .demo-reset-button { margin: 5px 0 0; font-size: 12px; }
+
+.overview-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+.overview-links .overview-primary-link { margin: 0; }
+.overview-secondary-link {
+    padding: 12px 17px;
+    color: #b4c2dd;
+    border: 1px solid #303a56;
+    border-radius: 6px;
+}
+.overview-secondary-link:hover { color: #fff; border-color: #7770e4; }
+
+.economy-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.economy-filter button {
+    padding: 10px 14px;
+    background: #151c2c;
+    border: 1px solid #2c3650;
+    border-radius: 6px;
+    color: #9cabca;
+    font: inherit;
+    cursor: pointer;
+}
+.economy-filter button:hover, .economy-filter button.is-active {
+    color: #fff;
+    background: #3c379a;
+    border-color: #7066ed;
+}
+
+.economy-notice {
+    min-height: 25px;
+    margin: 6px 0 14px;
+    color: #65dbb3;
+    font-size: 14px;
+}
+.economy-notice[data-state="error"] { color: #ff9da9; }
+.economy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr));
+    align-items: stretch;
+    gap: 13px;
+}
+
+.economy-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    padding: 19px;
+    background: #111725;
+    border: 1px solid #29344c;
+    border-radius: 9px;
+    transition: border-color .16s ease, background .16s ease;
+}
+.economy-card:hover { border-color: #4c4a91; background: #141b2c; }
+.economy-card[hidden] { display: none !important; }
+.economy-card-top { display: flex; align-items: flex-start; gap: 14px; flex: 1 1 auto; }
+.economy-card-top > img {
+    width: 84px;
+    height: 85px;
+    flex: 0 0 84px;
+    object-fit: contain;
+    background: #171e30;
+    border: 1px solid #252f48;
+    border-radius: 7px;
+}
+.economy-card-top > div { flex: 1 1 auto; min-width: 0; }
+.economy-rarity { color: #8a8fbe; font-size: 11px; letter-spacing: .05em; }
+.economy-card h2 { margin: 7px 0; color: #e0e7f8; font-size: 17px; line-height: 1.3; }
+.economy-card p { margin: 0; color: #8293b5; font-size: 13px; line-height: 1.4; }
+.economy-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border-top: 1px solid #283249;
+    padding-top: 15px;
+    color: #a1b1ce;
+    font-size: 13px;
+}
+.economy-card-meta strong { color: #dbe6ff; }
+.economy-card-meta .economy-price { color: #c1baff; white-space: nowrap; font-size: 17px; }
+.economy-price small { color: #8490a8; font-size: 11px; font-weight: normal; }
+.economy-card-actions { display: flex; align-items: flex-end; gap: 12px; }
+.economy-card-actions label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    color: #99a7c2;
+    font-size: 12px;
+}
+.economy-quantity {
+    width: 78px;
+    height: 42px;
+    padding: 0 9px;
+    border: 1px solid #384260;
+    border-radius: 6px;
+    background: #0b1120;
+    color: #eff2ff;
+    font: inherit;
+    font-size: 16px;
+    color-scheme: dark;
+}
+.economy-quantity:focus-visible { outline: 2px solid #8b83ff; outline-offset: 2px; }
+.economy-buy, .economy-sell {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 42px;
+    padding: 8px 10px;
+    border: 1px solid #685fee;
+    border-radius: 6px;
+    background: #4841d5;
+    color: #f1efff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.economy-sell { background: #222c47; border-color: #3b4b72; }
+.economy-buy:hover { background: #5b53e6; }
+.economy-sell:hover { background: #334165; }
+.economy-buy:disabled, .economy-sell:disabled { opacity: .4; cursor: not-allowed; }
+
+.overview-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0 16px;
+    font-size: 16px;
+    color: #c4d0e9;
+}
+.overview-section-heading span {
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: #2a2b59;
+    color: #c1baff;
+    font-size: 13px;
+}
+.blueprint-card { display: flex; flex-direction: column; gap: 9px; }
+.blueprint-card h2 { margin: 1px 0 2px; overflow-wrap: anywhere; }
+.blueprint-card p { margin: 4px 0; }
+.blueprint-card > small { display: block; margin-bottom: 8px; }
+.blueprint-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+.blueprint-actions button, .blueprint-rename-form button {
+    min-height: 36px;
+    padding: 7px 11px;
+    border: 1px solid #3b4666;
+    border-radius: 5px;
+    background: #1c2740;
+    color: #bdc9e5;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+}
+.blueprint-actions button:hover { border-color: #8981ff; color: #fff; }
+.blueprint-actions .blueprint-delete { color: #f1a7ae; border-color: #573641; background: #301d2b; }
+.blueprint-actions .blueprint-delete:hover { background: #4b2a37; border-color: #a75369; }
+.blueprint-rename-form { display: flex; gap: 7px; flex-wrap: wrap; margin-top: auto; }
+.blueprint-rename-form input {
+    flex: 1 1 100%;
+    min-width: 0;
+    height: 38px;
+    padding: 7px 10px;
+    border: 1px solid #6d68d9;
+    border-radius: 5px;
+    background: #0a1121;
+    color: white;
+    font: inherit;
+}
+.blueprint-rename-form button[type="submit"] { background: #4a42c6; color: white; }
+
+@media (max-width: 780px) {
+    .economy-heading { flex-direction: column; }
+    .economy-summary { width: 100%; min-width: 0; }
+    .workshop-overview--economy { padding: 26px 14px; }
+    .economy-filter { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
+    .economy-filter button { flex-shrink: 0; }
+    .topbar:has(.workshop-nav) .workshop-nav { flex-wrap: wrap; }
+    .topbar:has(.workshop-nav) .workshop-nav-link { flex: 1 0 22%; }
+}
+@media (max-width: 420px) {
+    .economy-card { padding: 14px; }
+    .economy-card-top > img { width: 65px; height: 70px; flex-basis: 65px; }
+    .economy-card-meta { flex-wrap: wrap; }
+}
+
+/* SKYCRAFT 0.8 — чертёж и физическая сборка являются разными действиями. */
+.build-action-hint {
+    margin: 0 0 10px;
+    color: #96a6c9;
+    font-size: 12px;
+    line-height: 1.45;
+}
+.build-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex-shrink: 0;
+}
+.build-actions .assemble-button,
+.blueprint-create-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 45px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+}
+.blueprint-create-button {
+    border: 1px solid #5962a5;
+    background: #19223c;
+    color: #cbd6f7;
+}
+.blueprint-create-button:hover { border-color: #9d91ff; background: #252c50; }
+.build-actions .assemble-button { min-height: 49px; }
+.blueprint-create-button span:first-child { font-size: 20px; }
+.blueprint-create-button:focus-visible,
+.build-actions .assemble-button:focus-visible { outline: 2px solid #c3baff; outline-offset: 3px; }
+.blueprint-actions .overview-card-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 10px;
+    min-height: 36px;
+    border: 1px solid #6a63da;
+    border-radius: 5px;
+    background: #323264;
+    color: #e1e0ff;
+    font-size: 12px;
+    text-decoration: none;
+}
+.blueprint-actions .overview-card-link:hover { background: #4943a1; }
+.blueprint-actions button:disabled { opacity: .55; cursor: default; }
+
+
+/* v0.8.2: отдельный переход к полётам из конструктора.
+   Не инициирует сборку и не расходует игровые ресурсы. */
+.constructor-play-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    flex-shrink: 0;
+    padding: 10px 14px;
+    border: 1px solid #526485;
+    border-radius: 6px;
+    background: #151e33;
+    color: #d3e1fc;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+.constructor-play-link:hover {
+    background: #22304d;
+    border-color: #8981ff;
+    color: #fff;
+}
+.constructor-play-link:focus-visible {
+    outline: 2px solid #c3baff;
+    outline-offset: 3px;
+}
+.constructor-play-link svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linejoin: round;
+}
+.constructor-play-arrow {
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+}
+.constructor-play-hint {
+    margin: 7px 0 0;
+    text-align: center;
+    color: #8696b7;
+    font-size: 12px;
+    line-height: 1.35;
+}

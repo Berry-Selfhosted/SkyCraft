@@ -1,0 +1,82 @@
+@page
+@{
+    ViewData["Title"] = "Выбор полёта";
+    ViewData["FlightSelectPage"] = true;
+}
+
+<section class="mission-page" aria-labelledby="mission-page-title">
+    <header class="mission-page-header">
+        <div>
+            <p class="mission-kicker"><span></span> SKYCRAFT / ЦЕНТР ПОЛЁТОВ</p>
+            <h1 id="mission-page-title">ВЫБЕРИ МИССИЮ<span class="mission-period">.</span></h1>
+            <p class="mission-intro">Сначала изучи управление в академии. Затем выходи на трассы на собственном дроне.</p>
+        </div>
+        <a class="mission-outline-link" asp-page="/Constructor">↗ В конструктор</a>
+    </header>
+
+    <a class="campaign-promo" href="/Campaign" aria-label="Открыть сюжетную кампанию Операция Коршун">
+        <span class="campaign-promo-symbol">✦</span>
+        <span><small>НОВАЯ СЮЖЕТНАЯ КАМПАНИЯ / 12 ГЛАВ</small><strong>Операция «Коршун»</strong><span>Катастрофа в горах, поисковые вылеты и выборы АИДЫ, меняющие следующую миссию.</span></span>
+        <span class="campaign-promo-arrow">ПЕРЕЙТИ ↗</span>
+    </a>
+
+    <div class="mission-section-label"><span>01 / ПОДГОТОВКА</span><span id="academy-status">Обязательно</span></div>
+    <button type="button" class="mission-academy-card is-selected" data-choose-level="academy" aria-pressed="true">
+        <span class="mission-academy-art" aria-hidden="true">
+            <span class="mission-academy-radar"></span>
+            <span class="mission-academy-cross">+</span>
+            <span class="mission-academy-radar-center"></span>
+        </span>
+        <span class="mission-academy-copy">
+            <span class="mission-card-label">✦ ЛЁТНАЯ АКАДЕМИЯ <span id="academy-state-badge">НЕ ПРОЙДЕНО</span></span>
+            <strong>Академия пилота</strong>
+            <span>14 упражнений: запуск двигателей, взлёт, зависание, манёвры, FPV и безопасная посадка.</span>
+            <span class="mission-academy-meta"><span>◈ Учебный дрон бесплатно</span><span>⌖ 14 этапов</span><span id="academy-best">Рекорд: —</span></span>
+        </span>
+        <span class="mission-academy-arrow" aria-hidden="true">↗</span>
+    </button>
+
+    <div class="mission-section-label mission-section-label--maps"><span>02 / ИСПЫТАТЕЛЬНЫЕ ПОЛИГОНЫ</span><span>3 трассы</span></div>
+    <div class="mission-map-grid" aria-label="Выбор тренировочной трассы">
+        <button class="mission-map-card mission-map-card--hangar" type="button" data-choose-level="hangar" aria-pressed="false">
+            <span class="mission-map-art" aria-hidden="true"><span class="map-architecture map-architecture--hangar"></span><span class="mission-map-number">01 / 03</span></span>
+            <span class="mission-map-content"><span class="mission-map-topline"><span>ЛЕГКО</span><span class="mission-map-lock" data-lock-label="hangar">🔒</span></span>
+                <strong>Первый взлёт</strong><span class="mission-map-desc">Учебный ангар, широкие ворота и базовые манёвры.</span>
+                <span class="mission-map-footer"><span>4 контрольные точки</span><span data-record="hangar">—</span></span>
+            </span>
+        </button>
+        <button class="mission-map-card mission-map-card--training" type="button" data-choose-level="training" aria-pressed="false">
+            <span class="mission-map-art" aria-hidden="true"><span class="map-architecture map-architecture--training"></span><span class="mission-map-number">02 / 03</span></span>
+            <span class="mission-map-content"><span class="mission-map-topline"><span>СРЕДНЕ</span><span class="mission-map-lock" data-lock-label="training">🔒</span></span>
+                <strong>Полигон</strong><span class="mission-map-desc">Слалом между башнями и контейнерами.</span>
+                <span class="mission-map-footer"><span>5 контрольных точек</span><span data-record="training">—</span></span>
+            </span>
+        </button>
+        <button class="mission-map-card mission-map-card--canyon" type="button" data-choose-level="canyon" aria-pressed="false">
+            <span class="mission-map-art" aria-hidden="true"><span class="map-architecture map-architecture--canyon"></span><span class="mission-map-number">03 / 03</span></span>
+            <span class="mission-map-content"><span class="mission-map-topline"><span>СЛОЖНО</span><span class="mission-map-lock" data-lock-label="canyon">🔒</span></span>
+                <strong>Каменный каньон</strong><span class="mission-map-desc">Скалы, узкие проходы и резкие повороты.</span>
+                <span class="mission-map-footer"><span>5 контрольных точек</span><span data-record="canyon">—</span></span>
+            </span>
+        </button>
+    </div>
+
+    <section class="mission-launch" aria-label="Подготовка к вылету">
+        <div class="mission-launch-description">
+            <p class="mission-kicker">ВЫБРАННОЕ ЗАДАНИЕ</p>
+            <h2 id="mission-selected-title">Академия пилота</h2>
+            <p id="mission-selected-description">Пройди обучение, чтобы открыть остальные трассы.</p>
+        </div>
+        <div class="mission-drone-chooser">
+            <label for="mission-drone-select">БЕСПИЛОТНИК</label>
+            <select id="mission-drone-select" aria-label="Выбрать собранный дрон"></select>
+            <small id="mission-drone-detail" role="status">Для академии доступен бесплатный учебный дрон</small>
+        </div>
+        <div class="mission-launch-action">
+            <button type="button" class="mission-launch-button" id="mission-launch-button">▶ Начать обучение <span>→</span></button>
+            <p class="mission-launch-hint" id="mission-launch-hint" role="status">Обучение открыто для всех игроков</p>
+            <p class="mission-launch-reward" id="mission-launch-reward" role="status">✦ Награда за первый вылет: 150 CR</p>
+        </div>
+    </section>
+    <div class="mission-toast" id="mission-toast" role="status" aria-live="polite"></div>
+</section>

@@ -1,0 +1,303 @@
+/*
+ * SKYCRAFT — только мобильный полёт.
+ * Активируется классом html.skycraft-mobile-flight, который ставится
+ * до загрузки CSS (flight-device-layout.js в <head>).
+ * Отдельные правила для landscape / portrait не зависят от 720px.
+ */
+html.skycraft-mobile-flight body.is-immersive-flight .flight-mission-hud,
+html.skycraft-mobile-flight body.is-immersive-flight .flight-lesson-card {
+    display: none !important;
+}
+
+html.skycraft-mobile-flight body.is-immersive-flight .flight-mobile-objective {
+    position: absolute !important;
+    z-index: 9 !important;
+    top: calc(9px + env(safe-area-inset-top, 0px)) !important;
+    left: calc(12px + env(safe-area-inset-left, 0px)) !important;
+    right: clamp(230px, 34vw, 500px) !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 7px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    text-align: left !important;
+    color: #f2f7ff;
+    text-shadow: 0 2px 5px rgba(0,0,0,.95), 0 0 14px rgba(0,0,0,.75) !important;
+    pointer-events: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    cursor: default !important;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html.skycraft-mobile-flight body .flight-mobile-objective-eyebrow,
+html.skycraft-mobile-flight body .flight-mobile-objective strong,
+html.skycraft-mobile-flight body .flight-mobile-objective-command {
+    display: inline !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+}
+html.skycraft-mobile-flight body .flight-mobile-objective-eyebrow {
+    flex: 0 0 auto !important;
+    color: #71eddf;
+    font-size: 11px !important;
+    font-weight: 800;
+    letter-spacing: .09em;
+}
+html.skycraft-mobile-flight body .flight-mobile-objective strong {
+    flex: 0 1 auto !important;
+    color: #fff;
+    font-size: 16px !important;
+    font-weight: 800;
+}
+html.skycraft-mobile-flight body .flight-mobile-objective-command {
+    flex: 1 1 auto !important;
+    color: #e1ebf6;
+    font-size: 12px !important;
+    font-weight: 700;
+}
+html.skycraft-mobile-flight body .flight-mobile-objective strong::before,
+html.skycraft-mobile-flight body .flight-mobile-objective-command::before {
+    content: "·";
+    display: inline-block;
+    padding-right: 7px;
+    color: #d8e8f0;
+}
+html.skycraft-mobile-flight body .flight-mobile-objective-chevron,
+html.skycraft-mobile-flight body .flight-mobile-objective-details,
+html.skycraft-mobile-flight body .flight-mobile-objective-track,
+html.skycraft-mobile-flight body .flight-mobile-objective::before,
+html.skycraft-mobile-flight body .flight-mobile-objective::after {
+    display: none !important;
+}
+
+/* Нижняя телеметрия — одна тонкая полоса без дополнительных рядов. */
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-bottom {
+    z-index: 8 !important;
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+    align-items: center !important;
+    left: calc(6px + env(safe-area-inset-left, 0px)) !important;
+    right: calc(6px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+    padding: 5px 4px 6px !important;
+    gap: 2px !important;
+    width: auto !important;
+    max-height: 51px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border-radius: 10px;
+    background: rgba(9, 18, 32, .69) !important;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-bottom > div {
+    min-width: 0 !important;
+    max-width: 100%;
+    flex: initial !important;
+    overflow: hidden !important;
+    text-align: center;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-bottom small {
+    font-size: 8px !important;
+    letter-spacing: 0 !important;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-bottom strong {
+    display: block !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Два джойстика ВСЕГДА доступны в мобильном режиме, включая landscape > 720px. */
+html.skycraft-mobile-flight body .flight-immersive .flight-touch-controls {
+    z-index: 8 !important;
+    display: flex !important;
+    position: absolute !important;
+    left: calc(11px + env(safe-area-inset-left, 0px)) !important;
+    right: calc(11px + env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(62px + env(safe-area-inset-bottom, 0px)) !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    height: auto !important;
+    pointer-events: none;
+}
+html.skycraft-mobile-flight body .flight-touch-stick,
+html.skycraft-mobile-flight body .flight-touch-action-cluster { pointer-events: auto !important; }
+html.skycraft-mobile-flight body .flight-touch-stick { display: grid; justify-items: center; gap: 5px; }
+html.skycraft-mobile-flight body .flight-touch-stick-label {
+    padding: 3px 7px;
+    border-radius: 20px;
+    color: #daeafa;
+    background: rgba(5, 14, 24, .58);
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: .09em;
+    white-space: nowrap;
+}
+html.skycraft-mobile-flight body .flight-touch-stick-base {
+    position: relative !important;
+    display: block !important;
+    width: 104px !important;
+    height: 104px !important;
+    border-radius: 50%;
+    border: 1px solid rgba(149, 174, 219, .40);
+    background: radial-gradient(circle at 40% 30%, rgba(99, 132, 170, .34), rgba(13, 25, 43, .72));
+    box-shadow: 0 12px 32px rgba(0,0,0,.25);
+    touch-action: none;
+}
+html.skycraft-mobile-flight body .flight-touch-stick-ring {
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px dashed rgba(202, 221, 247, .35);
+}
+html.skycraft-mobile-flight body .flight-touch-stick-thumb {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(180deg, #8c98f4, #525ac9);
+    border: 1px solid rgba(225, 231, 255, .5);
+    box-shadow: 0 6px 18px rgba(0,0,0,.22);
+}
+html.skycraft-mobile-flight body .flight-touch-action-cluster {
+    align-self: center;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    width: min(150px, 30vw);
+}
+html.skycraft-mobile-flight body .flight-touch-action-cluster button {
+    min-height: 35px;
+    padding: 3px 5px;
+    color: #e8f2fe;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 9px;
+    border: 1px solid rgba(139, 165, 203, .49);
+    background: rgba(11, 26, 43, .8);
+    touch-action: manipulation;
+}
+
+/* Системные кнопки: маленькие, рядом с краями экрана. */
+html.skycraft-mobile-flight body .flight-immersive .flight-exit {
+    left: auto !important; right: 112px !important; top: calc(9px + env(safe-area-inset-top, 0px)) !important;
+    width: auto !important; padding: 6px 9px !important; font-size: 11px !important;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-help-toggle {
+    top: calc(9px + env(safe-area-inset-top, 0px)) !important;
+    right: 9px !important;
+    padding: 5px 8px !important;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-help-toggle span,
+html.skycraft-mobile-flight body .flight-immersive .flight-help-toggle kbd {
+    display: none !important;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-top {
+    z-index: 7;
+    inset: calc(53px + env(safe-area-inset-top, 0px)) 9px auto auto !important;
+    max-width: 155px !important;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-hud-top .flight-hud-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+html.skycraft-mobile-flight body .flight-immersive .flight-camera-button {
+    padding: 6px 8px !important;
+    border-radius: 8px;
+    font-size: 10px !important;
+}
+
+/* Рация — субтитры, не огромная карточка. */
+html.skycraft-mobile-flight body .flight-immersive .flight-radio-panel:not([hidden]) {
+    display: block;
+    position: absolute;
+    z-index: 5;
+    top: auto !important;
+    bottom: calc(183px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(440px, 55vw) !important;
+    height: auto !important;
+    max-height: 54px !important;
+    overflow: hidden;
+    padding: 5px 9px !important;
+    background: rgba(6, 14, 25, .60);
+    border: 0;
+    box-shadow: none;
+    text-align: center;
+}
+html.skycraft-mobile-flight body .flight-radio-header,
+html.skycraft-mobile-flight body .flight-radio-entry:not(:last-child) { display: none !important; }
+html.skycraft-mobile-flight body .flight-radio-entry {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+html.skycraft-mobile-flight body .flight-radio-entry strong { font-size: 9px; }
+html.skycraft-mobile-flight body .flight-radio-entry p { margin: 2px 0 0; font-size: 11px; line-height: 1.25; }
+
+html.skycraft-mobile-flight body .flight-cinematic-title { bottom: 164px !important; }
+html.skycraft-mobile-flight body .flight-cinematic-title small { display: none; }
+html.skycraft-mobile-flight body .flight-immersive .flight-help-drawer {
+    top: 45px; bottom: 70px;
+    max-width: min(370px, calc(100vw - 14px));
+}
+
+/* Портретный телефон: 2 ряда телеметрии и более компактные джойстики. */
+@media (orientation: portrait) {
+    html.skycraft-mobile-flight body .flight-immersive .flight-mobile-objective {
+        top: calc(53px + env(safe-area-inset-top, 0px)) !important;
+        left: 8px !important;
+        right: 86px !important;
+    }
+    html.skycraft-mobile-flight body .flight-mobile-objective-eyebrow { font-size: 9px !important; }
+    html.skycraft-mobile-flight body .flight-mobile-objective strong { font-size: 13px !important; }
+    html.skycraft-mobile-flight body .flight-mobile-objective-command { font-size: 11px !important; }
+    html.skycraft-mobile-flight body .flight-immersive .flight-hud-bottom {
+        grid-template-columns: repeat(4, minmax(0,1fr)) !important;
+        max-height: 84px !important;
+    }
+    html.skycraft-mobile-flight body .flight-immersive .flight-touch-controls {
+        bottom: calc(98px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    html.skycraft-mobile-flight body .flight-touch-stick-base { width: 88px !important; height: 88px !important; }
+    html.skycraft-mobile-flight body .flight-touch-action-cluster { width: 112px; }
+    html.skycraft-mobile-flight body .flight-touch-action-cluster button { font-size: 10px; min-height: 34px; }
+    html.skycraft-mobile-flight body .flight-immersive .flight-exit { left: 8px !important; right: auto !important; }
+    html.skycraft-mobile-flight body .flight-immersive .flight-radio-panel { bottom: 226px !important; width: 70vw !important; }
+}
+
+@media (max-height: 440px) and (orientation: landscape) {
+    html.skycraft-mobile-flight body .flight-touch-stick-base { width: 78px !important; height: 78px !important; }
+    html.skycraft-mobile-flight body .flight-touch-stick-thumb { width: 36px; height: 36px; }
+    html.skycraft-mobile-flight body .flight-immersive .flight-touch-controls { bottom: 53px !important; }
+    html.skycraft-mobile-flight body .flight-touch-action-cluster button { min-height: 30px; font-size: 10px; }
+}

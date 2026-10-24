@@ -1,0 +1,56 @@
+@page
+@{
+    ViewData["Title"] = "Операция Коршун";
+    ViewData["CampaignPage"] = true;
+}
+<section class="campaign-page" aria-labelledby="campaign-title">
+    <header class="campaign-header">
+        <div class="campaign-intro">
+            <p class="campaign-eyebrow">SKYCRAFT / СЮЖЕТНАЯ КАМПАНИЯ / ОПЕРАЦИЯ 01</p>
+            <h1 id="campaign-title">ПОСЛЕ <span>РАЗЛОМА.</span></h1>
+            <p>Землетрясение вызвало оползни и прорыв естественной дамбы горного озера. Горные деревни отрезаны. Ты — оператор поискового БПЛА <strong>«Коршун»</strong>. АИДА — твой напарник, а каждый выбор определяет следующий вылет.</p>
+            <div class="campaign-header-meta">
+                <span>◈ 12 вылетов</span><span>◇ Одна большая открытая 3D-карта</span><span>⌁ Радио-диалоги АИДЫ прямо во время миссий</span>
+            </div>
+        </div>
+        <div class="campaign-aida-id" aria-label="ИИ-ассистент АИДА">
+            <div class="campaign-aida-orbit"><div class="campaign-aida-core">A</div></div>
+            <span>АИДА / СВЯЗЬ УСТАНОВЛЕНА</span>
+            <small>Автоматизированная интеллектуальная система аварийного поиска</small>
+        </div>
+    </header>
+    <div class="campaign-statusline">
+        <div><span class="campaign-status-dot"></span><strong id="campaign-progress-title">ОПЕРАЦИЯ НЕ НАЧАТА</strong><small id="campaign-pilot-profile">Стиль пилотирования: не определён</small></div>
+        <div class="campaign-counter"><strong id="campaign-counter">0 / 12</strong><span>ВЫЛЕТОВ ЗАВЕРШЕНО</span></div>
+    </div>
+    <div class="campaign-section-label"><span>КАРТА ОПЕРАЦИИ / РАЙОН ГОРНОГО ОЗЕРА</span><span>ЕДИНАЯ КАРТА / СЕКТОРЫ ОПЕРАЦИИ</span></div>
+    <div class="campaign-chapters" id="campaign-chapters" aria-label="Двенадцать глав кампании"></div>
+    <section class="campaign-prepare" aria-labelledby="campaign-selected-name">
+        <div>
+            <p class="campaign-eyebrow" id="campaign-selected-region">01 / ЛЕС</p>
+            <h2 id="campaign-selected-name">Опушка</h2>
+            <p id="campaign-selected-desc">Выбери сектор операции. Все вылеты происходят в одной большой спасательной долине, а глава определяет активную зону, погоду и сценарий АИДЫ.</p>
+            <div class="campaign-condition" id="campaign-selected-condition"></div>
+            <p class="campaign-selected-reward" id="campaign-selected-reward">✦ Награда за первое прохождение: 150 CR</p>
+        </div>
+        <div class="campaign-prepare-actions">
+            <span id="campaign-launch-hint">Для начала требуется пройти Академию пилота.</span>
+            <button type="button" class="campaign-action" id="campaign-launch">НАЧАТЬ ВЫЛЕТ <span>↗</span></button>
+            <a href="/Play" class="campaign-secondary-link">↩ Академия и тренировочные трассы</a>
+        </div>
+    </section>
+    <section class="campaign-epilogue" id="campaign-epilogue" hidden>
+        <p class="campaign-eyebrow">ДНЕВНИК ОПЕРАЦИИ / ФИНАЛ</p>
+        <h2 id="campaign-epilogue-title"></h2>
+        <p id="campaign-epilogue-text"></p>
+    </section>
+</section>
+<div class="campaign-debrief-backdrop" id="campaign-pending-debrief" hidden>
+    <section class="campaign-debrief-dialog" role="dialog" aria-modal="true" aria-labelledby="campaign-debrief-title">
+        <p class="campaign-eyebrow">АИДА / ДЕБРИФИНГ</p>
+        <h2 id="campaign-debrief-title">ВЫБОР СЛЕДУЮЩЕГО ВЫЛЕТА</h2>
+        <p id="campaign-debrief-voice"></p>
+        <div id="campaign-debrief-options" class="campaign-debrief-options"></div>
+        <button type="button" class="campaign-close-debrief" id="campaign-debrief-close">Принять решение позже</button>
+    </section>
+</div>
