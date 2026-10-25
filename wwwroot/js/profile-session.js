@@ -1,7 +1,7 @@
 "use strict";
   
                                         
-                                                                          
+ // ТУТ МЕСТО ДЛЯ ВАШЕЙ РЕКЛАМЫ                                                                 
                                                                           
    
 (function (root, factory) {
