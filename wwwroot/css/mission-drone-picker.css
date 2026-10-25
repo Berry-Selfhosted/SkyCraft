@@ -1,0 +1,22 @@
+/* Экран выбора дрона — общий для 12 глав кампании и тренировочных уровней. */
+.drone-picker-backdrop{position:fixed;inset:0;z-index:2000;background:rgba(3,7,18,.85);backdrop-filter:blur(13px);display:grid;place-items:center;padding:18px}
+.drone-picker-dialog{width:min(620px,100%);max-height:min(90vh,800px);overflow:auto;color:#eff4ff;border:1px solid #5b7193;border-radius:18px;background:linear-gradient(148deg,#1a2942,#0b1425 77%);box-shadow:0 25px 90px #000b;padding:clamp(20px,3vw,34px)}
+.drone-picker-heading>span{font:800 11px/1.5 system-ui;letter-spacing:.14em;color:#62e1d0}
+.drone-picker-heading h2{font:900 clamp(26px,5vw,40px)/1.1 system-ui;letter-spacing:.04em;margin:9px 0;color:#f4f5ff}
+.drone-picker-heading p{color:#a3b7d4;font-size:14px;margin:6px 0 20px}
+.drone-picker-list{display:grid;gap:10px;max-height:45vh;overflow-y:auto;padding-right:4px}
+.drone-picker-card{border:1px solid #364b69;background:#14233b;border-radius:12px;color:#e3eafa;padding:14px;display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;min-height:78px}
+.drone-picker-card:hover{border-color:#70b7f5;background:#1d3150}
+.drone-picker-card.is-selected{border-color:#64e0d1;background:#1b354a;box-shadow:inset 0 0 0 1px #64e0d1}
+.drone-picker-glyph{width:44px;height:44px;display:grid;place-items:center;border-radius:10px;background:#263b58;color:#73e3e0;font-size:29px;flex:none}
+.drone-picker-info{display:grid;gap:5px;min-width:0;flex:1}
+.drone-picker-info strong{font:800 16px/1.2 system-ui;overflow-wrap:anywhere}
+.drone-picker-info small{font:500 12px/1.4 system-ui;color:#a8bdd6}
+.drone-picker-check{color:#62e1d0;font-size:21px;opacity:0}.drone-picker-card.is-selected .drone-picker-check{opacity:1}
+.drone-picker-empty{border:1px dashed #516887;border-radius:10px;padding:24px;color:#bdd0ea;line-height:1.5}
+.drone-picker-actions{display:flex;gap:12px;margin-top:24px}
+.drone-picker-actions button{flex:1;min-height:48px;border-radius:9px;padding:9px 15px;font:800 13px/1.2 system-ui;cursor:pointer}
+.drone-picker-cancel{background:#1a293e;color:#b7c8e2;border:1px solid #435773}
+.drone-picker-go{background:#5046db;color:#fff;border:1px solid #827aff}
+.drone-picker-go:hover{background:#645bea}
+@media(max-width:480px){.drone-picker-dialog{padding:18px}.drone-picker-actions{flex-direction:column-reverse}.drone-picker-card{padding:11px}.drone-picker-info strong{font-size:14px}}

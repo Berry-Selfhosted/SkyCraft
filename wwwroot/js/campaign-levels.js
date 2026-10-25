@@ -9,7 +9,7 @@
     if (typeof module === "object" && module.exports) module.exports = api;
     if (root) root.SkycraftCampaignLevels = api;
 })(typeof window !== "undefined" ? window : null, function () {
-    const sharedBounds = Object.freeze({ boundary: 138, frontBoundary: 125, backBoundary: -130 });
+    const sharedBounds = Object.freeze({ boundary: 138, frontBoundary: 125, backBoundary: -138 });
 
     const palettes = {
         forest: { skyTop: "#7eb1e3", skyBottom: "#dff1ff", floor: "#72a659", accent: "#68c8ff" },
@@ -46,64 +46,64 @@
     // Each chapter occupies a distinct place of the same 300 × 280 m level.
     const terrainRoutes = [
         { start: { x: -68, y: 12.961, z: 69 }, checkpoints: [
-            { x: -58, y: 11.008, z: 60, radius: 5.5 },
-            { x: -74, y: 8.770, z: 46, radius: 5.5 },
-            { x: -52, y: 12.326, z: 34, radius: 5.5 }
+            { x: -58, y: 16.458, z: 60, radius: 5.5 },
+            { x: -74, y: 14.220, z: 46, radius: 5.5 },
+            { x: -52, y: 17.776, z: 34, radius: 5.5 }
         ] },
         { start: { x: -43, y: 15.536, z: 75 }, checkpoints: [
-            { x: -54, y: 12.491, z: 67, radius: 5.5 },
-            { x: -36, y: 5.541, z: 58, radius: 5.5 },
-            { x: -49, y: 4.843, z: 42, radius: 5.5 }
+            { x: -54, y: 17.941, z: 67, radius: 5.5 },
+            { x: -36, y: 10.991, z: 58, radius: 5.5 },
+            { x: -49, y: 10.293, z: 42, radius: 5.5 }
         ] },
-        { start: { x: -6, y: 19.215, z: 79 }, checkpoints: [
-            { x: 6, y: 29.946, z: 68, radius: 5.5 },
-            { x: -14, y: 9.066, z: 56, radius: 5.5 },
-            { x: 10, y: 15.172, z: 44, radius: 5.5 }
+        { start: { x: -6, y: 19.216, z: 79 }, checkpoints: [
+            { x: 6, y: 35.396, z: 68, radius: 5.5 },
+            { x: -14, y: 14.516, z: 56, radius: 5.5 },
+            { x: 10, y: 20.622, z: 44, radius: 5.5 }
         ] },
         { start: { x: 48, y: 29.991, z: 81 }, checkpoints: [
-            { x: 40, y: 27.336, z: 73, radius: 5.5 },
-            { x: 55, y: 16.782, z: 59, radius: 5.5 },
-            { x: 33, y: 3.424, z: 47, radius: 5.5 }
+            { x: 40, y: 32.786, z: 73, radius: 5.5 },
+            { x: 55, y: 22.232, z: 59, radius: 5.5 },
+            { x: 33, y: 8.874, z: 47, radius: 5.5 }
         ] },
         { start: { x: 72, y: 18.943, z: 40 }, checkpoints: [
-            { x: 80, y: 13.929, z: 28, radius: 5.5 },
-            { x: 67, y: 3.656, z: 17, radius: 5.5 },
-            { x: 84, y: 11.517, z: 4, radius: 5.5 }
+            { x: 80, y: 19.379, z: 28, radius: 5.5 },
+            { x: 67, y: 9.107, z: 17, radius: 5.5 },
+            { x: 84, y: 16.967, z: 4, radius: 5.5 }
         ] },
         { start: { x: 82, y: 14.041, z: -41 }, checkpoints: [
-            { x: 73, y: 1.681, z: -50, radius: 5.5 },
-            { x: 84, y: 10.824, z: -64, radius: 5.5 },
-            { x: 68, y: 13.090, z: -79, radius: 5.5 }
+            { x: 73, y: 7.131, z: -50, radius: 5.5 },
+            { x: 84, y: 16.274, z: -64, radius: 5.5 },
+            { x: 68, y: 18.540, z: -79, radius: 5.5 }
         ] },
         { start: { x: 64, y: 15.798, z: -90 }, checkpoints: [
-            { x: 73, y: 9.883, z: -101, radius: 5.5 },
-            { x: 59, y: 10.178, z: -114, radius: 5.5 },
-            { x: 78, y: 12.107, z: -126, radius: 5.5 }
+            { x: 73, y: 15.333, z: -101, radius: 5.5 },
+            { x: 59, y: 15.628, z: -114, radius: 5.5 },
+            { x: 78, y: 17.557, z: -126, radius: 5.5 }
         ] },
         { start: { x: 2, y: 19.456, z: -93 }, checkpoints: [
-            { x: -8, y: 12.125, z: -105, radius: 5.5 },
-            { x: 6, y: 10.794, z: -118, radius: 5.5 },
-            { x: -15, y: 11.920, z: -132, radius: 5.5 }
+            { x: -8, y: 17.575, z: -105, radius: 5.5 },
+            { x: 6, y: 16.244, z: -118, radius: 5.5 },
+            { x: -15, y: 16.657, z: -124, radius: 5.5 }
         ] },
-        { start: { x: -63, y: 13.256, z: -106 }, checkpoints: [
-            { x: -55, y: 11.706, z: -118, radius: 5.5 },
-            { x: -70, y: 12.021, z: -130, radius: 5.5 },
-            { x: -48, y: 12.026, z: -143, radius: 5.5 }
+        { start: { x: -63, y: 12.844, z: -96 }, checkpoints: [
+            { x: -55, y: 16.372, z: -108, radius: 5.5 },
+            { x: -70, y: 17.161, z: -112, radius: 5.5 },
+            { x: -48, y: 17.100, z: -120, radius: 5.5 }
         ] },
-        { start: { x: -76, y: 18.833, z: -31 }, checkpoints: [
-            { x: -85, y: 10.935, z: -43, radius: 5.5 },
-            { x: -71, y: 6.653, z: -55, radius: 5.5 },
-            { x: -89, y: 10.197, z: -68, radius: 5.5 }
+        { start: { x: -76, y: 12.050, z: 65 }, checkpoints: [
+            { x: -85, y: 14.447, z: 53, radius: 5.5 },
+            { x: -71, y: 10.832, z: 41, radius: 5.5 },
+            { x: -89, y: 10.922, z: 28, radius: 5.5 }
         ] },
-        { start: { x: -96, y: 19.411, z: -8 }, checkpoints: [
-            { x: -87, y: 20.983, z: -19, radius: 5.5 },
-            { x: -101, y: 13.678, z: -31, radius: 5.5 },
-            { x: -83, y: 10.826, z: -44, radius: 5.5 }
+        { start: { x: -96, y: 13.750, z: 106 }, checkpoints: [
+            { x: -87, y: 16.979, z: 95, radius: 5.5 },
+            { x: -101, y: 16.677, z: 83, radius: 5.5 },
+            { x: -83, y: 15.992, z: 70, radius: 5.5 }
         ] },
-        { start: { x: -16, y: 31.138, z: -14 }, checkpoints: [
-            { x: -26, y: 8.165, z: -25, radius: 5.5 },
-            { x: -12, y: 10.508, z: -38, radius: 5.5 },
-            { x: -31, y: 22.305, z: -51, radius: 5.5 }
+        { start: { x: -16, y: 12.372, z: 112 }, checkpoints: [
+            { x: -26, y: 16.595, z: 101, radius: 5.5 },
+            { x: -12, y: 17.330, z: 88, radius: 5.5 },
+            { x: -31, y: 18.026, z: 75, radius: 5.5 }
         ] }
     ];
 

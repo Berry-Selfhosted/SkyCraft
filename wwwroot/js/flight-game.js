@@ -235,17 +235,18 @@
     const scene = new window.SkycraftFlightScene(canvas, updateUi);
 
     function requireDrone() {
-        if (currentLevel?.tutorial || currentLevel?.story || selectedDrone) return true;
+        if (selectedDrone || (currentLevel?.tutorial && requestedDroneId === "academy-loaner")) return true;
         showNotification("СНАЧАЛА СОБЕРИ ДРОН В КРАФТЕ");
         window.SkycraftSounds?.play("error");
         return false;
     }
 
+    const requestedDroneId = new URLSearchParams(window.location.search).get("drone");
     function loadDroneForMission() {
-        if (currentLevel?.tutorial || currentLevel?.story) return; // учебный / спасательный аппарат бесплатно
-
-        // Тот же готовый аппарат, который игрок выбрал на экране миссий.
-        const drone = store?.getActiveDrone();
+        // ID указан явно в ссылке на вылет, а не берётся из черновика или первого попавшегося дрона.
+        // Академия допускает отдельный бесплатный учебный аппарат.
+        if (currentLevel?.tutorial && requestedDroneId === "academy-loaner") return;
+        const drone = store?.getDrones().find(d => d && d.id === requestedDroneId);
         if (!drone?.parts) return;
         try {
             const stats = window.SkycraftDroneStats.calculate(drone.parts);
@@ -258,7 +259,7 @@
     }
 
     function updateFlightAvailability() {
-        const ready = !!(selectedDrone || currentLevel?.tutorial || currentLevel?.story);
+        const ready = !!(selectedDrone || (currentLevel?.tutorial && requestedDroneId === "academy-loaner"));
         // Все основные действия выполняются с клавиатуры, отдельной панели больше нет.
         retry.disabled = !ready;
         if (!ready) $("flight-hud-status").textContent = "НЕТ ГОТОВОГО ДРОНА";
@@ -618,7 +619,7 @@
         lastMissionState = null;
         scene.selectLevel(level);
         if ($("flight-campaign-debrief")) $("flight-campaign-debrief").hidden = true;
-        if (level.tutorial || level.story) {
+        if (level.tutorial && requestedDroneId === "academy-loaner") {
             scene.setFlightSpecs(loanerSpecs);
             scene.setConfiguration(loanerParts);
         }
@@ -855,8 +856,10 @@
 
     chooseLevel(requestedLevel);
     loadDroneForMission();
-    if (!requestedLevel.tutorial && !requestedLevel.story && !selectedDrone) {
-        window.location.replace("/Play?reason=no-drone");
+    if (!selectedDrone && !(requestedLevel.tutorial && requestedDroneId === "academy-loaner")) {
+        window.location.replace(requestedLevel.story
+            ? `/Campaign?chapter=${requestedLevel.storyIndex}`
+            : `/Play?level=${encodeURIComponent(requestedLevel.id)}&reason=no-drone`);
         return;
     }
     // Карточка уровня запускает миссию сразу; при прямом входе видна подсказка Enter.

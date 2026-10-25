@@ -69,7 +69,7 @@
         const can = trained && progress.unlocked(selected, data);
         $("campaign-launch").disabled = !can;
         $("campaign-launch").innerHTML = data.finished[selected] ? "ПОВТОРИТЬ ВЫЛЕТ <span>↗</span>" : "НАЧАТЬ ВЫЛЕТ <span>↗</span>";
-        $("campaign-launch-hint").textContent = !trained ? "Сначала закончи Академию пилота" : !can ? "Сначала прими решение в дебрифинге предыдущей главы" : "Вылет начнётся в общей открытой долине операции. Коршун и канал АИДЫ предоставляются автоматически";
+        $("campaign-launch-hint").textContent = !trained ? "Сначала закончи Академию пилота" : !can ? "Сначала прими решение в дебрифинге предыдущей главы" : "Перед вылетом выбери собранный дрон из раздела «Мои дроны»";
         const ending=progress.ending(data), epilogue=$("campaign-epilogue");
         epilogue.hidden = !ending;
         if (ending) {
@@ -106,7 +106,9 @@
         const data=progress.read();
         if (!trained || !progress.unlocked(selected,data)) return;
         if (data.finished[selected] && !data.choices[selected]) { openDebrief(selected); return; }
-        window.location.assign(`/Flight?level=story-${String(selected).padStart(2,"0")}&autostart=1`);
+        window.SkycraftMissionDronePicker.launch(`story-${String(selected).padStart(2,"0")}`, economy, {
+            name: campaign.chapters[selected - 1].title
+        });
     }
     $("campaign-launch").addEventListener("click", launchSelected);
     const params=new URLSearchParams(location.search);

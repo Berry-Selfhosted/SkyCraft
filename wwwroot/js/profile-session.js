@@ -13,11 +13,11 @@
     const ACTIVE_KEY = "skycraft.profiles.active.v1";
     const MIGRATED_KEY = "skycraft.profiles.legacyMigrated.v1";
     const DATA_PREFIX = "skycraft.profile.v1.";
-    const NAME_PATTERN = /^[\p{L}\p{N}_-]{2,24}$/u;
+    const NAME_PATTERN = /^[\p{L}\p{N}_-][\p{L}\p{N}_ -]{0,22}[\p{L}\p{N}_-]$/u;
 
     function normalizedName(name) {
         const value = String(name || "").normalize("NFKC").trim();
-        if (!NAME_PATTERN.test(value)) throw new Error("Логин: 2–24 символа, буквы, цифры, _ или -.");
+        if (!NAME_PATTERN.test(value)) throw new Error("Логин: 2–24 символа, буквы, цифры, пробел, _ или -. Пробелы допустимы только внутри логина.");
         return value;
     }
     function nameId(name) { return normalizedName(name).toLocaleLowerCase(); }

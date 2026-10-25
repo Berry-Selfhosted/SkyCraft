@@ -135,11 +135,11 @@
             notice("Сначала пройди академию пилота");
             return;
         }
-        if (selected !== "academy" && !selectedDrone()) {
-            window.location.assign("/Constructor");
-            return;
-        }
-        window.location.assign(`/Flight?level=${encodeURIComponent(selected)}&autostart=1`);
+        window.SkycraftMissionDronePicker.launch(selected, store, {
+            tutorial: selected === "academy",
+            name: levels.get(selected)?.name,
+            preferredId: select.value
+        });
     }
     cards.forEach(card => card.addEventListener("click", () => {
         chooseLevel(card.dataset.chooseLevel);

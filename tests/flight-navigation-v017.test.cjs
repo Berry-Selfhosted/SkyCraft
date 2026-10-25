@@ -24,13 +24,13 @@ test("страница выбора миссий отделена от симу�
 test("полёт открывает именно выбранную карту и не позволяет обойти академию", () => {
     const selection = read("wwwroot/js/flight-select.js");
     const flight = read("wwwroot/js/flight-game.js");
-    assert.match(selection, /encodeURIComponent\(selected\)/);
+    assert.match(selection, /SkycraftMissionDronePicker\.launch\(selected, store/);
     assert.match(selection, /selected !== "academy" && !trained/);
     assert.match(selection, /store\.selectDrone\(select\.value\)/);
     assert.match(flight, /URLSearchParams\(window\.location\.search\)/);
     assert.match(flight, /window\.location\.replace\(requestedLevel\.story \? "\/Campaign\?reason=academy" : "\/Play\?reason=academy"\)/);
-    assert.match(flight, /window\.location\.replace\("\/Play\?reason=no-drone"\)/);
-    assert.match(flight, /getActiveDrone\(\)/);
+    assert.match(flight, /requestedDroneId/);
+    assert.match(flight, /getDrones\(\)\.find\(d => d && d\.id === requestedDroneId\)/);
 });
 
 test("на отдельной игровой странице есть пауза, подсказки, телеметрия и выход", () => {

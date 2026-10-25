@@ -191,6 +191,15 @@ function makeRescueTarget(THREE, point, color, index) {
     const pulse = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 3.1, 12), beacon);
     pulse.position.y = 1.58;
     group.add(pulse);
+    const markerColumn = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.10, 0.27, 9, 10),
+        new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.28, depthWrite: false })
+    );
+    markerColumn.position.y = 5.4;
+    group.add(markerColumn);
+    const signal = new THREE.Mesh(new THREE.OctahedronGeometry(0.75), beacon);
+    signal.position.y = 10.2;
+    group.add(signal);
 
     const body = new THREE.Group();
     const pelvis = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.28, 0.2), cloth);
@@ -319,7 +328,8 @@ class SkycraftModernRenderer {
         this.drone = new THREE.Group();
         this.drone.name = 'PlayerDrone';
         this.droneLightRig = buildDroneLights(THREE);
-        this.scene.add(this.environment, this.drone, this.droneLightRig);
+        this.scene.add(this.environment, this.drone);
+        this.scene.add(this.droneLightRig);
         this.ambient = new THREE.HemisphereLight(0xe0eaff, 0x525e63, 2.1);
         this.scene.add(this.ambient);
         this.keyLight = new THREE.DirectionalLight(0xffeed0, 3.2);
@@ -451,8 +461,13 @@ class SkycraftModernRenderer {
         if (!Array.isArray(points)) return;
         points.forEach(point => {
             if (!point) return;
-            const groundY = this.sampleGroundHeight(point.x, point.z, point.y || 0);
-            point.y = groundY + 0.06;
+            const terrain = window.SkycraftHillsTerrain?.heightAt(point.x, point.z);
+            const groundY = Number.isFinite(terrain) ? terrain
+                : this.sampleGroundHeight(point.x, point.z, point.y || 0);
+            // Flight objective floats 5 m above ground so pilots can scan it.
+            // The person itself stands ON terrain and is never buried in foliage.
+            point.groundY = groundY;
+            point.y = groundY + 5.2;
         });
     }
 
@@ -542,6 +557,79 @@ class SkycraftModernRenderer {
         this.floor.receiveShadow = true;
     }
 
+
+    // Weather is rendered in world space near the active camera, not as a HUD filter.
+    configureWeather(level) {
+        if (this.weatherSystem) {
+            this.scene.remove(this.weatherSystem.mesh);
+            this.weatherSystem.mesh.geometry.dispose();
+            this.weatherSystem.mesh.material.dispose();
+            this.weatherSystem = null;
+        }
+        const biome = level?.story ? level.biome : null;
+        const rain = ['storm', 'river', 'torrent'].includes(biome);
+        const snow = biome === 'snow';
+        const dust = biome === 'mud' || biome === 'cliff';
+        const mist = ['lake', 'deadforest', 'gorge', 'cave'].includes(biome);
+        if (this.scene.fog) this.scene.fog.density = biome === 'storm' ? 0.012
+            : biome === 'snow' ? 0.014 : dust ? 0.009 : mist ? 0.011
+            : biome === 'summit' ? 0.007 : level?.story ? 0.0035 : 0.013;
+        if (!rain && !snow && !dust && !mist && biome !== 'summit') return;
+        const kind = rain ? 'rain' : snow ? 'snow' : dust ? 'dust' : mist ? 'mist' : 'snow';
+        const count = MOBILE ? (rain ? 240 : 140) : (rain ? 620 : 340);
+        const segment = kind === 'rain';
+        const verts = new Float32Array(count * (segment ? 6 : 3));
+        const seeds = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) {
+            const k = i * 3;
+            seeds[k] = Math.random() * 54 - 27;
+            seeds[k + 1] = Math.random() * 28 - 8;
+            seeds[k + 2] = Math.random() * 54 - 27;
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(verts, 3));
+        const material = segment ? new THREE.LineBasicMaterial({
+            color: 0xa4d6ff, transparent: true, opacity: biome === 'storm' ? 0.63 : 0.38,
+            depthWrite: false
+        }) : new THREE.PointsMaterial({
+            color: kind === 'dust' ? 0xd6b58a : kind === 'mist' ? 0xc6dfeb : 0xf3f9ff,
+            size: kind === 'snow' ? 0.21 : kind === 'mist' ? 0.35 : 0.13,
+            transparent: true, opacity: kind === 'mist' ? 0.32 : 0.75,
+            sizeAttenuation: true, depthWrite: false
+        });
+        const mesh = segment ? new THREE.LineSegments(geometry, material) : new THREE.Points(geometry, material);
+        mesh.frustumCulled = false;
+        mesh.renderOrder = 6;
+        this.scene.add(mesh);
+        this.weatherSystem = { kind, mesh, verts, seeds, count, segment };
+    }
+
+    updateWeather(controller) {
+        const weather = this.weatherSystem;
+        if (!weather) return;
+        const t = performance.now() * 0.001;
+        const camera = this.camera.position;
+        const { kind, seeds, verts, count, segment } = weather;
+        const fall = kind === 'rain' ? 18 : kind === 'snow' ? 2.7 : kind === 'dust' ? 1.3 : 0.6;
+        const wind = kind === 'rain' ? 4.8 : kind === 'dust' ? 2 : 0.6;
+        for (let i = 0; i < count; i++) {
+            const k = i * 3;
+            const x = camera.x + ((seeds[k] + t * wind + 27) % 54) - 27;
+            const y = camera.y + ((seeds[k + 1] - t * fall + 10000) % 28) - 8;
+            const z = camera.z + seeds[k + 2];
+            if (segment) {
+                const offset = i * 6;
+                verts[offset] = x; verts[offset + 1] = y; verts[offset + 2] = z;
+                verts[offset + 3] = x - 0.20; verts[offset + 4] = y - 1.25; verts[offset + 5] = z;
+            } else {
+                verts[k] = x + Math.sin(t + i) * 0.4;
+                verts[k + 1] = y;
+                verts[k + 2] = z;
+            }
+        }
+        weather.mesh.geometry.attributes.position.needsUpdate = true;
+    }
+
     async loadLevel(level) {
         const epoch = ++this.epoch;
         this.levelReady = false;
@@ -563,7 +651,7 @@ class SkycraftModernRenderer {
             this.keyLight.color.set(0xffeed0);
             this.fill.color.set(0x8cbbff);
         }
-        this.scene.fog.density = story ? 0.0026 : 0.013;
+        this.configureWeather(level);
         this.ambient.intensity = story ? 1.15 : (level?.kind === 'academy' ? 1.6 : 0.85);
         this.keyLight.intensity = story ? 3.35 : (level?.kind === 'academy' ? 2.2 : 1.25);
         this.fill.intensity = story ? 1.0 : (level?.kind === 'academy' ? 0.8 : 0.35);
@@ -589,6 +677,11 @@ class SkycraftModernRenderer {
                 });
                 this.stylizeStoryWorld(asset, level);
                 this.environment.add(asset);
+                // Collision heightfield and visual rescue marker must agree.
+                // The old raycaster often hit pine foliage ABOVE the survivor,
+                // leaving targets hidden or impossible to approach.
+                await window.SkycraftHillsTerrain?.load();
+                if (epoch !== this.epoch) return;
                 this.placeTargetsOnGround(level?.checkpoints);
             } else if (level?.kind === 'hangar' || !level) {
                 // The same engine handles the home page and craft hangar.
@@ -619,9 +712,10 @@ class SkycraftModernRenderer {
             if (epoch !== this.epoch) return;
             if (level?.checkpoints) {
                 level.checkpoints.forEach((point, index) => {
-                    if (level.story) point.y = this.sampleGroundHeight(point.x, point.z, point.y || 0) + 0.06;
+                    const markerPoint = level.story
+                        ? { ...point, y: (point.groundY ?? point.y - 5.2) + 0.08 } : point;
                     const marker = level.story
-                        ? makeRescueTarget(THREE, point, new THREE.Color(level.accent || '#8bdad0'), index)
+                        ? makeRescueTarget(THREE, markerPoint, new THREE.Color(level.accent || '#8bdad0'), index)
                         : makeGate(THREE, point, new THREE.Color(level.accent || '#8bdad0'), index);
                     this.gates.push(marker);
                     this.environment.add(marker);
@@ -759,12 +853,18 @@ class SkycraftModernRenderer {
             texture.offset.x = waterTime * (0.32 + index * 0.015);
             texture.offset.y = waterTime * 0.11;
         });
+        this.updateWeather(controller);
         this.renderer.render(this.scene, this.camera);
         return true;
     }
 
     dispose() {
         this.epoch += 1;
+        if (this.weatherSystem) {
+            this.scene.remove(this.weatherSystem.mesh);
+            this.weatherSystem.mesh.geometry.dispose();
+            this.weatherSystem.mesh.material.dispose();
+        }
         this.renderer.dispose();
         this.renderer.domElement.remove();
     }

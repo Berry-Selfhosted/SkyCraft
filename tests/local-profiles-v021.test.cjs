@@ -81,11 +81,32 @@ test("защита страницы, личные данные и автомат
     assert.match(layout,/SkycraftProfiles\?\.requireLogin\(\)/);
     assert.match(layout,/profile-logout/);
     assert.match(read("Pages/Login.cshtml"),/profile-register/);
-    assert.match(read("wwwroot/js/flight-select.js"),/autostart=1/);
-    assert.match(read("wwwroot/js/campaign-ui.js"),/autostart=1/);
+    assert.match(read("wwwroot/js/flight-select.js"),/SkycraftMissionDronePicker\.launch/);
+    assert.match(read("wwwroot/js/campaign-ui.js"),/SkycraftMissionDronePicker\.launch/);
+    assert.match(read("wwwroot/js/mission-drone-picker.js"),/autostart=1/);
     assert.match(read("wwwroot/js/flight-game.js"),/flight-enter-prompt/);
     assert.match(read("Pages/Flight.cshtml"),/НАЖМИ/);
     for (const script of ["site.js","ui-sounds.js","flight-game.js","flight-select.js","home-scene.js","workshop.js","campaign-ui.js","flight-scene.js"]) {
         assert.match(read(`wwwroot/js/${script}`),/SkycraftProfiles\.storage/);
     }
+});
+
+
+test("пробелы внутри логина: регистрация, отображение и повторный вход", () => {
+    const local = new FakeStorage(), session = new FakeStorage();
+    const manager = createProfileManager(local, session);
+    manager.register("Дима Пилот");
+    assert.equal(manager.active().name, "Дима Пилот");
+    manager.storage.setItem("skycraft.credits.v1", "500");
+    manager.logout();
+    assert.equal(manager.list()[0].name, "Дима Пилот");
+    manager.login("дима пилот");
+    assert.equal(manager.storage.getItem("skycraft.credits.v1"), "500");
+    assert.throws(() => manager.register("ДИМА ПИЛОТ"), /уже существует/);
+    manager.register("  Другой Пилот  ");
+    assert.equal(manager.active().name, "Другой Пилот");
+    assert.throws(() => manager.register("   "), /Логин/);
+    assert.throws(() => manager.register("Логин!"), /Логин/);
+    assert.throws(() => manager.register("Имя\nФамилия"), /Логин/);
+    assert.throws(() => manager.register("A".repeat(25)), /Логин/);
 });

@@ -141,7 +141,7 @@ test("интерфейс предлагает обе кнопки и отклю�
     assert.match(source("Pages/Constructor.cshtml"), /id="create-blueprint-button"/);
     assert.match(source("Pages/Constructor.cshtml"), /id="assemble-button"/);
     assert.match(source("Pages/Play.cshtml"), /id="mission-drone-select"/);
-    assert.match(source("wwwroot/js/flight-game.js"), /const ready = !!\(selectedDrone \|\| currentLevel\?\.tutorial \|\| currentLevel\?\.story\)/);
+    assert.match(source("wwwroot/js/flight-game.js"), /const ready = !!\(selectedDrone \|\| \(currentLevel\?\.tutorial && requestedDroneId === "academy-loaner"\)\)/);
     assert.doesNotMatch(source("wwwroot/js/flight-scene.js"), /localStorage\.getItem\("skycraft\.selection\.v1"\)/);
     assert.match(source("Pages/Shared/_Layout.cshtml"), /asp-page="\/Hangar"/);
 });

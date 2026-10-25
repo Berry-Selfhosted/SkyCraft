@@ -36,6 +36,10 @@
     {
         <link rel="stylesheet" asp-append-version="true" href="~/css/flight.css" />
     }
+    @if (ViewData["CampaignPage"] is true || ViewData["FlightSelectPage"] is true)
+    {
+        <link rel="stylesheet" asp-append-version="true" href="~/css/mission-drone-picker.css" />
+    }
     @if (ViewData["FlightPage"] is true)
     {
         <script asp-append-version="true" src="~/js/flight-device-layout.js"></script>
@@ -210,7 +214,7 @@
         </section>
     </div>
 
-    @if (isWorkshop || ViewData["FlightPage"] is true || ViewData["FlightSelectPage"] is true || ViewData["Home3D"] is true)
+    @if (isWorkshop || ViewData["FlightPage"] is true || ViewData["FlightSelectPage"] is true || ViewData["CampaignPage"] is true || ViewData["Home3D"] is true)
     {
         // Один каталог компонентов для мастерской и игрового режима.
         <script type="application/json" id="skycraft-parts-catalog">@Html.Raw(JsonSerializer.Serialize(DroneCatalog.Parts))</script>
@@ -238,6 +242,7 @@
         <script asp-append-version="true" src="~/js/campaign-levels.js" defer></script>
         <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
         <script asp-append-version="true" src="~/js/flight-rewards.js" defer></script>
+        <script asp-append-version="true" src="~/js/mission-drone-picker.js" defer></script>
         <script asp-append-version="true" src="~/js/campaign-ui.js" defer></script>
     }
     @if (ViewData["FlightSelectPage"] is true)
@@ -245,6 +250,7 @@
         <script asp-append-version="true" src="~/js/workshop-economy.js" defer></script>
         <script asp-append-version="true" src="~/js/flight-rewards.js" defer></script>
         <script asp-append-version="true" src="~/js/flight-levels.js" defer></script>
+        <script asp-append-version="true" src="~/js/mission-drone-picker.js" defer></script>
         <script asp-append-version="true" src="~/js/flight-select.js" defer></script>
     }
     @if (ViewData["FlightPage"] is true)
