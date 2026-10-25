@@ -20,7 +20,7 @@
 
 | Компонент | Технология |
 |---|---|
-| Backend | C#, ASP.NET Core 8 |
+| Backend | C#, ASP.NET Core 8, JavaScript |
 | Frontend | HTML, CSS, JavaScript |
 | 3D-графика | Three.js, WebGL |
 | 3D-модели | GLB / glTF |
