@@ -663,7 +663,7 @@
                 right = norm(cross(forward, [0, 1, 0]));
                 up = norm(cross(right, forward));
                 // Небольшой крен картинки — ощущение пилотирования.
-                const bank = clamp(-roll * 0.32, -0.18, 0.18);
+                const bank = clamp(roll * 0.32, -0.18, 0.18);
                 const cos = Math.cos(bank), sin = Math.sin(bank);
                 const bankedRight = right.map((n, i) => n * cos + up[i] * sin);
                 up = up.map((n, i) => n * cos - right[i] * sin);
