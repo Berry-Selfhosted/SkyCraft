@@ -1,11 +1,11 @@
 "use strict";
 
-/*
- * SKYCRAFT — viewport и управление камерой.
- * 3D-геометрия рисуется только Three.js в three-scene.js.
- * HTML canvas остаётся прозрачной областью для pointer/wheel-событий;
- * 2D context, процедурные модели и запасной Canvas2D рендер удалены.
- */
+  
+                                            
+                                                          
+                                                                      
+                                                                     
+   
 (function () {
     const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
     const normalize = ([x, y, z]) => {
@@ -36,7 +36,7 @@
             this.modernRenderer = null;
             this.renderError = null;
 
-            // Не запрашиваем context('2d'): холст принимает только события мыши.
+                                                                                 
             canvas.style.background = 'transparent';
             canvas.style.touchAction = 'none';
             this.createRenderStatus();
@@ -45,8 +45,8 @@
             this.resizeObserver.observe(canvas);
             this.resize();
 
-            // Никакого fallback в примитивный мир: до окончания загрузки
-            // показываем состояние рендера, затем только WebGL + GLTFLoader.
+                                                                         
+                                                                             
             import('/js/three-scene.js?v=0.31.0').then(({ SkycraftModernRenderer }) => {
                 this.modernRenderer = new SkycraftModernRenderer(this);
                 this.render();
@@ -84,7 +84,7 @@
         setConfiguration(configuration) {
             this.renderError = null;
             this.configuration = { ...this.configuration, ...configuration };
-            // Three.js самостоятельно загружает нужные GLB и кэширует их.
+                                                                          
             this.modernRenderer?.rebuildDrone(this.configuration).catch(error => {
                 this.renderError = error;
                 this.setRenderStatus('error', 'Не удалось загрузить модель беспилотника.');
@@ -171,7 +171,7 @@
         animate() {
             if (!document.hidden) {
                 const now = performance.now();
-                // Для ангара максимум 30 FPS, для полёта собственный цикл.
+                                                                           
                 if (now - (this.lastRenderAt || 0) >= 33) {
                     this.lastRenderAt = now;
                     this.render();

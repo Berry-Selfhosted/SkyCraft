@@ -1,5 +1,5 @@
 "use strict";
-/* Экран сюжетной кампании. Рендер DOM, никаких скрытых серверных запросов. */
+                                                                              
 (function () {
     const campaign = window.SkycraftCampaign;
     const root = document.getElementById("campaign-chapters");

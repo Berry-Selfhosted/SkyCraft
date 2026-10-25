@@ -8,8 +8,8 @@ const read = file => readFileSync(path.join(root, file), "utf8");
 const math = require("../wwwroot/js/flight-orientation.js");
 const physics = require("../wwwroot/js/flight-physics.js");
 
-// GLB модели SKYCRAFT смотрят камерой вперёд вдоль +Z, а в физике нулевой
-// курс означает -Z. Проверяем именно реальное направление сетки, не метку yaw.
+                                                                          
+                                                                               
 const transformedModelForward = angle => ({ x: Math.sin(angle), z: Math.cos(angle) });
 const dot = (a, b) => a.x * b.x + a.z * b.z;
 const close = (a, b) => Math.abs(a - b) < 1e-8;

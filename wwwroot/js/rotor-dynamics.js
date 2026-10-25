@@ -1,16 +1,16 @@
 "use strict";
 
-/*
- * SKYCRAFT — игровая модель четырёх электродвигателей квадрокоптера.
- *
- * В отличие от анимации «прибавлять угол на каждом кадре», здесь RPM
- * следует за необходимой тягой: T ~ RPM². Тяга задаётся весом аппарата,
- * наклоном корпуса, запросом на подъём и командами автопилота.
- * Дифференциальная тяга по четырём углам задаёт моменты крена/тангажа/yaw.
- * Значения ориентировочные: реальную тягу определяют замеры пары
- * мотор + винт + ESC + аккумулятор, которых в каталоге пока нет.
- * Все расчёты используют секунды, радианы, кг, ньютоны, об/мин.
- */
+  
+                                                                     
+  
+                                                                     
+                                                                        
+                                                               
+                                                                           
+                                                                 
+                                                                 
+                                                                
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -20,8 +20,8 @@
     const GRAVITY = 9.81;
     const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
 
-    // Тот же порядок, что и в DroneScene.buildDrone (x, затем z).
-    // Противоположные пары вращаются в разные стороны.
+                                                                  
+                                                       
     const ROTORS = Object.freeze([
         Object.freeze({ x: -1, z: -1, direction: 1 }),
         Object.freeze({ x: -1, z: 1, direction: -1 }),
@@ -77,21 +77,21 @@
         const verticalSpeed = clamp(Number(velocity.y) || 0, -6, 6);
         const agility = clamp(12 / mass * Math.sqrt((Number(specs.speed) || 60) / 60), 0.5, 1.65);
 
-        // Контроллер высоты из flight-physics.js: aY = газ*5.2*agility - vy*1.35.
-        // Чтобы удержать высоту при наклоне, вертикальная компонента тяги
-        // должна преодолеть mg: суммарная T = m*(g+aY)/(cosPitch*cosRoll).
+                                                                                  
+                                                                          
+                                                                           
         const verticalAcceleration = lift * 5.2 * agility - verticalSpeed * 1.35;
         const correctedThrust = mass * Math.max(1.2, GRAVITY + verticalAcceleration) /
             Math.max(0.5, Math.cos(pitch) * Math.cos(roll));
         const perMotorThrust = correctedThrust / 4;
-        // При почти разряженном аккумуляторе падает доступная мощность.
+                                                                        
         const remaining = clamp(Number(battery) || 0, 0, 100);
         const sag = 1 - 0.10 * (1 - clamp(remaining / 20, 0, 1));
         const maxRpm = profile.maxRpm * sag;
         const hoverRatio = perMotorThrust / profile.maxThrust;
 
-        // Ошибка ориентации создаёт небольшой разный момент на парах роторов.
-        // При достижении заданного наклона обороты снова почти выравниваются.
+                                                                              
+                                                                              
         const pitchCorrection = clamp((forward * 0.43 - pitch) * 0.30, -0.15, 0.15);
         const rollCorrection = clamp((right * 0.43 - roll) * 0.30, -0.15, 0.15);
         const yawCorrection = yaw * 0.085;
@@ -100,7 +100,7 @@
                 1 + rotor.z * pitchCorrection - rotor.x * rollCorrection -
                 rotor.direction * yawCorrection
             ), 0, 1);
-            // Статическая тяга винта приблизительно пропорциональна RPM².
+                                                                          
             return clamp(Math.sqrt(ratio) * maxRpm, 0, maxRpm);
         });
         return { targets, collective: clamp(hoverRatio, 0, 1), profile };
@@ -121,13 +121,13 @@
         for (let index = 0; index < 4; index++) {
             const rotor = state.rotors[index];
             const target = idle ? profile.maxRpm * 0.16 : calculated ? calculated.targets[index] : 0;
-            // Инерция мотора/винта, управляемых ESC: рост и спад не мгновенны.
+                                                                               
             const timeConstant = target >= rotor.rpm ? profile.riseTime : profile.fallTime;
             const before = rotor.rpm;
             const alpha = 1 - Math.exp(-dt / timeConstant);
             rotor.rpm = clamp(before + (target - before) * alpha, 0, profile.maxRpm);
-            // Интегрируем экспоненту RPM аналитически. Иначе фаза винта
-            // заметно зависела бы от FPS даже при одинаковых оборотах.
+                                                                        
+                                                                       
             const revolutions = (target * dt + (before - target) * timeConstant * alpha) / 60;
             rotor.angle = ((rotor.angle + rotor.direction * revolutions * TWO_PI) % TWO_PI + TWO_PI) % TWO_PI;
             if (rotor.rpm < 0.5 && !powered) rotor.rpm = 0;

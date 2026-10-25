@@ -1,7 +1,7 @@
 "use strict";
 
-// Здесь только поведение интерфейса. Игровой движок и серверные аккаунты
-// можно подключить отдельно, не смешивая их с кодом главного экрана.
+                                                                         
+                                                                     
 
 const storageKeys = {
     sound: "skycraft.soundEnabled",
@@ -31,14 +31,14 @@ const userButton = document.getElementById("user-button");
 const userPopover = document.getElementById("user-popover");
 
 let lastFocusedElement = null;
-// WAV-звуки и их кэш управляются отдельным файлом ui-sounds.js.
+                                                                
 
 function readSetting(key, defaultValue) {
     try {
         const savedValue = window.SkycraftProfiles.storage.getItem(key);
         return savedValue === null ? defaultValue : savedValue === "true";
     } catch {
-        // Например, если в браузере запрещено локальное хранилище.
+                                                                   
         return defaultValue;
     }
 }
@@ -47,7 +47,7 @@ function writeSetting(key, value) {
     try {
         window.SkycraftProfiles.storage.setItem(key, String(value));
     } catch {
-        // Отсутствие localStorage не должно ломать управление экраном.
+                                                                       
     }
 }
 
@@ -81,7 +81,7 @@ function setSoundEnabled(enabled) {
     soundEngine?.setEnabled(enabled);
     writeSetting(storageKeys.sound, enabled);
     updateSoundControls();
-    // На выключение допускаем один завершающий звук по действию игрока.
+                                                                        
     soundEngine?.play(enabled ? "toggle-on" : "toggle-off", { force: !enabled });
 }
 
@@ -146,7 +146,7 @@ settingsOverlay.addEventListener("click", (event) => {
     }
 });
 
-// Удерживаем клавиатурный фокус внутри открытого модального окна.
+                                                                  
 settingsOverlay.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") {
         return;
@@ -208,7 +208,7 @@ updateSoundControls();
 updateMotionControls();
 updateVolumeControls();
 
-// Cross-tab notifications use real prefixed keys; ignore other pilots' data.
+                                                                             
 function belongsToCurrentProfileStorageEvent(eventKey, logicalKey) {
     const profile = window.SkycraftProfiles?.active();
     return eventKey === null || (profile && eventKey ===
@@ -224,7 +224,7 @@ window.addEventListener("storage", (event) => {
     }
 });
 
-// Баланс синхронизируется с мастерской и другими страницами интерфейса.
+                                                                        
 function updateAccountBalance() {
     let credits = 420;
     try {
@@ -232,7 +232,7 @@ function updateAccountBalance() {
         if (window.SkycraftProfiles.storage.getItem("skycraft.credits.v1") !== null && Number.isFinite(savedCredits)) {
             credits = Math.max(0, savedCredits);
         }
-    } catch { /* демо-баланс по умолчанию */ }
+    } catch {                                }
 
     document.querySelectorAll("[data-player-credits]").forEach((element) => {
         element.textContent = String(credits);
@@ -241,7 +241,7 @@ function updateAccountBalance() {
 }
 
 window.addEventListener("skycraft:credits-changed", updateAccountBalance);
-// Покупки и продажи в другой вкладке тоже отражаются в шапке сайта.
+                                                                    
 window.addEventListener("storage", (event) => {
     if (belongsToCurrentProfileStorageEvent(event.key, "skycraft.credits.v1")) {
         updateAccountBalance();
@@ -249,7 +249,7 @@ window.addEventListener("storage", (event) => {
 });
 updateAccountBalance();
 
-// Демонстрационный конструктор. Сведения сохраняются только в этом браузере.
+                                                                             
 const builderForm = document.getElementById("builder-form");
 
 if (builderForm) {
@@ -291,7 +291,7 @@ if (builderForm) {
     updateFrameStats();
 }
 
-// Локальный профиль пилота: имя отображается в шапке всех игровых страниц.
+                                                                           
 (function showActiveLocalPilot() {
     const profile = window.SkycraftProfiles?.active();
     if (!profile) return;

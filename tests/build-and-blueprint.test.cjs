@@ -96,7 +96,7 @@ test("выбранный полётный дрон может быть толь�
     assert.equal(store.getActiveDrone(), null);
     assert.equal(store.selectDrone(blueprint.id).ok, false);
     const first = store.assembleDrone(parts, catalog, stats).drone;
-    const second = store.assembleDrone(parts, catalog, stats); // не хватает денег
+    const second = store.assembleDrone(parts, catalog, stats);                    
     assert.equal(second.ok, false);
     assert.equal(store.selectDrone(first.id).ok, true);
     assert.equal(store.getActiveDrone().id, first.id);
@@ -146,7 +146,7 @@ test("интерфейс предлагает обе кнопки и отклю�
     assert.match(source("Pages/Shared/_Layout.cshtml"), /asp-page="\/Hangar"/);
 });
 
-// Регрессия v0.8.1: в разметке должна быть ровно одна кнопка каждого действия.
+                                                                               
 test("в конструкторе только одна кнопка чертежа и одна кнопка сборки", () => {
     const html = fs.readFileSync(path.resolve(__dirname, "../Pages/Constructor.cshtml"), "utf8");
     assert.equal((html.match(/id="create-blueprint-button"/g) || []).length, 1);
@@ -166,6 +166,6 @@ test("кнопка «Играть» ведёт из конструктора к 
     assert.doesNotMatch(flight, /id="flight-start"|class="flight-controls-bottom"/);
     assert.match(fs.readFileSync(path.join(root, "wwwroot/js/flight-game.js"), "utf8"), /event.code === "Enter"/);
     assert.match(fs.readFileSync(path.join(root, "Pages/Play.cshtml"), "utf8"), /id="mission-drone-select"/);
-    // Навигационная ссылка не должна вызывать клиентский метод покупки или сборки.
+                                                                                   
     assert.doesNotMatch(constructor.match(/<a class="constructor-play-link"[\s\S]*?<\/a>/)[0], /assembleDrone|saveBlueprint|data-buy/);
 });

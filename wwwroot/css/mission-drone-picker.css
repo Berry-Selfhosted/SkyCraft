@@ -1,4 +1,4 @@
-/* Экран выбора дрона — общий для 12 глав кампании и тренировочных уровней. */
+                                                                              
 .drone-picker-backdrop{position:fixed;inset:0;z-index:2000;background:rgba(3,7,18,.85);backdrop-filter:blur(13px);display:grid;place-items:center;padding:18px}
 .drone-picker-dialog{width:min(620px,100%);max-height:min(90vh,800px);overflow:auto;color:#eff4ff;border:1px solid #5b7193;border-radius:18px;background:linear-gradient(148deg,#1a2942,#0b1425 77%);box-shadow:0 25px 90px #000b;padding:clamp(20px,3vw,34px)}
 .drone-picker-heading>span{font:800 11px/1.5 system-ui;letter-spacing:.14em;color:#62e1d0}

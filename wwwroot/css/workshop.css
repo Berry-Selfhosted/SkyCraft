@@ -1,5 +1,5 @@
-/* SKYCRAFT — мастерская: сборка, чертежи и склад.
-   Основные цвета наследуются из site.css. */
+                                                  
+                                             
 
 .site-shell:has(.workshop-nav) {
     --header-height: 76px;
@@ -296,7 +296,7 @@
     background: #a199ff;
 }
 
-/* Центральная сцена: canvas рисует геометрию, CSS — свет, затемнение и UI. */
+                                                                              
 .builder-stage {
     position: relative;
     isolation: isolate;
@@ -597,7 +597,7 @@
 .assembly-message.is-success { color: #44e3af; }
 .assembly-message.is-error { color: #f1a6ad; }
 
-/* Чертежи и склад. */
+                      
 .workshop-overview {
     width: min(1380px, 100%);
     min-height: calc(100dvh - var(--header-height) - var(--footer-height));
@@ -746,7 +746,7 @@
     .stage-title p { max-width: 175px; }
 }
 
-/* Indicator of loaded 3D files (not baked image). */
+                                                     
 .glb-model-status {
     position: absolute; left: 50%; bottom: 157px; transform: translateX(-50%);
     z-index: 3; width: max-content; max-width: 85%; text-align: center;
@@ -757,10 +757,10 @@
 
 @media (max-width: 900px) { .glb-model-status { bottom: 122px; font-size: 10px; } }
 
-/* SKYCRAFT 0.6.1 — полноэкранная рабочая область конструктора.
-   На больших экранах мастерская занимает высоту окна между верхним меню
-   и нижней строкой. Каталог деталей прокручивается внутри собственной панели.
-   На планшетах и телефонах сохраняется привычный вертикальный поток. */
+                                                               
+                                                                        
+                                                                              
+                                                                        
 @media (min-width: 1101px) {
     .site-shell:has(.workshop-page) {
         --header-height: 70px;
@@ -791,7 +791,7 @@
         min-height: 0;
     }
 
-    /* На низком мониторе кнопка сборки доступна прокруткой инспектора. */
+                                                                          
     .builder-inspector {
         overflow-y: auto;
         scrollbar-color: #343c61 transparent;
@@ -827,7 +827,7 @@
     }
 }
 
-/* v0.7 — магазин, продажа деталей и управление чертежами. */
+                                                             
 .workshop-overview--economy {
     width: min(1480px, 100%);
     padding-top: clamp(24px, 3.6vw, 54px);
@@ -923,7 +923,7 @@
     transition: border-color .16s ease, background .16s ease;
 }
 .economy-card:hover { border-color: #4c4a91; background: #141b2c; }
-.economy-card[hidden] { display: none !important; }
+.economy-card[hidden] { display: none           ; }
 .economy-card-top { display: flex; align-items: flex-start; gap: 14px; flex: 1 1 auto; }
 .economy-card-top > img {
     width: 84px;
@@ -1054,7 +1054,7 @@
     .economy-card-meta { flex-wrap: wrap; }
 }
 
-/* SKYCRAFT 0.8 — чертёж и физическая сборка являются разными действиями. */
+                                                                            
 .build-action-hint {
     margin: 0 0 10px;
     color: #96a6c9;
@@ -1109,8 +1109,8 @@
 .blueprint-actions button:disabled { opacity: .55; cursor: default; }
 
 
-/* v0.8.2: отдельный переход к полётам из конструктора.
-   Не инициирует сборку и не расходует игровые ресурсы. */
+                                                       
+                                                          
 .constructor-play-link {
     display: flex;
     align-items: center;

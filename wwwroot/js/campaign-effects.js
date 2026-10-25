@@ -1,10 +1,10 @@
 "use strict";
-/*
- * Игровые последствия решений АИДЫ.
- * Модификатор применяется к СЛЕДУЮЩЕМУ вылету после дебрифинга.
- * Единицы: метры, секунды, м/с. Без скрытых случайных отказов, которые
- * невозможно предвидеть: все эффекты детерминированы временем и показываются в HUD.
- */
+  
+                                    
+                                                                
+                                                                       
+                                                                                    
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -57,7 +57,7 @@
     }
     function after(state, physics, dt, biome, controls = {}) {
         if (!state || !physics || dt <= 0) return;
-        // Базовые особенности региона также реальны: восходящие потоки и ветер.
+                                                                                
         const elapsed = state.clock;
         let wind = biome === "cliff" || biome === "gorge" ? 1.1 :
             biome === "storm" || biome === "summit" || biome === "torrent" ? 1.8 : 0;
@@ -72,9 +72,9 @@
         }
         if (state.id === "glide") physics.velocity.y -= .55*dt;
         if (state.id === "sensitive") {
-            // Клавиатура дискретная (+1/-1), поэтому одно умножение входа не
-            // сработает: контроллер физики ограничивает оси. Добавляем импульс
-            // по курсу, чтобы риск перенастроенной чувствительности был реальным.
+                                                                             
+                                                                               
+                                                                                  
             const yaw=physics.attitude?.yaw||0;
             const forward=Number(controls.forward)||0, right=Number(controls.right)||0;
             physics.velocity.x+=(right*Math.cos(yaw)+forward*Math.sin(yaw))*2.9*dt;

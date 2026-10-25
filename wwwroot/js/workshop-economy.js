@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * Экономика одиночной демо-версии. Чертёж — бесплатная конфигурация,
- * а собранный дрон — физический экземпляр, на создание которого идут ресурсы.
- * Для сетевой игры операции должны выполняться на сервере с транзакциями БД.
- */
+  
+                                                                     
+                                                                              
+                                                                             
+   
 (function (root) {
     const KEYS = Object.freeze({
         credits: "skycraft.credits.v1",
@@ -70,7 +70,7 @@
             return isRecord(saved) ? saved : {};
         }
 
-        // Только заранее известные ID уровней; один раз для каждого профиля.
+                                                                             
         function claimLevelReward(levelId, amount) {
             const validId = typeof levelId === "string" &&
                 /^(academy|hangar|training|canyon|story-(0[1-9]|1[0-2]))$/.test(levelId);
@@ -95,7 +95,7 @@
             })) {
                 return { ok: false, error: "Награду не удалось сохранить в браузере." };
             }
-            // Обновляем верхний счётчик сразу, без перезагрузки страницы.
+                                                                          
             if (typeof root.dispatchEvent === "function" && typeof root.Event === "function") {
                 root.dispatchEvent(new root.Event("skycraft:credits-changed"));
             }
@@ -127,7 +127,7 @@
             return asNonNegativeInteger(saved, asNonNegativeInteger(part.stock, 0));
         }
 
-        // Записываем связанные сущности вместе; при ошибке откатываем записи.
+                                                                              
         function commit(changes, silent = false) {
             const previous = [];
             try {
@@ -140,7 +140,7 @@
                     try {
                         if (oldValue === null) storage.removeItem(key);
                         else storage.setItem(key, oldValue);
-                    } catch { /* Хранилище недоступно. */ }
+                    } catch {                             }
                 }
                 return false;
             }
@@ -148,9 +148,9 @@
             return true;
         }
 
-        // В версии 0.7 кнопка «Собрать» одновременно создавала чертёж и
-        // расходовала ресурсы. Ранее оплаченные проекты становятся готовыми
-        // дронами; чертежи остаются. Денег повторно не снимаем.
+                                                                        
+                                                                            
+                                                                
         function migrateLegacyBuilds() {
             if (read(KEYS.migrated, false) === true) return true;
             const drones = getDrones();
@@ -225,7 +225,7 @@
             return { ok: true, total, credits: newCredits, stock: newStock };
         }
 
-        // Снимок выбранной конфигурации и характеристик. Никаких списаний.
+                                                                           
         function saveBlueprint(parts, stats, requestedName) {
             if (!validParts(parts)) return { ok: false, error: "Конфигурация неполная." };
             const all = getBlueprints();
@@ -244,7 +244,7 @@
             return { ok: true, blueprint };
         }
 
-        // Физическая сборка. Детали и деньги тратятся ТОЛЬКО здесь.
+                                                                    
         function assembleDrone(parts, catalog, stats, requestedName) {
             if (!validParts(parts) || !Array.isArray(catalog)) {
                 return { ok: false, error: "Некорректная конфигурация дрона." };
@@ -310,7 +310,7 @@
             if (!commit({ [KEYS.blueprints]: updated })) {
                 return { ok: false, error: "Не удалось удалить чертёж." };
             }
-            // Чертежи бесплатные. Собранные дроны существуют независимо.
+                                                                         
             return { ok: true };
         }
 

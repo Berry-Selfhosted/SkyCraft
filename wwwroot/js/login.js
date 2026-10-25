@@ -20,8 +20,8 @@
             message.dataset.error = "false";
             const result = mode === "register" ? manager.register(input.value) : manager.login(input.value);
             if (result?.migrated) {
-                // Статус переноса сохраняется в заголовке профиля, но сразу
-                // переходим в игру: выбранные данные доступны в первом профиле.
+                                                                            
+                                                                                
                 console.info(`SKYCRAFT: перенесено ${result.migrated} ключей сохранений`);
             }
             proceed();

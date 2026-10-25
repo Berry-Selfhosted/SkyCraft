@@ -1,5 +1,5 @@
-/* SKYCRAFT — основные стили интерфейса.
-   Размеры и цвета вынесены в переменные, чтобы дизайн было проще менять. */
+                                        
+                                                                            
 
 :root {
     color-scheme: dark;
@@ -64,7 +64,7 @@ input:focus-visible {
 }
 
 [hidden] {
-    display: none !important;
+    display: none           ;
 }
 
 .site-shell {
@@ -590,7 +590,7 @@ input:focus-visible {
     white-space: nowrap;
 }
 
-/* Дополнительные страницы доступны через главное меню. */
+                                                          
 
 .hero--subpage {
     align-items: center;
@@ -728,7 +728,7 @@ input:focus-visible {
 .builder-message {
     min-height: 24px;
     margin-bottom: 0;
-    font-size: 14px !important;
+    font-size: 14px           ;
 }
 
 .back-link {
@@ -742,7 +742,7 @@ input:focus-visible {
     color: white;
 }
 
-/* Модальное окно настроек. */
+                              
 
 .modal-overlay {
     position: fixed;
@@ -940,20 +940,20 @@ body.modal-open {
 body.reduce-motion *,
 body.reduce-motion *::before,
 body.reduce-motion *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+    scroll-behavior: auto           ;
+    transition-duration: 0.01ms           ;
+    animation-duration: 0.01ms           ;
 }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
+        scroll-behavior: auto           ;
+        transition-duration: 0.01ms           ;
+        animation-duration: 0.01ms           ;
     }
 }
 
-/* Компактные экраны: основные действия остаются на виду. */
+                                                            
 
 @media (max-width: 1100px) {
     .hero--home {
@@ -1234,7 +1234,7 @@ body.reduce-motion *::after {
 }
 
 
-/* SKYCRAFT 0.6 — живой GLB-ангар в главном меню. */
+                                                    
 .hero--home { background: #0a0f19; }
 .home-three-stage {
     position: absolute;
@@ -1303,7 +1303,7 @@ body.reduce-motion *::after {
     .hero--home .hero-content { position: relative; }
 }
 
-/* v0.30 — единый Three.js viewport; прозрачный canvas — только слой ввода. */
+                                                                              
 .skycraft-render-status {
     position: absolute;
     left: 50%; top: 50%;
@@ -1326,6 +1326,6 @@ body.reduce-motion *::after {
     border-color: rgba(240, 124, 124, .6);
     color: #ffcccf;
 }
-.skycraft-render-status[hidden] { display: none !important; }
-/* Только GPU создаёт визуальный слой: элемент ввода остаётся прозрачным. */
-.skycraft-modern-canvas { pointer-events: none !important; }
+.skycraft-render-status[hidden] { display: none           ; }
+                                                                            
+.skycraft-modern-canvas { pointer-events: none           ; }

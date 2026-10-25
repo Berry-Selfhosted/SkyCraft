@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * Логика мастерской SKYCRAFT. Каталог заполняет серверный Razor-шаблон,
- * а демо хранит баланс, остатки, чертежи и собранные дроны в localStorage.
- * Для сетевой игры эти операции необходимо перенести на сервер.
- */
+  
+                                                                        
+                                                                           
+                                                                
+   
 (function () {
     const workshopPage = document.querySelector("[data-workshop-page]");
     if (!workshopPage) {
@@ -42,8 +42,8 @@
         notice.dataset.state = type;
     }
 
-    // Старые сборки содержат устаревшие сохранённые характеристики.
-    // Пересчитываем их из набора деталей без изменения цены уже собранного дрона.
+                                                                    
+                                                                                  
     function resolveSavedSpecs(record) {
         try { return window.SkycraftDroneStats.calculate(record.parts); }
         catch { return record; }
@@ -332,7 +332,7 @@
         return;
     }
 
-    // data-* генерируются из C# каталога DroneCatalog.
+                                                       
     const parts = [...document.querySelectorAll(".part-card")].map((button) => ({
         button,
         id: button.dataset.partId,
@@ -357,7 +357,7 @@
             : defaults[category];
     }
 
-    // Загрузка бесплатного чертежа обратно в редактор.
+                                                       
     const blueprintId = new URLSearchParams(window.location.search).get("blueprint");
     const loadedBlueprint = blueprintId
         ? getBlueprints().find((blueprint) => blueprint && blueprint.id === blueprintId)
@@ -384,7 +384,7 @@
 
     let activeCategory = "frame";
 
-    // Не дублируем формулы: полёт пересчитывает ровно те же характеристики.
+                                                                            
     function currentStats() {
         return window.SkycraftDroneStats.calculate(selected, parts);
     }

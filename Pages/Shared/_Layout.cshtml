@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#0a0e18" />
     <meta name="description" content="SKYCRAFT — создавай беспилотники и открывай новые возможности." />
     <title>@ViewData["Title"] — SKYCRAFT</title>
-    <!-- Проверка локального профиля до загрузки игрового состояния. -->
+                                                                        
     <script asp-append-version="true" src="~/js/profile-session.js"></script>
     <script>
         window.SkycraftProfiles?.requireLogin();
@@ -22,7 +22,7 @@
     <link rel="stylesheet" asp-append-version="true" href="~/css/workshop.css" />
     @if (isWorkshop || ViewData["FlightPage"] is true || ViewData["Home3D"] is true)
     {
-        <!-- Locally vendored Three.js is preferred; install via Tools/vendor-three.mjs. -->
+                                                                                            
         <script type="importmap">
         {
             "imports": {

@@ -1,9 +1,9 @@
 "use strict";
-/*
- * Сюжетные вылеты кампании на одной большой 3D-карте.
- * Разные главы используют разные сектора общей спасательной долины,
- * поэтому игра ощущается как единая операция, а не набор разрозненных арен.
- */
+  
+                                                      
+                                                                    
+                                                                            
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -42,8 +42,8 @@
     ];
 
 
-    // Start pads and gates sampled directly from the converted Blender terrain.
-    // Each chapter occupies a distinct place of the same 300 × 280 m level.
+                                                                                
+                                                                            
     const terrainRoutes = [
         { start: { x: -68, y: 12.961, z: 69 }, checkpoints: [
             { x: -58, y: 16.458, z: 60, radius: 5.5 },
@@ -128,14 +128,14 @@
             skyBottom: palette.skyBottom,
             floor: palette.floor,
             terrainModel: "hills-lake-world",
-            // Only the supplied textured forest GLB is drawn by Three.js.
+                                                                          
             weather: sector.weather,
             sectorName: sector.subtitle,
             sun: { x: index < 6 ? 0.76 : 0.68, y: index % 2 ? 0.17 : 0.22 },
             start: route.start,
             checkpoints: route.checkpoints,
-            // No invisible legacy obstacles: solid collisions come from
-            // hills-lake-heightmap.json and native-pine trunk colliders.
+                                                                        
+                                                                         
             obstacles: [],
             extraColliders: [],
             ...sharedBounds

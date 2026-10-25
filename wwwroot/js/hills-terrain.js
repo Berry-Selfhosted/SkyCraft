@@ -1,11 +1,11 @@
 "use strict";
-/*
- * Terrain collision surface from the uploaded Blender hills/lake scene.
- * Coordinates were baked to metres during GLB conversion.
- *
- * Geometry is visualized by GLTFLoader, but physics reads this inexpensive
- * 2D height field, rather than only a flat legacy ground plane.
- */
+  
+                                                                        
+                                                          
+  
+                                                                           
+                                                                
+   
 (function (root) {
     let pending;
     let data;

@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * SKYCRAFT Flight Academy. The training lesson is a deterministic state machine.
- * It observes the *real* flight physics, not just keystrokes. No rewards, credits
- * or inventory are modified. Progress is granted only after a safe landing.
- */
+  
+                                                                                 
+                                                                                  
+                                                                            
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;

@@ -1,4 +1,3 @@
-
 "use strict";
 (function () {
     const manager = window.SkycraftProfiles;

@@ -36,10 +36,10 @@ test("газ вверх увеличивает средние обороты, с
 
 test("команды крена и тангажа меняют разные пары моторов", () => {
     const pitch = rotor.calculateTargets({ ...running, input: { forward: 1 }, attitude: { pitch: 0 } }).targets;
-    assert.ok(pitch[1] > pitch[0]); // сзади левый быстрее переднего левого
+    assert.ok(pitch[1] > pitch[0]);                                        
     assert.ok(pitch[3] > pitch[2]);
     const roll = rotor.calculateTargets({ ...running, input: { right: 1 }, attitude: { roll: 0 } }).targets;
-    assert.ok(roll[0] > roll[2]); // слева передний быстрее правого переднего
+    assert.ok(roll[0] > roll[2]);                                            
     assert.ok(roll[1] > roll[3]);
 });
 

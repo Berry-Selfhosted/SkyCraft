@@ -1,4 +1,4 @@
-/* Операция «Коршун». Отдельный экран сюжетных миссий, без зависимостей. */
+                                                                           
 .campaign-page { max-width: 1590px; margin: 0 auto; padding: 38px clamp(16px, 4vw, 65px) 70px; color: #e6edff; }
 .campaign-header { display: flex; justify-content: space-between; align-items: center; gap: 35px; border-bottom: 1px solid #283449; padding-bottom: 30px; }
 .campaign-intro { max-width: 850px; }
@@ -49,7 +49,7 @@
 @media(max-width:700px){.campaign-page{padding:20px 16px 50px}.campaign-header{align-items:flex-start}.campaign-aida-id{display:none}.campaign-header h1{font-size:42px}.campaign-chapters{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.campaign-chapter{min-height:162px;padding:12px}.campaign-chapter strong{font-size:16px}.campaign-section-label span:last-child{display:none}.campaign-prepare{grid-template-columns:1fr;padding:18px}.campaign-statusline{align-items:flex-start}.campaign-debrief-dialog{padding:20px}}
 @media(max-width:390px){.campaign-chapters{grid-template-columns:1fr}.campaign-chapter{min-height:117px}.campaign-chapter-icon{display:none}}
 
-/* v0.28: награда за первый вылет рядом с каждой главой. */
+                                                           
 .campaign-chapter-reward{position:relative;z-index:1;display:block;margin-top:6px;font-size:11px;font-weight:800;letter-spacing:.03em;color:#a3f4c9}
 .campaign-chapter.is-locked .campaign-chapter-reward{opacity:.52}
 .campaign-selected-reward{margin:12px 0 0;font-size:14px;font-weight:800;color:#94f4c4;line-height:1.4}

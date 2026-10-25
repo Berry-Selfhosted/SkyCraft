@@ -1,9 +1,9 @@
 "use strict";
-/*
- * Награды за первый успешный вылет.
- * Расчёт одинаков для экрана уровней, кампании и результата полёта.
- * За повторную победу деньги не выдаются: этим управляет экономика.
- */
+  
+                                    
+                                                                    
+                                                                    
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -15,7 +15,7 @@
         training: 220,
         canyon: 380
     });
-    // Двенадцать сюжетных глав становятся сложнее к финалу.
+                                                            
     const STORY_REWARDS = Object.freeze([
         150, 190, 230, 270, 320, 370, 430, 490, 560, 630, 730, 900
     ]);
@@ -30,7 +30,7 @@
         if (match) {
             const chapter = Number(match[1]);
             const base = STORY_REWARDS[chapter - 1];
-            // Последствия выбора АИДЫ увеличивают премию за риск на 10–20%.
+                                                                            
             const rate = typeof modifier === "string" && modifier.length
                 ? DANGEROUS_MODIFIERS.has(modifier) ? 0.20 : 0.10
                 : 0;

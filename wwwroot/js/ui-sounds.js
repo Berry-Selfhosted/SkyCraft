@@ -1,11 +1,11 @@
 "use strict";
 
-/*
- * Общий звуковой интерфейс SKYCRAFT.
- * Оригинальные WAV-файлы лежат в /wwwroot/assets/audio/.
- * Не зависит от игровых скриптов; работает с элементами, созданными динамически.
- * Хранение: skycraft.soundEnabled (как раньше) и skycraft.soundVolume.v1.
- */
+  
+                                     
+                                                         
+                                                                                 
+                                                                          
+   
 (function () {
     const ENABLED_KEY = "skycraft.soundEnabled";
     const VOLUME_KEY = "skycraft.soundVolume.v1";
@@ -27,7 +27,7 @@
 
     function saveValue(key, value) {
         try { window.SkycraftProfiles.storage.setItem(key, String(value)); }
-        catch { /* В приватном режиме управление звуком остаётся доступным. */ }
+        catch {                                                                }
     }
 
     function validVolume(value) {
@@ -51,7 +51,7 @@
         if ((!enabled && !options.force) || volume <= 0 || !files.has(name)) return false;
 
         const now = performance.now();
-        // Не создаём звуковой поток из десятков эффектов при наведении/столкновениях.
+                                                                                      
         const cooldown = { hover: 95, error: 260, checkpoint: 160 }[name] ?? 24;
         if (now - (lastPlayed.get(name) ?? -Infinity) < cooldown) return false;
         lastPlayed.set(name, now);
@@ -68,12 +68,12 @@
             player.pause();
             player.currentTime = 0;
             player.volume = volume;
-            // Автовоспроизведение запрещено до взаимодействия: отказ не ломает UI.
+                                                                                   
             const request = player.play();
             request?.catch?.(() => {});
             return true;
         } catch {
-            return false; // Звуки не должны мешать работе кнопок.
+            return false;                                         
         }
     }
 
@@ -107,7 +107,7 @@
     };
     window.SkycraftSounds = api;
 
-    // Позволяет любому экрану сообщить о результате без зависимостей между JS-файлами.
+                                                                                       
     window.addEventListener("skycraft:ui-sound", (event) => {
         if (typeof event.detail?.kind === "string") play(event.detail.kind);
     });
@@ -152,7 +152,7 @@
         }
     });
 
-    // Очень тихий hover только на устройствах с мышью, не на сенсорных экранах.
+                                                                                
     if (window.matchMedia?.("(hover: hover) and (pointer: fine)").matches) {
         document.addEventListener("pointerover", (event) => {
             const control = getControl(event);

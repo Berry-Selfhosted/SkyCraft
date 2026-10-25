@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * SKYCRAFT — игровой рендер, инерционная физика и две камеры квадрокоптера.
- * Наследует загрузку GLB-моделей, камеру и проекцию из drone-scene.js.
- * Для 3D-деталей используется тот же WebGL-рендер, что и в мастерской.
- */
+  
+                                                                            
+                                                                       
+                                                                       
+   
 (function () {
     const TWO_PI = Math.PI * 2;
     const clamp = (value, minimum, maximum) => Math.min(maximum, Math.max(minimum, value));
@@ -31,7 +31,7 @@
             this.velocity = this.physicsState.velocity;
             this.attitude = this.physicsState.attitude;
             this.cameraMode = "third";
-            this.yaw = 0.22;       // смещение камеры относительно направления носа
+            this.yaw = 0.22;                                                       
             this.elevation = 0.38;
             this.distance = 17;
             this.lastTimestamp = performance.now();
@@ -47,12 +47,12 @@
                 if (this.mode === "running") this.pause();
             });
 
-            // Конфигурация назначается только после выбора СОБРАННОГО дрона
-            // на странице полёта (flight-game.js), не из черновика мастерской.
+                                                                            
+                                                                               
         }
 
         setFlightSpecs(specs) {
-            // Защищаем физику от повреждённых/старых записей localStorage.
+                                                                           
             const base = { weight: 12, speed: 60, time: 5, range: 800 };
             this.flightSpecs = window.SkycraftFlightPhysics.sanitizeSpecs({ ...base, ...specs });
             this.reset();
@@ -60,7 +60,7 @@
 
         setConfiguration(configuration) {
             super.setConfiguration(configuration);
-            // При выборе другой сборки отклики ESC и ограничения RPM тоже меняются.
+                                                                                    
             this.rotorState = window.SkycraftRotorDynamics?.createState() || null;
         }
 
@@ -122,12 +122,12 @@
                 : null;
             this.campaignState = window.SkycraftCampaignEffects?.create(this.campaignModifier) || null;
             this.colliders = window.SkycraftCollisions?.build(level) || [];
-            // More distant camera to match the 300 m playable scenery.
+                                                                       
             this.distance = level.story ? 23 : 17;
             this.yaw = level.story ? 0 : 0.22;
             if (level.terrainModel === 'hills-lake-world') {
-                // Height data and collision proxies match the exported GLB, not
-                // the old procedural world. Rebuild when async data arrives.
+                                                                                
+                                                                             
                 window.SkycraftHillsTerrain?.load().then(() => {
                     if (this.level !== level) return;
                     this.colliders = window.SkycraftCollisions?.build(level) || [];
@@ -177,7 +177,7 @@
             if (this.mode === "paused") { this.pause(); return; }
             if (this.mode !== "ready") return;
             this.mode = "running";
-            // Миссия запущена, но моторы выключены: игрок запускает их вручную.
+                                                                                
             this.flightPhase = "disarmed";
             this.updateTutorial(0);
             this.notify();
@@ -194,7 +194,7 @@
         }
 
         disarmMotors() {
-            // Безопасность: при полёте выключить моторы вручную нельзя.
+                                                                        
             if (this.mode !== "running" || this.flightPhase !== "armed") return false;
             this.flightPhase = "disarmed";
             this.keys.clear();
@@ -214,7 +214,7 @@
         land() {
             if (this.mode !== "running" || this.failsafeLanding || this.completionPending) return false;
             if (this.flightPhase === "landing") {
-                // Прервать автопосадку можно только до контакта с землёй.
+                                                                          
                 this.flightPhase = "flying";
             } else if (["flying", "takeoff"].includes(this.flightPhase)) {
                 this.flightPhase = "landing";
@@ -231,9 +231,9 @@
             this.flightPhase = "disarmed";
             this.keys.clear();
             this.lastTouchdown = contact.hard ? "hard" : "soft";
-            // На земле моторы обесточены, их инерция видна в RPM-анимации.
+                                                                           
             if (this.tutorial) {
-                // Жёсткое касание не даёт зачёта: курсант должен повторить посадку.
+                                                                                    
                 if (contact.hard) this.tutorial.landingOrdered = false;
                 this.updateTutorial(0, { touchdown: !contact.hard });
                 if (this.tutorial.finished) this.mode = "done";
@@ -272,8 +272,8 @@
         setCameraMode(mode) {
             if (!["first", "third"].includes(mode)) return;
             this.cameraMode = mode;
-            // При смене ракурса сбрасываем смещение от предыдущей камеры,
-            // но НЕ состояние физики и НЕ пройденные ворота.
+                                                                          
+                                                             
             this.yaw = mode === "first" ? 0 : 0.22;
             this.elevation = mode === "first" ? 0 : 0.38;
             this.notify();
@@ -283,7 +283,7 @@
             this.setCameraMode(this.cameraMode === "third" ? "first" : "third");
         }
 
-        // Переопределяем обработчик конструктора: FPV допускает взгляд вниз.
+                                                                             
         bindInteraction() {
             this.canvas.addEventListener("pointerdown", (event) => {
                 this.dragPointer = event.pointerId;
@@ -315,12 +315,23 @@
             }, { passive: false });
         }
 
+                                                            
+        interact() {
+            if (this.mode !== "running") return;
+            if (this.level?.story && this.confirmStoryObjective()) return;
+            if (this.campaignState) {
+                const message = window.SkycraftCampaignEffects?.action(this.campaignState,
+                    { near: this.objectiveNearby(), index: this.completed });
+                if (message) this.notify({ campaignAction: message });
+            }
+        }
+
         handleKey(event) {
             const key = event.code;
             const controls = ["KeyW", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyE",
                 "Space", "ShiftLeft", "ShiftRight", "Escape", "KeyV", "KeyM", "KeyL", "KeyF", "KeyC"];
             if (!controls.includes(key)) return;
-            // Esc остаётся рабочим, даже если фокус на кнопке меню паузы.
+                                                                          
             if (key === "Escape" && event.type === "keydown" && !event.repeat) {
                 const settings = typeof document === "undefined" ? null : document.getElementById("settings-overlay");
                 if (!settings || settings.hidden) {
@@ -337,14 +348,7 @@
             }
             if (this.mode !== "running") return;
             if (key === "KeyF") {
-                if (event.type === "keydown" && !event.repeat) {
-                    if (this.level?.story && this.confirmStoryObjective()) return;
-                    if (this.campaignState) {
-                        const message = window.SkycraftCampaignEffects?.action(this.campaignState,
-                            { near: this.objectiveNearby(), index: this.completed });
-                        if (message) this.notify({ campaignAction: message });
-                    }
-                }
+                if (event.type === "keydown" && !event.repeat) this.interact();
                 return;
             }
             if (key === "KeyC") {
@@ -381,7 +385,7 @@
             return kmh < 0.05 ? 0 : kmh;
         }
 
-        // HUD altitude is above local terrain, not world Y or mountain elevation.
+                                                                                  
         get altitudeAboveGround() {
             const ground = window.SkycraftFlightOperations.GROUND_Y;
             const height = this.level?.terrainModel === 'hills-lake-world'
@@ -444,8 +448,8 @@
             if (dt <= 0) return;
             this.time += dt;
 
-            // Моторы на земле не создают движения дрона: запрет физический,
-            // а не только визуальная блокировка клавиатуры.
+                                                                            
+                                                            
             const grounded = ["disarmed", "armed"].includes(this.flightPhase);
             if (grounded) {
                 this.position.y = supportGroundAt(this.position.x, this.position.z, this.position.y);
@@ -463,9 +467,9 @@
                     input = operation.takeoffInput(this.velocity, this.attitude.yaw);
                 } else {
                     input = window.SkycraftFlightPhysics.controlsFromKeys(this.keys);
-                    // Third-person steering is CAMERA-relative, so turning the
-                    // orbit camera cannot invert W/A/S/D on the screen.
-                    // FPV still uses body-relative axes, as in real drone controls.
+                                                                               
+                                                                        
+                                                                                    
                     if (this.level.story && this.cameraMode === "third") {
                         input = window.SkycraftFlightOrientation.cameraRelativeInput(input, this.yaw);
                     }
@@ -496,15 +500,15 @@
                 const rangeLimit = this.distanceFromStart > actualRange;
                 let hit = null;
                 if (window.SkycraftCollisions && this.colliders) {
-                    // Проверка всего перемещения, а не только конечной точки:
-                    // дрон не проходит сквозь тонкие стены при высокой скорости.
+                                                                              
+                                                                                 
                     const result = window.SkycraftCollisions.move(
                         previous, { ...this.position }, this.velocity, this.colliders);
                     Object.assign(this.position, result.position);
                     Object.assign(this.velocity, result.velocity);
                     hit = result.collision;
                 } else if (this.position.y > ground + .04 && this.collides()) {
-                    // Обратная совместимость, если модуль коллизий не загружен.
+                                                                                
                     Object.assign(this.position, previous);
                     this.velocity.x = this.velocity.y = this.velocity.z = 0;
                     hit = { name: "Препятствие", impact: 0 };
@@ -539,8 +543,8 @@
                 * (this.level.story ? window.SkycraftCampaignEffects?.drain(
                     this.campaignState, Math.hypot(this.velocity.x,this.velocity.z)) || 1 : 1);
 
-            // При заряде <= 10% включаем автовозврат к земле, сохранив
-            // небольшую резервную энергию для безопасной посадки.
+                                                                       
+                                                                  
             if (!this.failsafeLanding && this.remainingBattery <= 10 && motorsOn) {
                 this.failsafeLanding = true;
                 if (this.flightPhase === "armed") {
@@ -587,12 +591,12 @@
                         this.campaignState.confirmedIndex === this.completed)) {
                         this.completed++;
                         if (this.completed === this.level.checkpoints.length && !this.tutorial) {
-                            // На обычных трассах посадка включается автоматически.
+                                                                                   
                             this.completionPending = true;
                             this.flightPhase = "landing";
                             this.keys.clear();
                         }
-                        // В академии посадка — отдельное действие игрока (клавиша L).
+                                                                                      
                         this.updateTutorial(0);
                         this.notify({ checkpoint: true });
                     } else if (distance < current.radius && needsScan &&
@@ -631,8 +635,8 @@
             return false;
         }
 
-        // FPV: точка обзора закреплена у носовой камеры и смотрит по курсу.
-        // Третье лицо: камера преследует дрон с небольшим смещением.
+                                                                            
+                                                                     
         updateCamera() {
             const yaw = (this.attitude?.yaw || 0) + (this.yaw || 0);
             const heading = this.attitude?.yaw || 0;
@@ -662,7 +666,7 @@
                 ];
                 right = norm(cross(forward, [0, 1, 0]));
                 up = norm(cross(right, forward));
-                // Небольшой крен картинки — ощущение пилотирования.
+                                                                    
                 const bank = clamp(roll * 0.32, -0.18, 0.18);
                 const cos = Math.cos(bank), sin = Math.sin(bank);
                 const bankedRight = right.map((n, i) => n * cos + up[i] * sin);
@@ -671,9 +675,9 @@
             } else {
                 const target = [this.position.x, this.position.y + 0.25, this.position.z];
                 const cosPitch = Math.cos(this.elevation);
-                // Камера следует за ХВОСТОМ дрона, а не за его носом.
-                // Положительный yaw физики направляет нос в +X;
-                // для позиции камеры знак yaw должен быть обратным.
+                                                                      
+                                                                
+                                                                    
                 const follow = window.SkycraftFlightOrientation.chaseOffset(
                     heading, this.yaw, this.distance * cosPitch);
                 cameraPosition = [
@@ -685,7 +689,7 @@
                 right = norm(cross(forward, [0, 1, 0]));
                 up = norm(cross(right, forward));
             }
-            // Камера третьего лица не проходит сквозь здания и стены.
+                                                                      
             if (this.cameraMode === "third" && window.SkycraftCollisions && this.colliders?.length) {
                 const center = { ...this.position, y: this.position.y + 0.25 };
                 const proposed = { x: cameraPosition[0], y: cameraPosition[1], z: cameraPosition[2] };
@@ -700,7 +704,7 @@
                     up = norm(cross(right, forward));
                 }
             }
-            // A chase camera must not go through the real imported terrain.
+                                                                            
             if (this.cameraMode === 'third' && this.level?.terrainModel === 'hills-lake-world') {
                 const groundY = window.SkycraftHillsTerrain?.heightAt(
                     cameraPosition[0], cameraPosition[2]);
@@ -716,8 +720,8 @@
             this.focalLength = Math.min(this.width * 0.95, this.height * 1.45);
         }
 
-        // Полётная сцена выводится только Three.js; никаких кубов, Canvas2D,
-        // процедурных полов или альтернативных 3D-моделей больше нет.
+                                                                             
+                                                                      
         render() {
             if (!this.level || this.width < 1 || this.height < 1) return;
             super.render();

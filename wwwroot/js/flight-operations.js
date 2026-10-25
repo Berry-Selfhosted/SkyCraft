@@ -1,12 +1,12 @@
 "use strict";
 
-/*
- * SKYCRAFT — посадка и наземные состояния.
- * Полётные единицы: метры, секунды, м/с; высота — координата центра дрона.
- * Высота 1.87 м соответствует касанию шасси плоскости земли (y=0)
- * при текущей геометрии GLB.
- * Это автопилот посадки в игровой модели, не сертифицированный контроллер.
- */
+  
+                                           
+                                                                           
+                                                                  
+                             
+                                                                           
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -15,8 +15,8 @@
     const GROUND_Y = 1.87;
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-    // Плавно снижаемся только после торможения горизонтальной скорости.
-    // Торможение осуществляется обратным тангажом / креном (инерция сохраняется).
+                                                                        
+                                                                                  
     function landingInput(position, velocity, yaw, ground = GROUND_Y) {
         const sinYaw = Math.sin(yaw);
         const cosYaw = Math.cos(yaw);
@@ -25,7 +25,7 @@
         const horizontalSpeed = Math.hypot(velocity.x, velocity.z);
         const altitude = Math.max(0, position.y - ground);
 
-        // Не начинаем быстрое снижение, пока аппарат ещё скользит по горизонтали.
+                                                                                  
         const descentSpeed = horizontalSpeed > 1.1
             ? 0.10
             : clamp(altitude * 0.68, 0.09, 1.15);

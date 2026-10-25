@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * Минимальные регрессионные тесты без npm-зависимостей.
- * Запуск: node --test tests/flight-regression.test.cjs
- * В тестах используются только встроенные модули Node.js.
- */
+  
+                                                        
+                                                       
+                                                          
+   
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -25,7 +25,7 @@ const FlightScene = browser.window.SkycraftFlightScene;
 const levels = browser.window.SkycraftLevels;
 
 function makeFlight(level = levels[0]) {
-    // Объект с методами настоящего FlightScene, без браузерного canvas.
+                                                                        
     const scene = Object.create(FlightScene.prototype);
     scene.level = level;
     scene.keys = new Set();

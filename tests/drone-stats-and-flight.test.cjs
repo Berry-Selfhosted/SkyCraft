@@ -18,7 +18,7 @@ const base = { ...model.DEFAULTS };
 const variants = (category) => catalog.filter((part) => part.category === category);
 const byId = new Map(catalog.map(part => [part.id, part]));
 
-// C# сериализует свойства в PascalCase, тогда как мастерская даёт camelCase.
+                                                                             
 test("каталог C# читается в обоих форматах и базовая сборка не меняется", () => {
     assert.equal(catalog.length, 15);
     const fromCSharp = catalog.map(part => ({
@@ -72,7 +72,7 @@ test("детали меняют характеристики в ожидаемо
 
 test("скорость/время/рейтинг дальности не суммируются четырежды у комплекта моторов", () => {
     const changed = model.calculate({ ...base, motor: "motor-race" }, catalog);
-    // 0.4 кг дополнительно за четыре гоночных мотора: 60 + 20 - 0.4 * 1.5.
+                                                                           
     assert.equal(changed.speed, 79.4);
     assert.equal(changed.weight, 12.4);
     assert.equal(changed.price, 80 + 4 * 38 + 4 * 10 + 65 + 35);
@@ -105,10 +105,10 @@ test("максимальная скорость дрона действител�
         scene.flightPhase = "flying";
         scene.position.y = 4;
         scene.keys.add("KeyW");
-        // Местоположение внутри тренировочного уровня, без препятствий.
+                                                                        
         for (let i = 0; i < 18; i++) scene.update(0.06);
     }
-    // При физическом разгоне за 1 сек различие умеренное: скорость не задаётся мгновенно.
+                                                                                          
     assert.ok(fast.speed > normal.speed + 1, `${fast.speed} vs ${normal.speed}`);
     assert.ok(fast.speed <= fast.flightSpecs.speed + 0.001);
     assert.ok(normal.speed <= normal.flightSpecs.speed + 0.001);

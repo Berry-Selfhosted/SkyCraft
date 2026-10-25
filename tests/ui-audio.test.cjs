@@ -16,7 +16,7 @@ test("все 15 эффектов — корректные короткие WAV, 
         const wav = fs.readFileSync(path.join(ROOT, "wwwroot", "assets", "audio", `${name}.wav`));
         assert.equal(wav.toString("ascii", 0, 4), "RIFF", name);
         assert.equal(wav.toString("ascii", 8, 12), "WAVE", name);
-        assert.equal(wav.readUInt16LE(22), 1, name); // mono
+        assert.equal(wav.readUInt16LE(22), 1, name);        
         assert.equal(wav.readUInt32LE(24), 24000, name);
         assert.equal(wav.readUInt16LE(34), 16, name);
         assert.ok(wav.length > 2000 && wav.length < 32000, name);

@@ -1,6 +1,6 @@
 "use strict";
 
-/* Экран выбора миссии. Никакой 3D-сцены и симуляции на этой странице нет. */
+                                                                             
 (function () {
     const cards = [...document.querySelectorAll("[data-choose-level]")];
     if (!cards.length || !window.SkycraftLevels || !window.SkycraftEconomy) return;
@@ -19,7 +19,7 @@
         trained = window.SkycraftProfiles.storage.getItem(trainingKey) === "true";
         const saved = JSON.parse(window.SkycraftProfiles.storage.getItem(recordKey) || "{}");
         if (saved && typeof saved === "object" && !Array.isArray(saved)) records = saved;
-    } catch { /* Хранилище может быть недоступно. */ }
+    } catch {                                        }
 
     const time = seconds => `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
     function notice(message) {
@@ -53,7 +53,7 @@
                 select.append(option);
             }
             select.value = drones.some(drone => drone.id === activeId) ? activeId : drones[0].id;
-            // Запоминаем выбранный собранный аппарат для физики следующей страницы.
+                                                                                    
             if (select.value !== activeId) store.selectDrone(select.value);
         }
         updateDroneDetails();
@@ -95,11 +95,11 @@
         } else if (!trained) {
             launch.innerHTML = `🔒 Пройти академию <span>→</span>`;
             $("mission-launch-hint").textContent = "Трасса откроется после обучения";
-            launch.disabled = false; // Перенаправляет в академию.
+            launch.disabled = false;                              
         } else if (!availableDrones().length) {
             launch.innerHTML = `◈ Нужен готовый дрон <span>→</span>`;
             $("mission-launch-hint").textContent = "Собери аппарат в мастерской";
-            launch.disabled = false; // Переход в мастерскую.
+            launch.disabled = false;                         
         } else {
             launch.innerHTML = `▶ Начать испытание <span>→</span>`;
             $("mission-launch-hint").textContent = "Время и рекорд сохраняются после посадки";

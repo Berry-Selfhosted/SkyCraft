@@ -1,12 +1,12 @@
 "use strict";
 
-/*
- * SKYCRAFT: физические объёмы уровней и непрерывная проверка столкновений.
- * Координаты: X/Z — горизонталь, Y — высота, размеры в игровых метрах.
- * Вместо пересчёта тысяч треугольников GLB для физики используются
- * простые AABB-коллайдеры, повторяющие габариты видимых конструкций.
- * Дрон приближён сферой — быстрый и стабильный компромисс для аркадной физики.
- */
+  
+                                                                           
+                                                                       
+                                                                   
+                                                                     
+                                                                               
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -24,8 +24,8 @@
         const items = [];
         const add = (name, pos, size) => items.push(box(name, pos, size));
         if (!level) return items;
-        // Непроницаемые границы мира. Пол и высота обрабатываются отдельно
-        // существующим модулем посадки и ограничением высоты.
+                                                                           
+                                                              
         const boundary = level.boundary;
         const frontBoundary = Number.isFinite(level.frontBoundary) ? level.frontBoundary : 18;
         const backBoundary = Number.isFinite(level.backBoundary) ? level.backBoundary : -68;
@@ -40,11 +40,11 @@
             if (item.type === "crate") {
                 add("Грузовой ящик", [x, size/2, z], [size, size, size]);
             } else if (item.type === "tower") {
-                // Столб и верхняя площадка вышки имеют разные габариты.
+                                                                        
                 add("Опора вышки", [x, 3.8, z], [size * .42, 7.6, size * .42]);
                 add("Платформа вышки", [x, 7.7, z], [size, .30, size]);
             } else if (item.type === "rock") {
-                // По ярусам drawBoulder(), но без мелких декоративных граней.
+                                                                              
                 add("Скала", [x, size * .27, z], [size * .95, size * .57, size * .77]);
                 add("Скала", [x + size * .05, size * .69, z + size * .08],
                     [size * .74, size * .5, size * .65]);
@@ -58,8 +58,8 @@
             items.push(box(extra.name || "Объект сцены", extra.center, extra.size));
         }
         if (level.terrainModel === 'hills-lake-world') {
-            // Pine trunks located at their actual mesh instance positions, not invisible legacy
-            // scenery. Loaded by hills-terrain.js and scoped to this level.
+                                                                                                
+                                                                            
             const forest = typeof window !== 'undefined' ? window.SkycraftHillsTerrain : null;
             for (const trunk of forest?.colliderBoxes?.() || []) {
                 if (!trunk.center || !trunk.size) continue;
@@ -77,8 +77,8 @@
             for (const z of [-12.7, -4.5, 3.7]) {
                 add("Балка ангара", [0, 8.35, z], [28.8, .5, .72]);
             }
-            // Контейнеры и шкафы из hangar-props.glb. Координаты соответствуют
-            // Tools/generate_hangar.py — при редактировании GLB меняй их здесь.
+                                                                               
+                                                                                
             const crates = [[-11,.65,-2.5],[-10.1,.65,-2.5],[-11,1.84,-2.5],
                 [11,.68,-7.2],[12.1,.68,-7.2],[11,.68,-5.9],
                 [-10,.65,-12],[10,.65,2.3]];
@@ -89,7 +89,7 @@
             for (const x of [-12.3,12.3]) {
                 add("Электрошкаф", [x,1.33,-11.6], [1.2,2.65,1.32]);
             }
-            // Стойки продолжения трассы созданы из box() в drawGround.
+                                                                       
             for (const x of [-14, 14]) for (const z of [-30, -50]) {
                 add("Колонна ангара", [x, 4.4, z], [.54, 8.8, .75]);
             }
@@ -105,12 +105,12 @@
                 add("Верхняя ферма", [0, 8.3, z], [38, .34, .4]);
             }
         } else if (level.kind === "training") {
-            // На открытом полигоне также учитываем видимые деревья.
+                                                                    
             for (const x of [-13, 13]) for (const z of [-4, -25, -48]) {
                 add("Дерево", [x, 2.8, z], [1.5, 4.3, 1.5]);
             }
         } else if (level.kind === "canyon") {
-            // Дополнительные стены каньона, видимые в drawGround().
+                                                                    
             for (let z = -57; z <= 17; z += 9) {
                 for (const x of [-13, -10, 10, 13]) {
                     const size = 6 + (Math.abs(z + x) % 4);
@@ -122,9 +122,9 @@
         return items;
     }
 
-    // Sweep ray от центра дрона к целевой точке через AABB,
-    // расширенный на его радиус (Minkowski sum). Не пропускает тонкую стену
-    // даже при больших dt / высоких скоростях.
+                                                            
+                                                                            
+                                               
     function sweepBox(from, to, collider, radius = DRONE_RADIUS) {
         let enter = 0, leave = 1;
         let normal = null;
@@ -150,7 +150,7 @@
         }
         if (enter > 1 || leave < 0) return null;
         if (normal === null) {
-            // Уже внутри коллайдера. Выталкиваем в сторону ближайшей грани.
+                                                                            
             let distance = Infinity;
             for (const axis of ["x", "y", "z"]) {
                 for (const [side, sign] of [[collider.min[axis] - radius, -1], [collider.max[axis] + radius, 1]]) {
@@ -241,7 +241,7 @@
         let first = null;
         const initialOverlap = resolvePenetration(position, v, colliders, radius);
         if (initialOverlap && !first) first = { name: initialOverlap.name, impact: initialOverlap.impact };
-        // До четырёх столкновений за кадр — скольжение вдоль стен/углов.
+                                                                         
         for (let iteration = 0; iteration < 4; iteration++) {
             const end = { x: position.x + remaining.x, y: position.y + remaining.y, z: position.z + remaining.z };
             const hit = sweep(position, end, colliders, radius);
@@ -252,7 +252,7 @@
             const inwardSpeed = v.x*n.x + v.y*n.y + v.z*n.z;
             if (!first) first = { name: hit.collider.name, impact: Math.max(0, -inwardSpeed) };
             if (inwardSpeed < 0) {
-                // Потеря энергии на удар; небольшая упругая отдача.
+                                                                    
                 for (const axis of ["x", "y", "z"]) v[axis] -= inwardSpeed * n[axis] * 1.02;
                 for (const axis of ["x", "y", "z"]) if (!n[axis]) v[axis] *= 0.88;
             }

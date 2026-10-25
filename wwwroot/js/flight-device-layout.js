@@ -1,8 +1,8 @@
 "use strict";
-/*
- * Определяем мобильный игровой интерфейс ДО отрисовки страницы.
- * Сохраняем один режим для всех CSS-файлов и игровых контроллеров.
- */
+  
+                                                                
+                                                                   
+   
 (function () {
     const root = document.documentElement;
 
@@ -14,7 +14,7 @@
         const phoneSize = shortSide <= 900 && window.innerWidth <= 1600;
         const smallLandscape = window.innerWidth <= 1400 && window.innerHeight <= 760 && window.innerWidth > window.innerHeight;
 
-        // Пейзажная ориентация телефона бывает шире 1000 CSS-пикселей.
+                                                                       
         return (mobileBrowser && phoneSize) || (touch && phoneSize) || smallLandscape || window.innerWidth <= 700;
     }
 

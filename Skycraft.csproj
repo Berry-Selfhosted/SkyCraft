@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- Запускаем приложение через dotnet, без отдельного Skycraft.exe. -->
+                                                                            
     <UseAppHost>false</UseAppHost>
   </PropertyGroup>
 </Project>

@@ -1,15 +1,15 @@
 "use strict";
 
-/*
- * Стабилизированная модель квадрокоптера SKYCRAFT.
- * Единицы: метры, секунды, радианы, м/с. Не CFD и не acro-контроллер.
- *
- * W/S: желаемый тангаж (ускорение вдоль носа), A/D: крен,
- * Q/E: угловая скорость рыскания, Space/Shift: изменение тяги.
- * Вектор тяги наклоняется вместе с корпусом; сопротивление воздуха
- * замедляет аппарат, но не останавливает его мгновенно.
- * Встроенные подшаги ограничивают зависимость от FPS.
- */
+  
+                                                   
+                                                                      
+  
+                                                          
+                                                               
+                                                                   
+                                                        
+                                                      
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -55,44 +55,44 @@
         const n = Math.ceil(dt / (1 / 120));
         const h = dt / n;
         const maxSpeed = specs.speed / 3.6;
-        // Более тяжёлая сборка реагирует медленнее; быстрые моторы повышают тягу.
+                                                                                  
         const massFactor = clamp(12 / specs.weight, 0.55, 1.6);
         const motorFactor = clamp(Math.sqrt(specs.speed / 60), 0.75, 1.5);
         const agility = massFactor * motorFactor;
-        const tiltLimit = 0.43; // ~25°: режим самовыравнивания, не акробатика.
+        const tiltLimit = 0.43;                                                
         const rotResponse = 2.8 * Math.sqrt(agility);
         const maxYawRate = 1.65 * Math.sqrt(agility);
         const drag = GRAVITY * Math.tan(tiltLimit) * agility / (maxSpeed * maxSpeed);
 
         for (let i = 0; i < n; i++) {
             const attitude = state.attitude;
-            // Плавное изменение угла вместо мгновенного перемещения.
+                                                                     
             const alpha = 1 - Math.exp(-rotResponse * h);
             attitude.pitch += (clamp(input.forward || 0, -1, 1) * tiltLimit - attitude.pitch) * alpha;
             attitude.roll += (clamp(input.right || 0, -1, 1) * tiltLimit - attitude.roll) * alpha;
             state.yawRate += (clamp(input.yaw || 0, -1, 1) * maxYawRate - state.yawRate)
                 * (1 - Math.exp(-3.5 * h));
             attitude.yaw += state.yawRate * h;
-            // Вектор тяги в локальных координатах, повёрнутый вокруг yaw.
-            // W даёт ускорение вдоль -Z, D — вдоль +X.
+                                                                          
+                                                       
             const forwardAcceleration = GRAVITY * Math.tan(attitude.pitch) * agility;
             const rightAcceleration = GRAVITY * Math.tan(attitude.roll) * agility;
             const cosYaw = Math.cos(attitude.yaw);
             const sinYaw = Math.sin(attitude.yaw);
             const ax = rightAcceleration * cosYaw + forwardAcceleration * sinYaw;
-            // При положительном yaw направление правого борта — (+cosYaw, +sinYaw).
-            // Старый минус инвертировал A/D относительно карты после разворота.
+                                                                                    
+                                                                                
             const az = rightAcceleration * sinYaw - forwardAcceleration * cosYaw;
             const vx = state.velocity.x;
             const vz = state.velocity.z;
             const horizontalSpeed = Math.hypot(vx, vz);
-            // Квадратичное аэродинамическое сопротивление + небольшое затухание.
+                                                                                 
             const airResistance = drag * horizontalSpeed;
             state.velocity.x += (ax - vx * (airResistance + 0.045)) * h;
             state.velocity.z += (az - vz * (airResistance + 0.045)) * h;
 
-            // Стабилизация высоты автоматически компенсирует наклон тяги.
-            // Space/Shift добавляют/убирают газ, движение по вертикали инерционно.
+                                                                          
+                                                                                   
             const lift = clamp(input.lift || 0, -1, 1);
             const verticalAcceleration = lift * 5.2 * agility - state.velocity.y * 1.35;
             state.velocity.y += verticalAcceleration * h;

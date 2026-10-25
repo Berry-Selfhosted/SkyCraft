@@ -1,9 +1,9 @@
 "use strict";
-/*
- * АИДА / радио-переговоры во время миссии.
- * Никакого внешнего ИИ: только сценарная логика, зависящая от главы,
- * прогресса, заряда, столкновений и выбранного модификатора.
- */
+  
+                                           
+                                                                     
+                                                             
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;

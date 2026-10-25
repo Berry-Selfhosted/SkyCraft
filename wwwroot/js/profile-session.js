@@ -1,9 +1,9 @@
 "use strict";
-/*
- * SKYCRAFT / Локальные игровые профили.
- * Это выбор пользователя в одном браузере, а НЕ серверная аутентификация.
- * Весь игровой прогресс лежит в localStorage, сгруппирован по profile id.
- */
+  
+                                        
+                                                                          
+                                                                          
+   
 (function (root, factory) {
     const api = factory(root?.localStorage, root?.sessionStorage);
     if (typeof module === "object" && module.exports) module.exports = { createProfileManager: factory };
@@ -68,8 +68,8 @@
         }
         return keys;
     }
-    // В старых версиях сохранения были общими. Забираем их ТОЛЬКО в первый
-    // профиль и удаляем исходные ключи после успешного копирования.
+                                                                           
+                                                                    
     function importLegacy(profileId) {
         if (rawLocal.getItem(MIGRATED_KEY) === "1") return 0;
         const candidates = migrationCandidates();
@@ -93,7 +93,7 @@
         let migrated = 0;
         try { if (current.length === 0) migrated = importLegacy(profile.id); }
         catch (error) {
-            // Не создаём «успешный» профиль с частично перенесёнными данными.
+                                                                              
             rawLocal.setItem(REGISTRY_KEY, JSON.stringify(current));
             throw new Error(`Не удалось перенести сохранения: ${error.message}`);
         }
@@ -109,7 +109,7 @@
     }
     function logout() { rawSession.removeItem(ACTIVE_KEY); }
     function redirectTarget(candidate) {
-        // Только внутренний путь этого сайта, без //, \\, control chars и схем.
+                                                                                
         return typeof candidate === "string" && /^\/(?!\/|\\)[^\\\x00-\x1f]*$/.test(candidate)
             && !/^\/Login(?:[/?#]|$)/i.test(candidate) ? candidate : "/";
     }

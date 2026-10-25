@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * Flight UI: HUD, управление прохождением и локальные рекорды.
- * Выбор карты и собранного дрона находится на странице /Play.
- * Никакой серверной логики, начисления денег или мультиплеера здесь нет.
- */
+  
+                                                               
+                                                              
+                                                                         
+   
 (function () {
     const canvas = document.getElementById("flight-canvas");
     if (!canvas || !window.SkycraftLevels || !window.SkycraftFlightScene) return;
@@ -42,9 +42,9 @@
     const recordKey = "skycraft.flight.records.v1";
     const trainingKey = "skycraft.tutorial.completed.v1";
     let trained = false;
-    try { trained = window.SkycraftProfiles.storage.getItem(trainingKey) === "true"; } catch { /* private browsing */ }
-    // На эту страницу попадаем только после выбора карты.
-    // Прямая ссылка не должна обходить допуск академии или проверку собранного дрона.
+    try { trained = window.SkycraftProfiles.storage.getItem(trainingKey) === "true"; } catch {                        }
+                                                          
+                                                                                      
     const requestedLevelId = new URLSearchParams(window.location.search).get("level") || "academy";
     const requestedLevel = window.SkycraftLevels.find(level => level.id === requestedLevelId);
     const campaignStore = window.SkycraftCampaign?.createStore(window.SkycraftProfiles.storage);
@@ -79,7 +79,7 @@
     let lastMobileObjectiveStep = null;
 
     function applyResponsiveFlightUi() {
-        // Единый детектор загружен в <head>, до отрисовки страницы.
+                                                                    
         const mobileUi = window.SkycraftDeviceLayout?.sync() ?? false;
         document.body.classList.toggle("is-mobile-flight-ui", mobileUi);
         document.body.classList.toggle("is-desktop-flight-ui", !mobileUi);
@@ -227,7 +227,7 @@
 
     function syncAtmosphere(state) {
         if (!atmosphere) return;
-        // Real atmosphere/light comes from Three.js; do not overlay a fake sky.
+                                                                                
         atmosphere.hidden = true;
         atmosphere.dataset.biome = state.level?.story ? (window.SkycraftCampaign?.chapters?.[state.level.storyIndex - 1]?.biome || "story") : "none";
     }
@@ -243,8 +243,8 @@
 
     const requestedDroneId = new URLSearchParams(window.location.search).get("drone");
     function loadDroneForMission() {
-        // ID указан явно в ссылке на вылет, а не берётся из черновика или первого попавшегося дрона.
-        // Академия допускает отдельный бесплатный учебный аппарат.
+                                                                                                     
+                                                                   
         if (currentLevel?.tutorial && requestedDroneId === "academy-loaner") return;
         const drone = store?.getDrones().find(d => d && d.id === requestedDroneId);
         if (!drone?.parts) return;
@@ -260,7 +260,7 @@
 
     function updateFlightAvailability() {
         const ready = !!(selectedDrone || (currentLevel?.tutorial && requestedDroneId === "academy-loaner"));
-        // Все основные действия выполняются с клавиатуры, отдельной панели больше нет.
+                                                                                       
         retry.disabled = !ready;
         if (!ready) $("flight-hud-status").textContent = "НЕТ ГОТОВОГО ДРОНА";
     }
@@ -272,7 +272,7 @@
             try {
                 window.SkycraftProfiles.storage.setItem(recordKey, JSON.stringify(records));
             } catch {
-                // В режиме без хранилища рекорды действуют только до обновления страницы.
+                                                                                          
             }
         }
         return records[levelId];
@@ -284,9 +284,9 @@
     }
 
     mobileObjective?.addEventListener("click", () => {
-        // Начиная с v0.24 мобильная подсказка — это однострочный HUD.
-        // Полные объяснения открываются через отдельную кнопку помощи (I),
-        // поэтому сам заголовок больше не разворачивается по нажатию.
+                                                                      
+                                                                           
+                                                                      
         mobileObjective.setAttribute("aria-expanded", "false");
         mobileObjective.classList.remove("is-expanded");
         if (mobileObjectiveDetails) mobileObjectiveDetails.hidden = true;
@@ -296,8 +296,8 @@
     window.addEventListener("resize", applyResponsiveFlightUi, { passive: true });
     window.addEventListener("orientationchange", () => setTimeout(applyResponsiveFlightUi, 0));
 
-    // Блокируем случайное выделение и долгий тап только во время активной игры.
-    // В меню и на других страницах браузер продолжает работать обычным образом.
+                                                                                
+                                                                                
     for (const eventName of ["selectstart", "dragstart", "contextmenu"]) {
         document.addEventListener(eventName, (event) => {
             if (document.body.classList.contains("flight-gameplay-active") &&
@@ -307,8 +307,8 @@
         });
     }
 
-    // Данные задания находятся поверх 3D-сцены, а не в панели подсказок.
-    // Перерисовываем их только при смене этапа, а не каждые 50 мс вместе с HUD.
+                                                                         
+                                                                                
     function updateMission(state) {
         const total = state.level.checkpoints.length;
         const completed = Math.max(0, Math.min(total, state.completed));
@@ -386,9 +386,9 @@
         $("flight-lesson-fill").style.width = `${Math.round(lesson.progress * 100)}%`;
     }
 
-    // На мобильном экране показываем одну маленькую карточку вместо
-    // полноразмерного HUD задания и отдельного окна инструктора.
-    // Используем те же данные, что и в обычном режиме: прогресс не дублируется.
+                                                                    
+                                                                 
+                                                                                
     function updateMobileObjective(state) {
         if (!mobileObjective || !mobileObjectiveStep || !mobileObjectiveTitle ||
             !mobileObjectiveCommand || !mobileObjectiveDetails || !mobileObjectiveFill) return;
@@ -416,7 +416,7 @@
             lastMobileObjectiveSignature = signature;
         }
         mobileObjectiveFill.style.width = `${Math.round(Math.max(0, Math.min(1, total ? completed / total : 0)) * 100)}%`;
-        // После перехода к следующему упражнению автоматически сворачиваем подсказку.
+                                                                                      
         const step = `${state.level.id}:${lesson?.index ?? completed}`;
         if (step !== lastMobileObjectiveStep) {
             lastMobileObjectiveStep = step;
@@ -428,7 +428,7 @@
 
     function updateUi(state) {
         if (!state.level) return;
-        // CSS компактного полётного интерфейса ориентируется на текущий режим.
+                                                                               
         const stage = $("flight-stage");
         stage.dataset.flightMode = state.mode;
         stage.dataset.flightPhase = state.flightPhase || "disarmed";
@@ -542,7 +542,7 @@
                 }
                 if (state.level.tutorial) {
                     trained = true;
-                    try { window.SkycraftProfiles.storage.setItem(trainingKey, "true"); } catch { /* no storage */ }
+                    try { window.SkycraftProfiles.storage.setItem(trainingKey, "true"); } catch {                  }
                     $("flight-result-title").textContent = "ОБУЧЕНИЕ ПРОЙДЕНО!";
                     $("flight-result-caption").textContent = "ДОПУСК К ИСПЫТАНИЯМ";
                 }
@@ -745,8 +745,8 @@
         }
     });
 
-    // Компактные кнопки встроены в существующий МОБИЛЬНЫЙ D-pad.
-    // Большая плавающая панель на экране полёта полностью удалена.
+                                                                 
+                                                                   
     document.querySelectorAll("[data-flight-action]").forEach((button) => {
         button.addEventListener("click", () => {
             switch (button.dataset.flightAction) {
@@ -759,6 +759,9 @@
                         if (scene.flightPhase === "disarmed") scene.armMotors();
                         else scene.disarmMotors();
                     }
+                    break;
+                case "interact":
+                    scene.interact();
                     break;
                 case "land":
                     if (scene.mode === "running") scene.land();
@@ -862,13 +865,13 @@
             : `/Play?level=${encodeURIComponent(requestedLevel.id)}&reason=no-drone`);
         return;
     }
-    // Карточка уровня запускает миссию сразу; при прямом входе видна подсказка Enter.
+                                                                                      
     if (new URLSearchParams(location.search).get("autostart") === "1") {
         scene.start();
         canvas.focus({ preventScroll: true });
     }
 
-    // При выходе из активной симуляции спрашиваем подтверждение.
+                                                                 
     $("flight-exit")?.addEventListener("click", (event) => {
         if (["running", "paused"].includes(scene.mode) &&
             !window.confirm("Выйти к выбору уровней? Текущий полёт будет прерван.")) {

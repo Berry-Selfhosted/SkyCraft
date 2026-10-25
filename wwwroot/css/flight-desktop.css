@@ -1,19 +1,19 @@
-/*
- * SKYCRAFT — полёт на ПК.
- * Обычные карточки задания и инструктора остаются видимыми на компьютере.
- * Не меняем стили страницы выбора миссии /Play.
- */
+  
+                          
+                                                                          
+                                                
+   
 html.skycraft-desktop-flight body.is-immersive-flight .flight-mobile-objective,
 html.skycraft-desktop-flight body.is-immersive-flight .flight-touch-controls {
-    display: none !important;
+    display: none           ;
 }
 html.skycraft-desktop-flight body.is-immersive-flight .flight-mission-hud {
-    display: block !important;
+    display: block           ;
 }
 html.skycraft-desktop-flight body.is-immersive-flight .flight-lesson-card:not([hidden]) {
-    display: block !important;
+    display: block           ;
 }
-/* Скрытые карточки должны остаться скрытыми при завершении обучения. */
+                                                                        
 html.skycraft-desktop-flight body.is-immersive-flight .flight-lesson-card[hidden] {
-    display: none !important;
+    display: none           ;
 }

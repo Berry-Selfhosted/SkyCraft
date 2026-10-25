@@ -15,7 +15,7 @@ function state(position = { x:0, y:1.87, z:12 }) {
 function completeLesson() {
     const lesson = tutorial.create(), sample = state();
     const tick = (dt = 0.02) => tutorial.update(lesson, sample, dt);
-    tick(); // старт
+    tick();         
     sample.flightPhase = "armed"; tick();
     sample.flightPhase = "flying"; sample.altitude = 3.6; tick();
     for (let i = 0; i < 120; i++) tick(1 / 60);
@@ -103,7 +103,7 @@ test("уровни заперты, пока обучение не отмечен
     assert.match(read("Pages/Flight.cshtml"),/id="flight-lesson-card"/);
 });
 
-// Проверяем интеграцию со сценой без браузера; обычная карта должна вести себя по-старому.
+                                                                                           
 test("симулятор не завершает академию по двум воротам без посадки", () => {
     const context={window:{}}; vm.createContext(context);
     for(const file of ["drone-scene.js","flight-levels.js","flight-physics.js",

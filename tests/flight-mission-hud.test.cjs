@@ -9,8 +9,8 @@ const vm = require("node:vm");
 const root = path.resolve(__dirname, "..");
 const read = (name) => fs.readFileSync(path.join(root, name), "utf8");
 
-// Модуль полёта содержит логику миссии. Запускаем ровно эту функцию
-// с простыми узлами DOM, не подменяя её формулы отдельной реализацией.
+                                                                    
+                                                                       
 function makeHud() {
     const js = read("wwwroot/js/flight-game.js");
     const start = js.indexOf("function updateMission(state) {");
@@ -30,7 +30,7 @@ function makeHud() {
         return nodes.get(id);
     }
     const context = vm.createContext({ console });
-    // Функция использует только $ и lastMissionState.
+                                                      
     context.$ = get;
     vm.runInContext(`let lastMissionState = null; ${js.slice(start, end)}\nglobalThis.updateMission = updateMission;`, context);
     return { get, update: (state) => context.updateMission(state) };

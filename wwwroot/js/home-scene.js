@@ -1,10 +1,10 @@
 "use strict";
 
-/*
- * Главный экран SKYCRAFT: настоящие GLB-модели вместо фоновой картинки.
- * Наследуем готовую камеру, загрузчик, WebGL и подсистему отображения деталей.
- * GLB-ассеты кешируются после первого HTTP-запроса.
- */
+  
+                                                                        
+                                                                               
+                                                    
+   
 (function () {
     class HomeScene extends window.SkycraftDroneScene {
         constructor(canvas) {
@@ -25,8 +25,8 @@
             this.distance = Math.max(10.7, Math.min(17.0, this.distance + delta));
         }
 
-        // Не перезаписываем выбор деталей: на главной показывается
-        // последняя сборка, сохранённая в мастерской.
+                                                                   
+                                                      
         loadSavedConfiguration() {
             try {
                 const selection = JSON.parse(window.SkycraftProfiles.storage.getItem("skycraft.selection.v1"));
@@ -38,7 +38,7 @@
                     this.setConfiguration(valid);
                 }
             } catch {
-                // localStorage недоступен или пуст — покажем базовый дрон.
+                                                                           
             }
         }
     }
@@ -48,7 +48,7 @@
     const scene = new HomeScene(canvas);
     scene.loadSavedConfiguration();
 
-    // Цифры на главной соответствуют ТОМУ ЖЕ набору деталей, что и 3D-модель.
+                                                                              
     const statsEngine = window.SkycraftDroneStats;
     if (statsEngine) {
         try {

@@ -1,10 +1,10 @@
 "use strict";
-/*
- * SKYCRAFT / КОРШУН: сценарные данные и версия сохранений.
- * Никаких запросов к внешнему ИИ: АИДА — автономный сценарный напарник.
- * Решение предыдущей главы изменяет игровой модификатор следующей главы.
- * Модуль работает в браузере и в Node.js для модульных тестов.
- */
+  
+                                                           
+                                                                        
+                                                                         
+                                                               
+   
 (function (root, factory) {
     const api = factory();
     if (typeof module === "object" && module.exports) module.exports = api;
@@ -173,8 +173,8 @@
             const data = read(), entry = chapter(number);
             if (!entry || !data.finished[number] || !entry.choices.some(choice => choice.id === choiceId)) return false;
             if (data.choices[number] && data.choices[number] !== choiceId) {
-                // Изменив ранее принятое решение, игрок открывает новую ветвь:
-                // сбрасываем только ПОСЛЕДУЮЩИЕ главы, не рекорды уже пройденной главы.
+                                                                               
+                                                                                        
                 for (let index = number + 1; index <= 12; index++) {
                     delete data.choices[index]; delete data.finished[index]; delete data.best[index];
                 }
@@ -192,7 +192,7 @@
             return data.choices[12] === "cable" ? "rescue" : "beacon";
         }
         function profile(data = read()) {
-            // Только игровая привычка, НЕ медицинский/психологический диагноз.
+                                                                               
             const decisions = Object.keys(data.choices).length;
             const protective = Object.values(data.choices).filter(id =>
                 ["low", "audio", "edge", "lidar", "markers", "manual", "shelter", "seal", "clean", "heating", "sonar", "beacon"].includes(id)).length;

@@ -17,7 +17,7 @@
                     <span class="flight-atmosphere-haze"></span>
                 </div>
                 <div class="flight-stage-overlay" aria-hidden="true"></div>
-                <!-- Постоянное задание внутри игровой сцены, независимо от подсказок (I). -->
+                                                                                              
                 <section class="flight-mission-hud" id="flight-mission-hud" aria-label="Текущее задание уровня">
                     <div class="flight-mission-heading">
                         <span class="flight-mission-location" id="flight-hud-location">АНГАР 01 / ОБУЧЕНИЕ</span>
@@ -47,7 +47,7 @@
                     <p class="flight-lesson-hint" id="flight-lesson-hint">Следуй указаниям инструктора.</p>
                     <div class="flight-lesson-progress"><span id="flight-lesson-fill"></span></div>
                 </aside>
-                <!-- Единая компактная панель для телефона: заменяет две большие карточки. -->
+                                                                                              
                 <button type="button" class="flight-mobile-objective" id="flight-mobile-objective"
                         aria-expanded="false" aria-controls="flight-mobile-objective-details"
                         aria-label="Текущее задание. Нажми, чтобы посмотреть подробности">
@@ -70,7 +70,7 @@
 
                     </div>
                 </div>
-                <!-- Отдельная кнопка поверх сцены: доступна даже на узких экранах. -->
+                                                                                       
                         <button type="button" class="flight-help-toggle" id="flight-help-toggle"
                                 aria-label="Показать подсказки по управлению" aria-controls="flight-help-drawer"
                                 aria-expanded="false" aria-keyshortcuts="I"
@@ -136,6 +136,7 @@
                     </div>
                     <div class="flight-touch-side flight-touch-side--right">
                         <div class="flight-touch-action-cluster flight-touch-action-cluster--right" aria-label="Посадка, камера и помощь">
+                            <button type="button" data-flight-action="interact" aria-label="Взаимодействовать с пострадавшим или объектом, клавиша F">F Действие</button>
                             <button type="button" data-flight-action="land" aria-label="Посадить дрон">L Посадка</button>
                             <button type="button" data-flight-action="camera" aria-label="Сменить камеру">V Камера</button>
                             <button type="button" data-flight-action="help" aria-label="Открыть подсказки">I Помощь</button>
@@ -149,7 +150,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Правая панель подсказок: по умолчанию закрыта, не влияет на управление. -->
+                                                                                                
                 <aside class="flight-help-drawer" id="flight-help-drawer"
                        aria-label="Подсказки по управлению" aria-hidden="true" inert>
                     <div class="flight-help-drawer-header">

@@ -41,7 +41,7 @@ test("Q/E плавно вращают дрон, W после разворота 
     for (let i = 0; i < 120; i++) physics.step(state, { yaw: 1 }, 1 / 60, specs);
     assert.ok(state.attitude.yaw > 1.5);
     for (let i = 0; i < 60; i++) physics.step(state, { forward: 1 }, 1 / 60, specs);
-    // После поворота почти на 180° движение вперёд идёт в сторону +Z.
+                                                                      
     assert.ok(state.position.z > 11.5);
 });
 

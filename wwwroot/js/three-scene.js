@@ -1,16 +1,16 @@
-/**
- * SKYCRAFT / Modern renderer (Three.js r186)
- * -----------------------------------------
- * Three.js WebGL renderer and glTF 2.0 loader, with actual UV textures, PBR
- * materials, filmic tonemapping, dynamic lights/shadows and fog.
- *
- * This module is the ONLY graphics backend. While it loads, the user sees a
- * loading state; failures are reported rather than drawing obsolete worlds.
- * The transparent input canvas still handles camera pointer/wheel events.
- *
- * NOTE: Include Three.js under its MIT license. Exact version pinned by the
- * import map declared in _Layout.cshtml. See Tools/vendor-three.mjs.
- */
+   
+                                             
+                                            
+                                                                            
+                                                                 
+  
+                                                                            
+                                                                            
+                                                                          
+  
+                                                                            
+                                                                     
+   
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -31,8 +31,8 @@ function loadModel(loader, name) {
                 if (!child.isMesh) return;
                 child.castShadow = !MOBILE;
                 child.receiveShadow = true;
-                // The supplied road scene includes double-sided alpha foliage.
-                // Do not substitute unlit polygon colors for its PBR materials.
+                                                                               
+                                                                                
                 const materials = Array.isArray(child.material) ? child.material : [child.material];
                 materials.forEach(material => {
                     if (!material) return;
@@ -44,7 +44,7 @@ function loadModel(loader, name) {
             });
             return object;
         }).catch(error => {
-            STATIC_CACHE.delete(url); // permit retry after a network failure
+            STATIC_CACHE.delete(url);                                        
             throw error;
         }));
     }
@@ -260,8 +260,8 @@ function makeRescueTarget(THREE, point, color, index) {
 }
 
 function buildDroneLights(THREE) {
-    // Balanced studio lights for previews. The overhead spotlight casts shadows;
-    // weaker side lights reveal the grey body without flattening its shape.
+                                                                                 
+                                                                            
     const group = new THREE.Group();
 
     const overhead = new THREE.SpotLight(0xf5f8ff, 38, 24, Math.PI / 4.2, 0.48, 1.5);
@@ -319,8 +319,8 @@ class SkycraftModernRenderer {
         this.scene.background = new THREE.Color(0x879baa);
         this.scene.fog = new THREE.FogExp2(0x9caab5, 0.006);
         this.camera = new THREE.PerspectiveCamera(45, 1, 0.08, 560);
-        // Static level world is a sibling of the drone, NEVER its child.
-        // Camera/orbit transforms must not be applied to the environment.
+                                                                         
+                                                                          
         this.environment = new THREE.Group();
         this.environment.name = 'StaticWorld';
         this.environment.matrixAutoUpdate = false;
@@ -464,8 +464,8 @@ class SkycraftModernRenderer {
             const terrain = window.SkycraftHillsTerrain?.heightAt(point.x, point.z);
             const groundY = Number.isFinite(terrain) ? terrain
                 : this.sampleGroundHeight(point.x, point.z, point.y || 0);
-            // Flight objective floats 5 m above ground so pilots can scan it.
-            // The person itself stands ON terrain and is never buried in foliage.
+                                                                              
+                                                                                  
             point.groundY = groundY;
             point.y = groundY + 5.2;
         });
@@ -558,7 +558,7 @@ class SkycraftModernRenderer {
     }
 
 
-    // Weather is rendered in world space near the active camera, not as a HUD filter.
+                                                                                      
     configureWeather(level) {
         if (this.weatherSystem) {
             this.scene.remove(this.weatherSystem.mesh);
@@ -639,8 +639,8 @@ class SkycraftModernRenderer {
         this.environment.clear();
         this.gates = [];
         const story = !!level?.story;
-        // Every story chapter uses the user's uploaded low-poly hills/lake. There is no
-        // fallback to any generated cube geometry or procedural scenery.
+                                                                                        
+                                                                         
         const scenery = story;
         if (story) this.applyStoryPalette(level);
         else {
@@ -661,14 +661,14 @@ class SkycraftModernRenderer {
                 const asset = await loadModel(this.assetLoader,
                     'hills-lake-world');
                 if (epoch !== this.epoch) return;
-                // World scale is baked into the user-supplied landscape GLB.
-                // Keeping this transform at identity makes camera motion unable
-                // to drag the scenery or change its physical dimensions.
+                                                                             
+                                                                                
+                                                                         
                 asset.name = 'UploadedHillsLakeGLB';
                 asset.scale.setScalar(1);
                 asset.position.set(0, 0, 0);
-                // World transform is fixed in map coordinates; only the
-                // camera and PlayerDrone change when the mouse rotates.
+                                                                        
+                                                                        
                 asset.rotation.set(0, 0, 0);
                 asset.traverse(mesh => {
                     if (!mesh.isMesh) return;
@@ -677,16 +677,16 @@ class SkycraftModernRenderer {
                 });
                 this.stylizeStoryWorld(asset, level);
                 this.environment.add(asset);
-                // Collision heightfield and visual rescue marker must agree.
-                // The old raycaster often hit pine foliage ABOVE the survivor,
-                // leaving targets hidden or impossible to approach.
+                                                                             
+                                                                               
+                                                                    
                 await window.SkycraftHillsTerrain?.load();
                 if (epoch !== this.epoch) return;
                 this.placeTargetsOnGround(level?.checkpoints);
             } else if (level?.kind === 'hangar' || !level) {
-                // The same engine handles the home page and craft hangar.
-                // The flying hangar must leave the rear training course open;
-                // previews use the complete closed building.
+                                                                          
+                                                                              
+                                                             
                 const ids = level?.kind === 'hangar'
                     ? ['hangar-floor', 'hangar-structure', 'hangar-lighting', 'hangar-props']
                     : ['hangar-floor', 'hangar-shell', 'hangar-structure', 'hangar-lighting', 'hangar-props'];
@@ -697,7 +697,7 @@ class SkycraftModernRenderer {
                 this.environment.add(this.floor);
             } else {
                 this.environment.add(this.floor);
-                // Ordinary three test flights preserve basic obstacles.
+                                                                        
                 for (const item of level?.obstacles || []) {
                     const h = item.type === 'tower' ? 7.5 : item.type === 'rock' ? item.size * 1.35 : item.size;
                     const geometry = new THREE.DodecahedronGeometry(item.size * 0.52, 1);
@@ -753,7 +753,7 @@ class SkycraftModernRenderer {
             if (parts[i].status === 'fulfilled') templates.set(id, parts[i].value);
         });
         if (!templates.get(configuration.frame)) {
-            this.configurationSignature = null; // permit retry on next frame
+            this.configurationSignature = null;                              
             return;
         }
         this.drone.clear();
@@ -807,8 +807,8 @@ class SkycraftModernRenderer {
         this.camera.up.set(up[0], up[1], up[2]);
         cameraTarget.set(pos[0] + forward[0], pos[1] + forward[1], pos[2] + forward[2]);
         this.camera.lookAt(cameraTarget);
-        // Invariant: changing the orbit changes only the camera pose.
-        // The StaticWorld transform is an immutable identity matrix.
+                                                                      
+                                                                     
         this.camera.fov = THREE.MathUtils.clamp(2 * Math.atan(height / (2 * Math.max(controller.focalLength, 1))) * 180 / Math.PI, 24, 85);
         this.camera.updateProjectionMatrix();
         const flight = !!controller.level;
@@ -820,7 +820,7 @@ class SkycraftModernRenderer {
                 this.bodyPivot.rotation.set(attitude.pitch, window.SkycraftFlightOrientation?.modelYaw(attitude.yaw) || 0, attitude.roll, 'YXZ');
             }
             this.droneLightRig.position.set(position.x, position.y, position.z);
-            this.droneLightRig.visible = false; // studio lighting is preview-only
+            this.droneLightRig.visible = false;                                   
             this.drone.visible = controller.cameraMode !== 'first';
             const active = controller.tutorial && window.SkycraftTutorial &&
                 !['gates', 'landing'].includes(window.SkycraftTutorial.active(controller.tutorial).id);

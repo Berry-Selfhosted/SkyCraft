@@ -1,5 +1,5 @@
 "use strict";
-/* Единый экран подтверждения собственного дрона перед КАЖДЫМ вылетом. */
+                                                                         
 (function (root) {
     function available(store) {
         return (store?.getDrones() || []).filter(d => d && d.id && d.parts &&
